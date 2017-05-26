@@ -1,0 +1,22 @@
+<ion-header>
+  <ion-navbar color="primary">
+    <ion-title>Login</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  <h2>Welcome to Ionic!</h2>
+ 
+  <div padding>
+
+    <button ion-button round block color="secondary" icon-left (click)="Aceptar('Alumno')" ><ion-icon name="star"></ion-icon>Alumno</button><br><br>
+
+    <button ion-button round block color="primary" icon-left (click)="Aceptar('Profesor')" ><ion-icon name="md-bookmarks"></ion-icon>Profesor</button><br><br>
+
+    <button ion-button round block color="danger" icon-left (click)="Aceptar('Administrativo')" ><ion-icon name="md-clipboard"></ion-icon>Administrativo</button><br><br>
+
+    <button ion-button round block color="dark" icon-left (click)="Aceptar('Administrador')" ><ion-icon name="md-briefcase"></ion-icon>Administrador</button><br><br>
+
+  </div>
+
+</ion-content>

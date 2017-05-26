@@ -1,0 +1,48 @@
+<ion-menu [content]="content">
+  <ion-header>
+    <ion-toolbar color="dark">
+      <ion-title>Menu</ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+  <ion-content padding>
+    <ion-list>
+      <div *ngIf="tipo =='Alumno'">
+      <button menuClose ion-item ><ion-icon name="md-person"></ion-icon> Datos Alumno </button>
+      <button menuClose ion-item ><ion-icon name="md-document"></ion-icon> Materias </button>
+      <button menuClose ion-item ><ion-icon name="md-copy"></ion-icon> Asistencia </button>
+      <button menuClose ion-item ><ion-icon name="md-notifications"></ion-icon> Notificaciones </button>
+      <button menuClose ion-item (click)="Salir()"><ion-icon name="md-close-circle"></ion-icon> Salir</button>
+      </div>
+      <div *ngIf="tipo =='Profesor'">
+      <button menuClose ion-item ><ion-icon name="md-person"></ion-icon> Datos Profesor </button>
+      <button menuClose ion-item ><ion-icon name="md-document"></ion-icon> Materias </button>
+      <button menuClose ion-item ><ion-icon name="md-copy"></ion-icon> Asistencia </button>
+      <button menuClose ion-item ><ion-icon name="md-attach"></ion-icon> Divisiones </button>
+      <button menuClose ion-item ><ion-icon name="md-notifications"></ion-icon> Notificaciones </button>
+      <button menuClose ion-item (click)="Salir()"><ion-icon name="md-close-circle"></ion-icon> Salir</button>
+      </div>
+      <div *ngIf="tipo =='Administrativo'">
+      <button menuClose ion-item ><ion-icon name="md-person"></ion-icon> Datos Administrativo </button>
+      <button menuClose ion-item ><ion-icon name="md-clipboard"></ion-icon> Tomar Asistencia </button>
+      <button menuClose ion-item ><ion-icon name="md-attach"></ion-icon> Divisiones </button>
+      <button menuClose ion-item ><ion-icon name="md-contacts"></ion-icon> Alumnos </button>
+      <button menuClose ion-item ><ion-icon name="md-filing"></ion-icon> Profesores </button>
+      <button menuClose ion-item ><ion-icon name="md-notifications"></ion-icon> Notificaciones </button>
+      <button menuClose ion-item (click)="Salir()"><ion-icon name="md-close-circle"></ion-icon> Salir</button>
+      </div>
+      <div *ngIf="tipo =='Administrador'">
+      <button menuClose ion-item ><ion-icon name="md-person"></ion-icon> Datos Administrador </button>
+      <button menuClose ion-item ><ion-icon name="md-contacts"></ion-icon> Alumnos </button>
+      <button menuClose ion-item ><ion-icon name="md-filing"></ion-icon> Profesores </button>
+      <button menuClose ion-item ><ion-icon name="md-attach"></ion-icon> Divisiones </button>
+      <button menuClose ion-item ><ion-icon name="md-notifications"></ion-icon> Notificaciones </button>
+      <button menuClose ion-item (click)="Salir()"><ion-icon name="md-close-circle"></ion-icon> Salir</button>
+      </div>
+    </ion-list>
+  </ion-content>
+
+</ion-menu>
+
+<!-- Disable swipe-to-go-back because it's poor UX to combine STGB with side menus -->
+<ion-nav [root]="rootPage" #content swipeBackEnabled="false"></ion-nav>
