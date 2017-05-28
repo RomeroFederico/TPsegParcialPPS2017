@@ -1,15 +1,83 @@
 <ion-header>
-  <ion-navbar>
+  <ion-navbar color = "primary">
     <button ion-button menuToggle>
       <ion-icon name="menu"></ion-icon>
     </button>
-    <ion-title>Principal Profesor</ion-title>
+    <ion-title>Profesor</ion-title>
   </ion-navbar>
 </ion-header>
 
 
-<ion-content padding>
+<ion-content padding  class = "home" text-center>
 
-  Bienvenido PROFESOR
+  <ion-row>
+      <ion-col class = "columnaOpcion">
+      <div (click) = "Aceptar()">
+      <ion-row class = "imgOpcion">
+        <ion-col class = "columnaCentrada">
+          <img src= "assets/images/profesor/profesor.png"/>
+        </ion-col>
+      </ion-row>
+      <ion-row class = "opcion">
+        <ion-col class = "columnaCentrada">
+          <ion-col>
+            Mis Datos
+          </ion-col>
+        </ion-col>
+      </ion-row>
+      </div>
+      </ion-col>
+      <ion-col class = "columnaOpcion">
+      <div (click) = "Aceptar()">
+      <ion-row class = "imgOpcion">
+        <ion-col class = "columnaCentrada">
+          <img src= "assets/images/profesor/clases.png"/>
+        </ion-col>
+      </ion-row>
+      <ion-row class = "opcion">
+        <ion-col class = "columnaCentrada">
+          <ion-col>
+            Lista de clases
+          </ion-col>
+        </ion-col>
+      </ion-row>
+      </div>
+      </ion-col>
+    </ion-row>
+
+    <ion-row>
+      <ion-col class = "columnaOpcion">
+      <div (click) = "Aceptar()">
+      <ion-row class = "imgOpcion">
+        <ion-col class = "columnaCentrada">
+          <img src= "assets/images/profesor/divisiones.png"/>
+        </ion-col>
+      </ion-row>
+      <ion-row class = "opcion">
+        <ion-col class = "columnaCentrada">
+          <ion-col>
+            Lista de divisiones
+          </ion-col>
+        </ion-col>
+      </ion-row>
+      </div>
+      </ion-col>
+      <ion-col class = "columnaOpcion">
+      <div (click) = "Aceptar()">
+      <ion-row class = "imgOpcion">
+        <ion-col class = "columnaCentrada">
+          <img src= "assets/images/administrador/usuario-agregar.png"/>
+        </ion-col>
+      </ion-row>
+      <ion-row class = "opcion">
+        <ion-col class = "columnaCentrada">
+          <ion-col>
+            Agregar Usuario
+          </ion-col>
+        </ion-col>
+      </ion-row>
+      </div>
+      </ion-col>
+    </ion-row>
 
 </ion-content>
