@@ -9,6 +9,8 @@ import { HomeAlumnoPage } from '../pages/home-alumno/home-alumno';
 import { HomeProfesorPage } from '../pages/home-profesor/home-profesor';
 import { HomeAdministradorPage } from '../pages/home-administrador/home-administrador';
 import { HomeAdministrativoPage } from '../pages/home-administrativo/home-administrativo';
+import { ListadoAdministradorPage } from '../pages/listado-administrador/listado-administrador';
+import { AgregarAdministradorPage } from '../pages/agregar-administrador/agregar-administrador';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
@@ -21,7 +23,9 @@ import { SplashScreen } from '@ionic-native/splash-screen';
     HomeAlumnoPage,
     HomeProfesorPage,
     HomeAdministrativoPage,
-    HomeAdministradorPage
+    HomeAdministradorPage,
+    ListadoAdministradorPage,
+    AgregarAdministradorPage
   ],
   imports: [
     BrowserModule,
@@ -35,7 +39,9 @@ import { SplashScreen } from '@ionic-native/splash-screen';
     HomeAlumnoPage,
     HomeProfesorPage,
     HomeAdministrativoPage,
-    HomeAdministradorPage
+    HomeAdministradorPage,
+    ListadoAdministradorPage,
+    AgregarAdministradorPage
   ],
   providers: [
     StatusBar,
