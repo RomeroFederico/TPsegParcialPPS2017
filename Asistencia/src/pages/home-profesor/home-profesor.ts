@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams , LoadingController} from 'ionic-angular';
 import { DatosProfesorPage } from '../datos-profesor/datos-profesor';
+import { ListadoClasesProfesorPage } from '../listado-clases-profesor/listado-clases-profesor';
 import { Profesor } from '../../components/clases/profesor';
 
 @Component({
@@ -19,8 +20,26 @@ export class HomeProfesorPage
 
   }
 
-  Aceptar() 
+  Aceptar(opcion) 
   {
+    var page;
+    switch (opcion) {
+      case '0':
+
+        page = DatosProfesorPage;
+        break;
+
+      case '1':
+
+        page = ListadoClasesProfesorPage;
+        break;
+
+      case '2':
+
+        page = DatosProfesorPage;
+        break;
+    
+    }
     let loading = this.loadingController.create({
       spinner: 'bubbles',
       content: `Espere un Momento...`,
@@ -29,7 +48,7 @@ export class HomeProfesorPage
 
     loading.onDidDismiss(() => {
       //this.animacionSeleccion[this.seleccionAnimar] = "";
-      this.navCtrl.push(DatosProfesorPage,{Profesor:this.profesor});
+      this.navCtrl.push(page,{Profesor:this.profesor});
     });
 
     this.loading = loading;

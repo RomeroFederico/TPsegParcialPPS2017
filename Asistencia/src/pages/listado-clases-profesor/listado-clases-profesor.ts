@@ -5,13 +5,16 @@ import { NavController, NavParams } from 'ionic-angular';
   selector: 'page-listado-clases-profesor',
   templateUrl: 'listado-clases-profesor.html',
 })
-export class ListadoClasesProfesorPage {
+export class ListadoClasesProfesorPage 
+{
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  constructor(public navCtrl: NavController, public navParams: NavParams) 
+  {
+
   }
-
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad ListadoClasesProfesor');
+  Volver()
+  {
+    this.navCtrl.pop();
   }
 
 }
