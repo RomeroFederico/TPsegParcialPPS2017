@@ -5,18 +5,77 @@
 </ion-header>
 
 <ion-content padding>
-  <h2>Welcome to Ionic!</h2>
- 
-  <div padding>
+  <ion-row>
+      <ion-col>
+      <div>
+      <ion-row >
+        <ion-col class = "columnaCentrada">
+          <ion-col>
+            <button ion-button block color="secondary" icon-left (click)="Aceptar('Alumno')" ><ion-icon name="star"></ion-icon>Alumno</button>
+          </ion-col>
+        </ion-col>
+      </ion-row>
+      </div>
+      </ion-col>
+      <ion-col>
+      <div>
+      <ion-row >
+        <ion-col class = "columnaCentrada">
+          <ion-col>
+            <button ion-button block color="primary" icon-left (click)="Aceptar('Profesor')" ><ion-icon name="md-bookmarks"></ion-icon>Profesor</button>
+          </ion-col>
+        </ion-col>
+      </ion-row>
+      </div>
+      </ion-col>
+    </ion-row>
 
-    <button ion-button round block color="secondary" icon-left (click)="Aceptar('Alumno')" ><ion-icon name="star"></ion-icon>Alumno</button><br><br>
+    <ion-row>
+      <ion-col>
+      <div>
+      <ion-row >
+        <ion-col class = "columnaCentrada">
+          <ion-col>
+            <button ion-button block color="danger" icon-left (click)="Aceptar('Administrativo')" ><ion-icon name="md-clipboard"></ion-icon>Secretaria</button>
+          </ion-col>
+        </ion-col>
+      </ion-row>
+      </div>
+      </ion-col>
+      <ion-col>
+      <div>
+      <ion-row >
+        <ion-col class = "columnaCentrada">
+          <ion-col>
+            <button ion-button block color="dark" icon-left (click)="Aceptar('Administrador')" ><ion-icon name="md-briefcase"></ion-icon>Admin</button>
+          </ion-col>
+        </ion-col>
+      </ion-row>
+      </div>
+      </ion-col>
+    </ion-row>
 
-    <button ion-button round block color="primary" icon-left (click)="Aceptar('Profesor')" ><ion-icon name="md-bookmarks"></ion-icon>Profesor</button><br><br>
+  <ion-list>
 
-    <button ion-button round block color="danger" icon-left (click)="Aceptar('Administrativo')" ><ion-icon name="md-clipboard"></ion-icon>Administrativo</button><br><br>
+  <ion-item>
+    <ion-label>E-Mail</ion-label>
+    <ion-input type="text" [(ngModel)]="mail" name="mail"></ion-input>
+  </ion-item>
 
-    <button ion-button round block color="dark" icon-left (click)="Aceptar('Administrador')" ><ion-icon name="md-briefcase"></ion-icon>Administrador</button><br><br>
+  <ion-item>
+    <ion-label>Password</ion-label>
+    <ion-input type="password" [(ngModel)]="pass" name="pass"></ion-input>
+  </ion-item>
 
-  </div>
+  <ion-item>
+    <ion-label>Tipo</ion-label>
+    <ion-input type="text" [(ngModel)]="tipo" disabled ></ion-input>
+  </ion-item>
+
+</ion-list>
+
+<div padding>
+  <button ion-button block (click)="Login()" >Login</button>
+</div>
 
 </ion-content>
