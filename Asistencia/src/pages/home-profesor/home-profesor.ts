@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { NavController, NavParams , LoadingController} from 'ionic-angular';
 import { DatosProfesorPage } from '../datos-profesor/datos-profesor';
 import { ListadoClasesProfesorPage } from '../listado-clases-profesor/listado-clases-profesor';
+import { ListadoDivisionesProfesorPage } from '../listado-divisiones-profesor/listado-divisiones-profesor';
 import { Profesor } from '../../components/clases/profesor';
 
 @Component({
@@ -36,7 +37,7 @@ export class HomeProfesorPage
 
       case '2':
 
-        page = DatosProfesorPage;
+        page = ListadoDivisionesProfesorPage;
         break;
     
     }

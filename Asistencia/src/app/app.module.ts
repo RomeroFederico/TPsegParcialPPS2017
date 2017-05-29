@@ -16,6 +16,7 @@ import { AgregarAdministradorPage } from '../pages/agregar-administrador/agregar
 import { HomeProfesorPage } from '../pages/home-profesor/home-profesor';
 import { DatosProfesorPage } from '../pages/datos-profesor/datos-profesor';
 import { ListadoClasesProfesorPage } from '../pages/listado-clases-profesor/listado-clases-profesor';
+import { ListadoDivisionesProfesorPage } from '../pages/listado-divisiones-profesor/listado-divisiones-profesor';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
@@ -36,6 +37,7 @@ import { IonicStorageModule } from '@ionic/storage';
     AgregarAdministradorPage,
     DatosProfesorPage,
     ListadoClasesProfesorPage,
+    ListadoDivisionesProfesorPage
   ],
   imports: [
     BrowserModule,
@@ -54,7 +56,8 @@ import { IonicStorageModule } from '@ionic/storage';
     ListadoAdministradorPage,
     AgregarAdministradorPage,
     DatosProfesorPage,
-    ListadoClasesProfesorPage
+    ListadoClasesProfesorPage,
+    ListadoDivisionesProfesorPage
   ],
   providers: [
     StatusBar,
