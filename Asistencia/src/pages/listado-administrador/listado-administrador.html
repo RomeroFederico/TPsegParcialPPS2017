@@ -1,5 +1,5 @@
 <ion-header>
-  <ion-navbar color = "primary" hideBackButton>
+  <ion-navbar color = "primary">
     <button ion-button menuToggle>
       <ion-icon name="menu"></ion-icon>
     </button>
@@ -8,13 +8,13 @@
         <ion-icon class="customIcon" name="arrow-back"></ion-icon>
       </button>
     </ion-buttons>
-    <ion-label class = "titulo">Listado de {{tipoListado}}s</ion-label>
+    <ion-label class = "titulo">{{opciones.mensaje}}</ion-label>
   </ion-navbar>
 </ion-header>
 
 <ion-content padding>
 
-  <div *ngIf = "tipoListado == 'Usuario'">
+  <div *ngIf = "opciones.tipo == 'Usuario'">
 
   <ion-item>
       <ion-label>Filtrar por </ion-label>
@@ -36,9 +36,9 @@
   <ion-searchbar (ionInput)="getItems($event)" placeholder = '...'></ion-searchbar>
 
   <ion-list>
-    <ion-item *ngFor="let usuario of usuarios">
+    <ion-item *ngFor="let usuario of usuarios" (click) = 'MostrarDatosUsuario(usuario)'>
           <ion-thumbnail item-left>
-            <img src="https://avatars3.githubusercontent.com/u/17879446?v=3&s=460"><!-- Imagen del jugador -->
+            <img src="https://avatars3.githubusercontent.com/u/17879446?v=3&s=460">
           </ion-thumbnail>
           <h2 class = "nombreUsuario">{{usuario.apellido}}, {{usuario.nombre}}</h2>
           <ion-grid no-padding>

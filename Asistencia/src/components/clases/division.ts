@@ -52,6 +52,7 @@ export class Division
     this.materia = materia;
     this.profesor = profesor;
     this.nombre = nombre;
+    this.ciclo = ciclo;
     this.fechaInicio = fechaInicio;
     this.fechaFin = fechaFin;
     this.hora = hora;

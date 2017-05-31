@@ -24,7 +24,11 @@ export class HomeAdministradorPage {
     console.log('ionViewDidLoad HomeAdministradorPage');
   }
 
-  Seleccion(opcion)
+  /**
+  * Seleccion de una opcion de la pagina principal.
+  * @param opcion numero que representa la opcion seleccionada.
+  */
+  Seleccion(opcion : number)
   {
     console.log("Selecciono " + opcion);
     this.animacionSeleccion[opcion] = "animated flash infinite";
@@ -33,10 +37,10 @@ export class HomeAdministradorPage {
     this.MostrarLoading(this.SeleccionOpcion(opcion));
   }
 
-  // presentUpgradeModel() {
-  //    setTimeout(function(){ console.log("Hello"); this.Mostrar(); }, 3000);
-  // }
-
+  /**
+  * A partir de la opcion seleccionada de 'Seleccion', se obtiene la pagina a mostrar y lo que se quiere mostrar (Materia, Usuario, Division, Aula).
+  * @param opcion numero que representa la opcion seleccionada.
+  */
   SeleccionOpcion(opcion)
   {
     var objOpcion = {ruta : "listado-administrador", mensaje : "", tipo : ""};
@@ -98,6 +102,9 @@ export class HomeAdministradorPage {
     return objOpcion;
   }
 
+  /**
+  * Muestra un menu para cambiar la vista de los iconos de la pagina principal.
+  */
   MostrarOpcionesVista() 
   {
    let actionSheet = this.actionSheetController.create({
@@ -133,8 +140,12 @@ export class HomeAdministradorPage {
    });
 
    actionSheet.present();
- }
+  }
 
+  /**
+  * Carga la pagina a mostrar.
+  * @param seleccion objeto obtenido de la funcion 'SeleccionOpcion', contiene la pagina a mostrar, el titulo de la misma y el tipo de dato a manejar.
+  */
   MostrarLoading(seleccion) 
   {
     console.log(seleccion);
@@ -148,7 +159,9 @@ export class HomeAdministradorPage {
 
     loading.onDidDismiss(() => {
       this.animacionSeleccion[this.seleccionAnimar] = "";
-      this.navCtrl.push(seleccion.ruta == "agregar-administrador"? AgregarAdministradorPage : ListadoAdministradorPage, {tipoListado : seleccion.tipo});
+      this.navCtrl.setRoot(seleccion.ruta == "agregar-administrador"? AgregarAdministradorPage : ListadoAdministradorPage,
+                           {opciones : seleccion},
+                           {animate: true, direction: 'forward'});
     });
 
     this.loading = loading;

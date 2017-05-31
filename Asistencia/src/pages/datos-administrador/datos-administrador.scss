@@ -1,3 +1,95 @@
 page-datos-administrador {
 
+    .atributoAlumno {
+        color : white;
+        border-radius: 10px;
+        background-color: #488aff;
+        font-size: medium;
+        padding-left: 10px;
+        opacity: 0.7;
+        margin: 0px 0px 0px 0px;
+    }
+
+    .atributoProfesor {
+        color : white;
+        border-radius: 10px;
+        background-color: #32db64;
+        font-size: medium;
+        padding-left: 10px;
+        opacity: 0.7;
+        margin: 0px 0px 0px 0px;
+    }
+
+    .atributoAdministrativo {
+        color : white;
+        border-radius: 10px;
+        background-color: #f53d3d;
+        font-size: medium;
+        padding-left: 10px;
+        opacity: 0.7;
+        margin: 0px 0px 0px 0px;
+    }
+
+    .mostrarAtributo {
+        color : white;
+        border-radius: 10px;
+        background-color: gray;
+        font-size: medium;
+        padding-left: 10px;
+        opacity: 0.7;
+        text-align: right;
+        padding-right: 10px;
+        margin: 0px 0px 0px 0px;
+    }
+
+    .tipoUsuario {
+        text-align : right;
+        margin: 0px 10px 5px 0px;
+        color: white;
+    }
+
+    .alumno {
+        background-color: #488aff;
+    }
+
+    .profesor {
+        background-color: #32db64;
+    }
+
+    .administrativo {
+        background-color: #f53d3d;
+    }
+
+    .titulo {
+        color : white;
+        font-weight: bold;
+        font-size: large;
+    }
+
+    .columnaCentrada{
+        display: flex;
+        align-items: center;
+    }
+
+    .tituloUsuario{
+        padding-left: 20px;
+        color: white;
+    }
+
+    .subtituloUsuario{
+        padding-left: 20px;
+        color: white;
+    }
+
+    .miHeader {
+        border-radius: 10px;
+        padding-left: 10px;
+        margin-bottom: 10px;
+    }
+
+    .imagenPerfil {
+        border:3px solid white;
+        border-radius: 10px;
+    }
+
 }

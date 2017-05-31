@@ -1,6 +1,9 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 
+import { DatosAdministradorPage } from '../datos-administrador/datos-administrador';
+import { HomeAdministradorPage } from '../home-administrador/home-administrador';
+
 import { Usuario } from '../../components/clases/usuario';
 //import { Administrador } from '../../components/clases/administrador';
 import { Administrativo } from '../../components/clases/administrativo';
@@ -13,7 +16,7 @@ import { Alumno } from '../../components/clases/alumno';
 })
 export class ListadoAdministradorPage {
 
-  tipoListado : string;
+  opciones : any;
 
   usuariosBase : Array<Usuario>;
   usuarios : Array<Usuario>;
@@ -25,9 +28,10 @@ export class ListadoAdministradorPage {
 
   constructor(public navCtrl: NavController, public navParams: NavParams)
   {
-    this.tipoListado = this.navParams.get("tipoListado");
+    this.opciones = this.navParams.get("opciones");
+    console.log(this.opciones);
 
-    if (this.tipoListado == "Usuario")
+    if (this.opciones.tipo == "Usuario")
     {
       this.CargarUsuarios();
       this.InicializarListadoUsuarios();
@@ -38,11 +42,26 @@ export class ListadoAdministradorPage {
     console.log('ionViewDidLoad ListadoAdministradorPage');
   }
 
+  /**
+  * Volver a la pagina principal.
+  */
   Volver()
   {
-    this.navCtrl.pop();
+    this.navCtrl.setRoot(HomeAdministradorPage, {}, {animate: true, direction: 'forward'});
   }
 
+  /**
+  * Muestra el usuario seleccionado, en la pagina DatosAdministradorPage.
+  * @param usuario usuario a mostrar.
+  */
+  MostrarDatosUsuario(usuario : Usuario)
+  {
+    this.navCtrl.push(DatosAdministradorPage, {usuario : usuario});
+  }
+
+  /**
+  * Carga los usuarios. Luego se hara con la base de datos
+  */
   CargarUsuarios()
   {
     this.usuariosBase = new Array<Usuario>();
@@ -52,6 +71,9 @@ export class ListadoAdministradorPage {
     this.usuariosBase.push(new Alumno(3, "tres", "TRES", "789", "1003", "c@c.com", "811124", 18, "default.png"));
   }
 
+  /**
+  * Inicializa el listado de acuerdo al filtro seleccionado (Todos, Alumnos, Profesor, Administrativo).
+  */
   InicializarListadoUsuarios()
   {
     if (this.filtro == "Todos")
@@ -69,7 +91,11 @@ export class ListadoAdministradorPage {
     }
   }
 
-  DevolverTipo(usuario)
+  /**
+  * Devuelve el tipo de usuario en formato de cadena.
+  * @param usuario usuario del sistema.
+  */
+  DevolverTipo(usuario : Usuario)
   {
     if (usuario instanceof Administrativo)
       return "Administrativo";
@@ -79,17 +105,21 @@ export class ListadoAdministradorPage {
       return "Alumno";
   }
 
+  /**
+  * Funcion utilizada para el buscador. Permite filtrar el listado de acuerdo al string ingresado y el filtro utilizado.
+  * @param ev evento ionInput del buscador.
+  */
   getItems(ev: any) {
 
     this.eventoFiltrar = ev;
 
-    // Reset items back to all of the items
+    // Resetea el listado al valor inicial, aplicando el filtro.
     this.InicializarListadoUsuarios();
 
-    // set val to the value of the searchbar
+    // Ajusto val al valor ingresado en el buscador.
     let val = ev.target.value;
 
-    // if the value is an empty string don't filter the items
+    // Si el valor ingresado esta vacio no realizo la busqueda.
     if (val && val.trim() != '') {
       this.usuarios = this.usuarios.filter((item) => {
         if (this.buscar == "Apellido")
@@ -102,12 +132,22 @@ export class ListadoAdministradorPage {
     }
   }
 
+  /**
+  * Evento onChange del select que contiene el filtro de busqueda por apellido, nombre o legajo.
+  * Ejecuta la funcion getItems, actualizando el listado con el nuevo filtro de busqueda.
+  * Si no se ejecuto nunca la funcion getItems, no se hara nada.
+  */
   onChangeBuscar()
   {
     if (this.eventoFiltrar != null)
       this.getItems(this.eventoFiltrar);
   }
 
+  /**
+  * Evento onChange del select que contiene el filtro por tipo de usuario.
+  * Ejecuta la funcion getItems, actualizando el listado con los valores validos.
+  * Si no se ejecuto nunca la funcion getItems, no se hara nada.
+  */
   onChangeFiltro()
   {
     this.onChangeBuscar();
