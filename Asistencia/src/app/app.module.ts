@@ -7,10 +7,12 @@ import { LoginPage } from '../pages/login/login';
 import { MenuPage } from '../pages/menu/menu';
 import { HomeAlumnoPage } from '../pages/home-alumno/home-alumno';
 
-import { HomeAdministradorPage } from '../pages/home-administrador/home-administrador';
 import { HomeAdministrativoPage } from '../pages/home-administrativo/home-administrativo';
+
+import { HomeAdministradorPage } from '../pages/home-administrador/home-administrador';
 import { ListadoAdministradorPage } from '../pages/listado-administrador/listado-administrador';
 import { AgregarAdministradorPage } from '../pages/agregar-administrador/agregar-administrador';
+import { DatosAdministradorPage } from '../pages/datos-administrador/datos-administrador';
 
 //Profesor
 import { HomeProfesorPage } from '../pages/home-profesor/home-profesor';
@@ -35,6 +37,7 @@ import { IonicStorageModule } from '@ionic/storage';
     HomeAdministradorPage,
     ListadoAdministradorPage,
     AgregarAdministradorPage,
+    DatosAdministradorPage,
     DatosProfesorPage,
     ListadoClasesProfesorPage,
     ListadoDivisionesProfesorPage
@@ -55,6 +58,7 @@ import { IonicStorageModule } from '@ionic/storage';
     HomeAdministradorPage,
     ListadoAdministradorPage,
     AgregarAdministradorPage,
+    DatosAdministradorPage,
     DatosProfesorPage,
     ListadoClasesProfesorPage,
     ListadoDivisionesProfesorPage
