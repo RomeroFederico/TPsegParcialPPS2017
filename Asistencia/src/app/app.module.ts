@@ -19,6 +19,7 @@ import { HomeProfesorPage } from '../pages/home-profesor/home-profesor';
 import { DatosProfesorPage } from '../pages/datos-profesor/datos-profesor';
 import { ListadoClasesProfesorPage } from '../pages/listado-clases-profesor/listado-clases-profesor';
 import { ListadoDivisionesProfesorPage } from '../pages/listado-divisiones-profesor/listado-divisiones-profesor';
+import { DatosDivisionProfesorPage } from '../pages/datos-division-profesor/datos-division-profesor';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
@@ -40,7 +41,8 @@ import { IonicStorageModule } from '@ionic/storage';
     DatosAdministradorPage,
     DatosProfesorPage,
     ListadoClasesProfesorPage,
-    ListadoDivisionesProfesorPage
+    ListadoDivisionesProfesorPage,
+    DatosDivisionProfesorPage
   ],
   imports: [
     BrowserModule,
@@ -61,7 +63,8 @@ import { IonicStorageModule } from '@ionic/storage';
     DatosAdministradorPage,
     DatosProfesorPage,
     ListadoClasesProfesorPage,
-    ListadoDivisionesProfesorPage
+    ListadoDivisionesProfesorPage,
+    DatosDivisionProfesorPage
   ],
   providers: [
     StatusBar,

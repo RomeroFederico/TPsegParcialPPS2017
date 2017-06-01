@@ -7,6 +7,8 @@ import { Profesor } from '../../components/clases/profesor';
 import { Storage } from '@ionic/storage';
 
 import { Ciclo } from '../../components/clases/ciclo';
+import { DatosDivisionProfesorPage } from '../datos-division-profesor/datos-division-profesor';
+
 
 @Component({
   selector: 'page-listado-divisiones-profesor',
@@ -39,55 +41,45 @@ export class ListadoDivisionesProfesorPage
     this.materias = new Array<Materia>();
     this.aulas = new Array<Aula>();
 
-    this.materias.push(new Materia(1,"Matematica I","java.png"));
-    this.materias.push(new Materia(2,"Programacion I","java.png"));
-    this.materias.push(new Materia(3,"Laboratorio I","java.png"));
-    this.materias.push(new Materia(4,"Ingles I","java.png"));
+    this.materias.push(new Materia(1,"Laboratorio II","java.png"));
+    this.materias.push(new Materia(2,"Laboratorio III","java.png"));
+    this.materias.push(new Materia(3,"Laboratorio  VI","java.png"));
 
-    this.aulas.push(new Aula(1,"100-A",3));
-    this.aulas.push(new Aula(2,"LAB-1",2));
+    this.aulas.push(new Aula(1,"LAB-5",3));
 
     this.divisiones.push(new Division
     (1,this.aulas[0],this.materias[0],
-    this.profesor,"1-A",new Ciclo(1, 2017, 1), "mañana",
-    new Date(2017,3,16),new Date(2017,6,20),"8:30 am",
-    ["Jueves","Martes"],"Cursando",
-    30,20,16,1,new Date(2017,3,17)));
-
-    this.divisiones.push(new Division
-    (2,this.aulas[0],this.materias[3],
-    this.profesor,"1-B",new Ciclo(1, 2017, 1), "mañana",
+    this.profesor,"2-A",new Ciclo(1, 2017, 1), "Mañana",
     new Date(2017,3,16),new Date(2017,6,20),"8:30 am",
     ["Martes"],"Cursando",
     30,20,16,1,new Date(2017,3,17)));
 
     this.divisiones.push(new Division
-    (3,this.aulas[1],this.materias[1],
-    this.profesor,"1-C",new Ciclo(1, 2017, 1), "mañana",
+    (2,this.aulas[0],this.materias[1],
+    this.profesor,"3-A",new Ciclo(1, 2017, 1), "Mañana",
     new Date(2017,3,16),new Date(2017,6,20),"8:30 am",
     ["Lunes"],"Cursando",
     30,20,16,1,new Date(2017,3,17)));
 
     this.divisiones.push(new Division
-    (4,this.aulas[1],this.materias[2],
-    this.profesor,"2-A",new Ciclo(1, 2017, 1), "mañana",
+    (3,this.aulas[0],this.materias[2],
+    this.profesor,"4-A",new Ciclo(1, 2017, 1), "Mañana",
     new Date(2017,3,16),new Date(2017,6,20),"8:30 am",
-    ["Miercoles"],"Cursando",
+    ["Jueves"],"Cursando",
     30,20,16,1,new Date(2017,3,17)));
 
-    this.divisiones.push(new Division
-    (4,this.aulas[1],this.materias[2],
-    this.profesor,"2-B",new Ciclo(1, 2017, 1), "mañana",
-    new Date(2017,3,16),new Date(2017,6,20),"8:30 am",
-    ["Miercoles"],"Cursando",
-    30,20,16,1,new Date(2017,3,17)));
+
 
     console.log(this.divisiones);
     console.log(this.materias);
     //this.divisiones.push(new Division(1,new Aula(1,"100A",1),new Materia(1,)));
   }
 
-  
+  Aceptar(division)
+  {
+    this.navCtrl.push(DatosDivisionProfesorPage,{Division:division});
+  }
+
   Volver()
   {
     this.navCtrl.pop();
