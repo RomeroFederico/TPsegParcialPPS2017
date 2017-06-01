@@ -1,6 +1,7 @@
 import { Aula } from './aula';
 import { Materia } from './materia';
 import { Profesor } from './profesor';
+import { Ciclo } from './ciclo';
 
 export class Division
 {
@@ -10,7 +11,8 @@ export class Division
   public profesor : Profesor;
   public nombre : string;
 
-  public ciclo : string;
+  public ciclo : Ciclo;
+  public turno : string
 
   public fechaInicio : Date;
   public fechaFin : Date;
@@ -35,7 +37,8 @@ export class Division
               materia : Materia = new Materia(),
               profesor : Profesor = new Profesor(),
               nombre : string = "",
-              ciclo : string = "",
+              ciclo : Ciclo = new Ciclo(),
+              turno : string = "",
               fechaInicio : Date = new Date(Date.now()),
               fechaFin : Date = new Date(Date.now()),
               hora : string = "",
@@ -53,6 +56,7 @@ export class Division
     this.profesor = profesor;
     this.nombre = nombre;
     this.ciclo = ciclo;
+    this.turno = turno;
     this.fechaInicio = fechaInicio;
     this.fechaFin = fechaFin;
     this.hora = hora;

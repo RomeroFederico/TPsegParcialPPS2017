@@ -10,6 +10,7 @@ import { Alumno } from '../../components/clases/alumno';
 import { Division } from '../../components/clases/division';
 import { Aula } from '../../components/clases/aula';
 import { Materia } from '../../components/clases/materia';
+import { Ciclo } from '../../components/clases/ciclo';
 
 @Component({
   selector: 'page-datos-administrador',
@@ -17,24 +18,42 @@ import { Materia } from '../../components/clases/materia';
 })
 export class DatosAdministradorPage {
 
+  tipo : string;
+
   usuario : Usuario;
   divisiones : Array<Division>;
   divisionesUsuario : any;
 
+  division : Division;
+  alumnos : Array<Alumno>;
+  alumnosDivision : Array<any>;
+
   // Array con cada una de los estados de la lista desplegable.
-  shownGroup = [null, null]
+  shownGroup = [null, null, null, null, null];
 
   constructor(public navCtrl: NavController, public navParams: NavParams)
   {
-    this.usuario = this.navParams.get("usuario");
-    console.log(this.usuario);
+    this.tipo = this.navParams.get("tipo");
 
-    this.ObtenerDivisiones();
+    if (this.tipo == "Usuario")
+    { 
+      this.usuario = this.navParams.get("usuario");
 
-    if (this.DevolverTipo(this.usuario) == "Alumno")
-      this.ObtenerDivisionesAlumno();
-    else if (this.DevolverTipo(this.usuario) == "Profesor")
-      this.ObtenerDivisionesProfesor();
+      this.ObtenerDivisiones();
+
+      if (this.DevolverTipo(this.usuario) == "Alumno")
+        this.ObtenerDivisionesAlumno();
+      else if (this.DevolverTipo(this.usuario) == "Profesor")
+        this.ObtenerDivisionesProfesor();
+    }
+    else if (this.tipo == "Division")
+    {
+      this.division = this.navParams.get("division");
+      console.log(this.division);
+
+      this.ObtenerAlumnos();
+      this.ObtenerAlumnosDivision();
+    }
   }
 
   ionViewDidLoad() {
@@ -67,13 +86,18 @@ export class DatosAdministradorPage {
   */
   DevolverColor()
   {
-    var tipo = this.DevolverTipo(this.usuario)
-    if (tipo == "Administrativo")
-      return 'danger';
-    else if (tipo == "Profesor")
-      return 'secondary';
+    if (this.tipo == "Usuario")
+    {
+      var tipo = this.DevolverTipo(this.usuario)
+      if (tipo == "Administrativo")
+        return 'danger';
+      else if (tipo == "Profesor")
+        return 'secondary';
+      else
+        return 'primary';
+    }
     else
-      return 'primary';
+      return 'dark';  
   }
 
   /**
@@ -85,16 +109,28 @@ export class DatosAdministradorPage {
 
     this.divisiones.push(new Division(1, new Aula(1, "103", 1), new Materia(1, "Arquitectura y Diseño de Bases de Datos", "default.png"),
                                       new Profesor(2, "dos", "DOS", "456", "1002", "b@b.com", "789999", 35, "default.png"),
-                                      "4-A", "1er Cuatrimestre 2017", new Date(2017, 3, 25), new Date(2017, 7, 5), "08:00", 
+                                      "4-A", new Ciclo(1, 2017, 1), "Mañana", new Date(2017, 3, 25), new Date(2017, 7, 5), "08:00", 
                                       ["Martes"], "En curso", 20, 10, 15, 5, new Date(2017, 5, 25)));
     this.divisiones.push(new Division(2, new Aula(1, "103", 1), new Materia(2, "Matematica III", "default.png"),
                                       new Profesor(4, "cuatro", "CUATRO", "789", "1004", "d@d.com", "aw9999", 40, "default.png"),
-                                      "5-A", "1er Cuatrimestre 2017", new Date(2017, 3, 25), new Date(2017, 7, 5), "08:00", 
+                                      "5-A", new Ciclo(1, 2017, 1), "Mañana",new Date(2017, 3, 25), new Date(2017, 7, 5), "08:00", 
                                       ["Miercoles", "Viernes"], "En curso", 18, 9, 15, 4, new Date(2017, 5, 28)));
     this.divisiones.push(new Division(2, new Aula(1, "104", 1), new Materia(3, "Matematica II", "default.png"),
                                       new Profesor(4, "cuatro", "CUATRO", "789", "1004", "d@d.com", "aw9999", 40, "default.png"),
-                                      "4-A", "2do Cuatrimestre 2016", new Date(2016, 9, 25), new Date(2016, 12, 5), "08:00", 
+                                      "4-A", new Ciclo(1, 2016, 2), "Mañana",new Date(2016, 9, 25), new Date(2016, 12, 5), "08:00", 
                                       ["Lunes"], "Terminada", 18, 9, 15, 15, null));
+  }
+
+  /**
+  * Carga los alumnos precargados para la prueba sin base de datos.
+  */
+  ObtenerAlumnos()
+  {
+    this.alumnos = new Array<Alumno>();
+
+    this.alumnos.push(new Alumno(3, "tres", "TRES", "789", "1003", "c@c.com", "811124", 18, "default.png"));
+    this.alumnos.push(new Alumno(6, "seis", "SEIS", "101", "1006", "f@f.com", "811124", 21, "default.png"));
+    this.alumnos.push(new Alumno(9, "nueve", "NUEVE", "999", "1009", "i@i.com", "811124", 25, "default.png"));
   }
 
   /**
@@ -119,6 +155,18 @@ export class DatosAdministradorPage {
     this.divisionesUsuario = new Array();
 
     this.divisionesUsuario = this.divisiones.filter((item) => { return item.profesor.idUsuario == this.usuario.idUsuario; });
+  }
+
+  /**
+  * Carga los alumnos de la division. Luego se hara con la base de datos.
+  */
+  ObtenerAlumnosDivision()
+  {
+    this.alumnosDivision = new Array();
+
+    this.alumnosDivision.push({alumno : this.alumnos[0], estado: "Cursando", faltas: 2});
+    this.alumnosDivision.push({alumno : this.alumnos[1], estado: "Libre", faltas: 10});
+    this.alumnosDivision.push({alumno : this.alumnos[2], estado: "Abandono", faltas: 1});
   }
 
   /**

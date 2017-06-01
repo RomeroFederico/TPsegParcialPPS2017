@@ -6,257 +6,558 @@
         <ion-icon class="customIcon" name="arrow-back"></ion-icon>
       </button>
     </ion-buttons>
-    <ion-label class = "titulo">Datos de {{usuario.nombre}}</ion-label>
+    <ion-label *ngIf = "tipo == 'Usuario'" class = "titulo">Datos de {{usuario.nombre}}</ion-label>
+    <ion-label *ngIf = "tipo == 'Division'" class = "titulo">Datos de la division</ion-label>
   </ion-navbar>
 
 </ion-header>
 
 <ion-content padding>
 
-  <!-- PORTADA -->
-  <ion-grid no-padding [ngClass] = "DevolverTipo(usuario) == 'Alumno' ? 'miHeader alumno' : (DevolverTipo(usuario) == 'Profesor' ? 'miHeader profesor' : 'miHeader administrativo')">
+  <div *ngIf = "tipo == 'Usuario'">
 
-    <ion-row>
+    <!-- PORTADA -->
+    <ion-grid no-padding [ngClass] = "DevolverTipo(usuario) == 'Alumno' ? 'miHeader alumno' : (DevolverTipo(usuario) == 'Profesor' ? 'miHeader profesor' : 'miHeader administrativo')">
 
-      <ion-col width-33 style = "padding: 10px 10px 0px 10px">
+      <ion-row>
 
-          <img class = 'imagenPerfil' src="https://avatars3.githubusercontent.com/u/17879446?v=3&s=460">
+        <ion-col width-33 style = "padding: 10px 10px 0px 10px">
 
-          <button ion-button small block color = 'light'>
-            CAMBIAR
-          </button>
+            <img class = 'imagenPerfil' src="https://avatars3.githubusercontent.com/u/17879446?v=3&s=460">
 
-      </ion-col>
+            <button ion-button small block color = 'light'>
+              CAMBIAR
+            </button>
 
-      <ion-col class = 'columnaCentrada'>
+        </ion-col>
 
-        <div>
-        <h3 class = "tituloUsuario">{{usuario.apellido}}, {{usuario.nombre}}</h3>
+        <ion-col class = 'columnaCentrada'>
+
+          <div>
+          <h3 class = "tituloUsuario">{{usuario.apellido}}, {{usuario.nombre}}</h3>
+          
+          <p *ngIf = "DevolverTipo(usuario) != 'Administrador'" class = "subtituloUsuario">Legajo: {{usuario.legajo}}</p>
+          </div>
+
+        </ion-col>
+
+      </ion-row>
+
+      <p class = "tipoUsuario">{{DevolverTipo(usuario)}}</p>
+
+    </ion-grid>
+
+    <!-- DATOS -->
+    <ion-item style = "padding: 0px 0px 0px 0px">
+      <ion-grid no-padding>
+            <ion-row>
+              <ion-col width-33>
+                <p [ngClass] = "DevolverTipo(usuario) == 'Alumno' ? 'atributoAlumno' : (DevolverTipo(usuario) == 'Profesor' ? 'atributoProfesor' : 'atributoAdministrativo')">
+                Id :
+                </p>
+              </ion-col>
+              <ion-col><p class = "mostrarAtributo">{{usuario.idUsuario}}<p></ion-col>
+            </ion-row>
+            <ion-row>
+              <ion-col width-33>
+                <p [ngClass] = "DevolverTipo(usuario) == 'Alumno' ? 'atributoAlumno' : (DevolverTipo(usuario) == 'Profesor' ? 'atributoProfesor' : 'atributoAdministrativo')">
+                Apellido :
+                </p>
+              </ion-col>
+              <ion-col><p class = "mostrarAtributo">{{usuario.apellido}}<p></ion-col>
+            </ion-row>
+            <ion-row>
+              <ion-col width-33>
+                <p [ngClass] = "DevolverTipo(usuario) == 'Alumno' ? 'atributoAlumno' : (DevolverTipo(usuario) == 'Profesor' ? 'atributoProfesor' : 'atributoAdministrativo')">
+                Nombre :
+                </p>
+              </ion-col>
+              <ion-col><p class = "mostrarAtributo">{{usuario.nombre}}<p></ion-col>
+            </ion-row>
+            <ion-row>
+              <ion-col width-33>
+                <p [ngClass] = "DevolverTipo(usuario) == 'Alumno' ? 'atributoAlumno' : (DevolverTipo(usuario) == 'Profesor' ? 'atributoProfesor' : 'atributoAdministrativo')">
+                Edad :
+                </p>
+              </ion-col>
+              <ion-col><p class = "mostrarAtributo">{{usuario.edad}}<p></ion-col>
+            </ion-row>
+            <ion-row>
+              <ion-col width-33>
+                <p [ngClass] = "DevolverTipo(usuario) == 'Alumno' ? 'atributoAlumno' : (DevolverTipo(usuario) == 'Profesor' ? 'atributoProfesor' : 'atributoAdministrativo')">
+                Legajo :
+                </p>
+              </ion-col>
+              <ion-col><p class = "mostrarAtributo">{{usuario.legajo}}<p></ion-col>
+            </ion-row>
+            <ion-row>
+              <ion-col width-33>
+                <p [ngClass] = "DevolverTipo(usuario) == 'Alumno' ? 'atributoAlumno' : (DevolverTipo(usuario) == 'Profesor' ? 'atributoProfesor' : 'atributoAdministrativo')">
+                DNI :
+                </p>
+              </ion-col>
+              <ion-col><p class = "mostrarAtributo">{{usuario.dni}}<p></ion-col>
+            </ion-row>
+            <ion-row>
+              <ion-col width-33>
+                <p [ngClass] = "DevolverTipo(usuario) == 'Alumno' ? 'atributoAlumno' : (DevolverTipo(usuario) == 'Profesor' ? 'atributoProfesor' : 'atributoAdministrativo')">
+                Email :
+                </p>
+              </ion-col>
+              <ion-col><p class = "mostrarAtributo">{{usuario.email}}<p></ion-col>
+            </ion-row>
+      </ion-grid>
+    </ion-item>
+
+    <!-- LISTA DESPLEGABLE DE DIVISIONES EN CURSO -->
+    <ion-item text-wrap (click)="toggleGroup(0)" no-padding *ngIf = " DevolverTipo(usuario) != 'Administrativo' ">
+
+      <p [ngClass] = "DevolverTipo(usuario) == 'Alumno' ? 'atributoAlumno' :'atributoProfesor'">
+        Divisiones actuales
+      </p>
+      <ion-icon item-right [name]="isGroupShown(0) ? 'arrow-dropdown' : 'arrow-dropright'" [ngClass] = "DevolverTipo(usuario) == 'Alumno' ? 'iconoAlumno' :'iconoProfesor'"></ion-icon>
+
+      <div *ngIf="isGroupShown(0) && DevolverTipo(usuario) == 'Alumno'">
         
-        <p *ngIf = "DevolverTipo(usuario) != 'Administrador'" class = "subtituloUsuario">Legajo: {{usuario.legajo}}</p> 
-        </div>
+        <ion-list>
+          <ion-item *ngFor = "let d of filtrarDivisionesAlumno('Cursando')" text-wrap no-padding>
+            <ion-thumbnail item-left>
+              <img [src] = "'assets/images/materias/' + d.division.materia.img">
+            </ion-thumbnail>
+            <h3>{{d.division.nombre}} {{d.division.ciclo.CicloEnCadena}}</h3>
+            <p>Materia: {{d.division.materia.nombre}}</p>
+            <p>Dias: {{d.division.dias.join('-')}}</p>
+            <p>Final: {{ObtenerFecha(d.division.fechaFin)}}</p>
+          </ion-item>
 
-      </ion-col>
+          <ion-item *ngIf = "filtrarDivisionesAlumno('Cursando').length == 0" text-wrap no-padding>
+            <ion-icon item-left large name = "warning" class = "iconoAlumno"></ion-icon>
+            <h3>No hay divisiones para mostrar</h3>
+          </ion-item>
+        </ion-list>
 
-    </ion-row>
+      </div>
 
-    <p class = "tipoUsuario">{{DevolverTipo(usuario)}}</p>
+      <div *ngIf="isGroupShown(0) && DevolverTipo(usuario) == 'Profesor'">
+        
+        <ion-list>
+          <ion-item *ngFor = "let d of filtrarDivisionesProfesor('En curso')" text-wrap no-padding>
+            <ion-thumbnail item-left>
+              <img [src] = "'assets/images/materias/' + d.materia.img">
+            </ion-thumbnail>
+            <h3>{{d.nombre}} {{d.ciclo.CicloEnCadena}}</h3>
+            <p>Materia: {{d.materia.nombre}}</p>
+            <p>Dias: {{d.dias.join('-')}}</p>
+            <p>Final: {{ObtenerFecha(d.fechaFin)}}</p>
+          </ion-item>
 
-  </ion-grid>
+          <ion-item *ngIf = "filtrarDivisionesProfesor('En curso').length == 0" text-wrap no-padding>
+            <ion-icon item-left large name = "warning" class = "iconoProfesor"></ion-icon>
+            <h3>No hay divisiones para mostrar</h3>
+          </ion-item>
+        </ion-list>
 
-  <!-- DATOS -->
-  <ion-item style = "padding: 0px 0px 0px 0px">
-  <ion-grid no-padding>
-          <ion-row>
-            <ion-col width-33>
-              <p [ngClass] = "DevolverTipo(usuario) == 'Alumno' ? 'atributoAlumno' : (DevolverTipo(usuario) == 'Profesor' ? 'atributoProfesor' : 'atributoAdministrativo')">
-              Id :
-              </p>
-            </ion-col>
-            <ion-col><p class = "mostrarAtributo">{{usuario.idUsuario}}<p></ion-col>
-          </ion-row>
-          <ion-row>
-            <ion-col width-33>
-              <p [ngClass] = "DevolverTipo(usuario) == 'Alumno' ? 'atributoAlumno' : (DevolverTipo(usuario) == 'Profesor' ? 'atributoProfesor' : 'atributoAdministrativo')">
-              Apellido :
-              </p>
-            </ion-col>
-            <ion-col><p class = "mostrarAtributo">{{usuario.apellido}}<p></ion-col>
-          </ion-row>
-          <ion-row>
-            <ion-col width-33>
-              <p [ngClass] = "DevolverTipo(usuario) == 'Alumno' ? 'atributoAlumno' : (DevolverTipo(usuario) == 'Profesor' ? 'atributoProfesor' : 'atributoAdministrativo')">
-              Nombre :
-              </p>
-            </ion-col>
-            <ion-col><p class = "mostrarAtributo">{{usuario.nombre}}<p></ion-col>
-          </ion-row>
-          <ion-row>
-            <ion-col width-33>
-              <p [ngClass] = "DevolverTipo(usuario) == 'Alumno' ? 'atributoAlumno' : (DevolverTipo(usuario) == 'Profesor' ? 'atributoProfesor' : 'atributoAdministrativo')">
-              Edad :
-              </p>
-            </ion-col>
-            <ion-col><p class = "mostrarAtributo">{{usuario.edad}}<p></ion-col>
-          </ion-row>
-          <ion-row>
-            <ion-col width-33>
-              <p [ngClass] = "DevolverTipo(usuario) == 'Alumno' ? 'atributoAlumno' : (DevolverTipo(usuario) == 'Profesor' ? 'atributoProfesor' : 'atributoAdministrativo')">
-              Legajo :
-              </p>
-            </ion-col>
-            <ion-col><p class = "mostrarAtributo">{{usuario.legajo}}<p></ion-col>
-          </ion-row>
-          <ion-row>
-            <ion-col width-33>
-              <p [ngClass] = "DevolverTipo(usuario) == 'Alumno' ? 'atributoAlumno' : (DevolverTipo(usuario) == 'Profesor' ? 'atributoProfesor' : 'atributoAdministrativo')">
-              DNI :
-              </p>
-            </ion-col>
-            <ion-col><p class = "mostrarAtributo">{{usuario.dni}}<p></ion-col>
-          </ion-row>
-          <ion-row>
-            <ion-col width-33>
-              <p [ngClass] = "DevolverTipo(usuario) == 'Alumno' ? 'atributoAlumno' : (DevolverTipo(usuario) == 'Profesor' ? 'atributoProfesor' : 'atributoAdministrativo')">
-              Email :
-              </p>
-            </ion-col>
-            <ion-col><p class = "mostrarAtributo">{{usuario.email}}<p></ion-col>
-          </ion-row>
-  </ion-grid>
-  </ion-item>
+      </div>
 
-  <!-- LISTA DESPLEGABLE DE DIVISIONES EN CURSO -->
-  <ion-item text-wrap (click)="toggleGroup(0)" no-padding *ngIf = " DevolverTipo(usuario) != 'Administrativo' ">
-    <h3 style = "padding-left: 10px">Divisiones actuales</h3>
-    <ion-icon item-right [name]="isGroupShown(0) ? 'arrow-dropdown' : 'arrow-dropright'"></ion-icon>
+    </ion-item>
+  
+    <!-- LISTA DESPLEGABLE DE DIVISIONES YA TERMINADAS -->
+    <ion-item text-wrap (click)="toggleGroup(1)" no-padding *ngIf = " DevolverTipo(usuario) != 'Administrativo' ">
 
-    <div *ngIf="isGroupShown(0) && DevolverTipo(usuario) == 'Alumno'">
+      <p [ngClass] = "DevolverTipo(usuario) == 'Alumno' ? 'atributoAlumno' :'atributoProfesor'">
+        Divisiones terminadas
+      </p>
+      <ion-icon item-right [name]="isGroupShown(1) ? 'arrow-dropdown' : 'arrow-dropright'" [ngClass] = "DevolverTipo(usuario) == 'Alumno' ? 'iconoAlumno' :'iconoProfesor'"></ion-icon>
+
+      <div *ngIf="isGroupShown(1) && DevolverTipo(usuario) == 'Alumno'">
+        
+        <ion-list>
+          <ion-item *ngFor = "let d of filtrarDivisionesAlumno('Terminada')" text-wrap no-padding>
+            <ion-thumbnail item-left>
+              <img [src] = "'assets/images/materias/' + d.division.materia.img">
+            </ion-thumbnail>
+            <h3>{{d.division.nombre}} {{d.division.ciclo.CicloEnCadena}}</h3>
+            <p>Materia: {{d.division.materia.nombre}}</p>
+          </ion-item>
+
+          <ion-item *ngIf = "filtrarDivisionesAlumno('Terminada').length == 0" text-wrap no-padding>
+            <ion-icon item-left large name = "warning" class = "iconoAlumno"></ion-icon>
+            <h3>No hay divisiones para mostrar</h3>
+          </ion-item>
+        </ion-list>
+
+      </div>
+
+      <div *ngIf="isGroupShown(1) && DevolverTipo(usuario) == 'Profesor'">
+        
+        <ion-list>
+          <ion-item *ngFor = "let d of filtrarDivisionesProfesor('Terminada')" text-wrap no-padding>
+            <ion-thumbnail item-left>
+              <img [src] = "'assets/images/materias/' + d.materia.img">
+            </ion-thumbnail>
+            <h3>{{d.nombre}} {{d.ciclo.CicloEnCadena}}</h3>
+            <p>Materia: {{d.materia.nombre}}</p>
+          </ion-item>
+
+          <ion-item *ngIf = "filtrarDivisionesProfesor('Terminada').length == 0" text-wrap no-padding>
+            <ion-icon item-left large name = "warning" class = "iconoProfesor"></ion-icon>
+            <h3>No hay divisiones para mostrar</h3>
+          </ion-item>
+        </ion-list>
+
+      </div>
+
+    </ion-item>
+
+    <!-- LISTA DESPLEGABLE DE DIVISIONES NO EMPEZADAS -->
+    <ion-item text-wrap (click)="toggleGroup(2)" no-padding *ngIf = " DevolverTipo(usuario) != 'Administrativo' ">
       
-      <ion-list>
-        <ion-item *ngFor = "let d of filtrarDivisionesAlumno('Cursando')" text-wrap no-padding>
-          <ion-avatar item-left>
-            <img [src] = "'assets/images/materias/' + d.division.materia.img">
-          </ion-avatar>
-          <h3>{{d.division.nombre}} {{d.division.ciclo}}</h3>
-          <p>Materia: {{d.division.materia.nombre}}</p>
-          <p>Dias: {{d.division.dias.join('-')}}</p>
-          <p>Final: {{ObtenerFecha(d.division.fechaFin)}}</p>
-        </ion-item>
-      </ion-list>
+      <p [ngClass] = "DevolverTipo(usuario) == 'Alumno' ? 'atributoAlumno' :'atributoProfesor'">
+        Divisiones no empezadas
+      </p>
+      <ion-icon item-right [name]="isGroupShown(2) ? 'arrow-dropdown' : 'arrow-dropright'" [ngClass] = "DevolverTipo(usuario) == 'Alumno' ? 'iconoAlumno' :'iconoProfesor'"></ion-icon>
 
+      <div *ngIf="isGroupShown(2) && DevolverTipo(usuario) == 'Alumno'">
+        
+        <ion-list>
+          <ion-item *ngFor = "let d of filtrarDivisionesAlumno('No empezada')" text-wrap no-padding>
+            <ion-thumbnail item-left>
+              <img [src] = "'assets/images/materias/' + d.division.materia.img">
+            </ion-thumbnail>
+            <h3>{{d.division.nombre}} {{d.division.ciclo.CicloEnCadena}}</h3>
+            <p>Materia: {{d.division.materia.nombre}}</p>
+            <p>Inicio: {{ObtenerFecha(d.division.fechaInicio)}}</p>
+          </ion-item>
+
+          <ion-item *ngIf = "filtrarDivisionesAlumno('No empezada').length == 0" text-wrap no-padding>
+            <ion-icon item-left large name = "warning" class = "iconoAlumno"></ion-icon>
+            <h3>No hay divisiones para mostrar</h3>
+          </ion-item>
+        </ion-list>
+
+      </div>
+
+      <div *ngIf="isGroupShown(2) && DevolverTipo(usuario) == 'Profesor'">
+        
+        <ion-list>
+          <ion-item *ngFor = "let d of filtrarDivisionesProfesor('No empezada')" text-wrap no-padding>
+            <ion-thumbnail item-left>
+              <img [src] = "'assets/images/materias/' + d.materia.img">
+            </ion-thumbnail>
+            <h3>{{d.nombre}} {{d.ciclo.CicloEnCadena}}</h3>
+            <p>Materia: {{d.materia.nombre}}</p>
+            <p>Inicio: {{ObtenerFecha(d.fechaInicio)}}</p>
+          </ion-item>
+
+          <ion-item *ngIf = "filtrarDivisionesProfesor('No empezada').length == 0" text-wrap no-padding>
+            <ion-icon item-left large name = "warning" class = "iconoProfesor"></ion-icon>
+            <h3>No hay divisiones para mostrar</h3>
+          </ion-item>
+        </ion-list>
+
+      </div>
+
+    </ion-item>
+
+    <!-- LISTA DESPLEGABLE DE DIVISIONES ABANDONADAS -->
+    <ion-item text-wrap (click)="toggleGroup(3)" no-padding *ngIf = " DevolverTipo(usuario) == 'Alumno' ">
+      
+      <p class = "atributoAlumno">
+        Divisiones abandonadas
+      </p>
+      <ion-icon item-right [name]="isGroupShown(3) ? 'arrow-dropdown' : 'arrow-dropright'" class = "iconoAlumno"></ion-icon>
+
+      <div *ngIf="isGroupShown(3)">
+        
+        <ion-list>
+          <ion-item *ngFor = "let d of filtrarDivisionesAlumno('Abandonada')" text-wrap no-padding>
+            <ion-thumbnail item-left>
+              <img [src] = "'assets/images/materias/' + d.division.materia.img">
+            </ion-thumbnail>
+            <h3>{{d.division.nombre}} {{d.division.ciclo.CicloEnCadena}}</h3>
+            <p>Materia: {{d.division.materia.nombre}}</p>
+          </ion-item>
+
+          <ion-item *ngIf = "filtrarDivisionesAlumno('Abandonada').length == 0" text-wrap no-padding>
+            <ion-icon item-left large name = "warning" class = "iconoAlumno"></ion-icon>
+            <h3>No hay divisiones para mostrar</h3>
+          </ion-item>
+        </ion-list>
+
+      </div>
+
+    </ion-item>
+
+    <!-- LISTA DESPLEGABLE DE DIVISIONES EN LAS QUE QUEDO LIBRE -->
+    <ion-item text-wrap (click)="toggleGroup(4)" no-padding *ngIf = " DevolverTipo(usuario) == 'Alumno' ">
+
+      <p class = "atributoAlumno">
+        Divisiones que quedo libre
+      </p>
+      <ion-icon item-right [name]="isGroupShown(4) ? 'arrow-dropdown' : 'arrow-dropright'" class = "iconoAlumno"></ion-icon>
+
+      <div *ngIf="isGroupShown(4)">
+        
+        <ion-list>
+          <ion-item *ngFor = "let d of filtrarDivisionesAlumno('Libre')" text-wrap no-padding>
+            <ion-thumbnail item-left>
+              <img [src] = "'assets/images/materias/' + d.division.materia.img">
+            </ion-thumbnail>
+            <h3>{{d.division.nombre}} {{d.division.ciclo.CicloEnCadena}}</h3>
+            <p>Materia: {{d.division.materia.nombre}}</p>
+          </ion-item>
+
+          <ion-item *ngIf = "filtrarDivisionesAlumno('Libre').length == 0" text-wrap no-padding>
+            <ion-icon item-left large name = "warning" class = "iconoAlumno"></ion-icon>
+            <h3>No hay divisiones para mostrar</h3>
+          </ion-item>
+        </ion-list>
+
+      </div>
+
+    </ion-item>
+
+  </div>
+
+  <div *ngIf = "tipo == 'Division'">
+
+     <!-- PORTADA -->
+    <ion-grid no-padding class = "miHeader administrador">
+
+      <ion-row>
+
+        <ion-col width-33 style = "padding: 10px 10px 0px 10px">
+
+            <img class = 'imagenPerfil' [src] = "'assets/images/materias/' + division.materia.img">
+
+        </ion-col>
+
+        <ion-col class = 'columnaCentrada' style = "padding-top: 10px;">
+
+          <div>
+          <h3 class = "tituloUsuario">{{division.nombre}}</h3>
+          
+          <p class = "subtituloUsuario">{{division.materia.nombre}}</p>
+          <p class = "subtituloUsuario">Turno {{division.turno}}</p>
+          </div>
+
+        </ion-col>
+
+      </ion-row>
+
+      <p class = "tipoUsuario">{{division.ciclo.CicloEnCadena}}</p>
+
+    </ion-grid>
+
+    <!-- DATOS -->
+    <ion-item style = "padding: 0px 0px 0px 0px">
+      <ion-grid no-padding text-wrap>
+            <ion-row>
+              <ion-col width-33>
+                <p class = "atributoAdministrador">
+                Id :
+                </p>
+              </ion-col>
+              <ion-col><p class = "mostrarAtributo">{{division.idDivision}}<p></ion-col>
+            </ion-row>
+            <ion-row>
+              <ion-col width-33>
+                <p class = "atributoAdministrador">
+                Materia :
+                </p>
+              </ion-col>
+              <ion-col><p class = "mostrarAtributo">{{division.materia.nombre}}<p></ion-col>
+            </ion-row>
+            <ion-row>
+              <ion-col width-33>
+                <p class = "atributoAdministrador">
+                Turno :
+                </p>
+              </ion-col>
+              <ion-col><p class = "mostrarAtributo">{{division.turno}}<p></ion-col>
+            </ion-row>
+            <ion-row>
+              <ion-col width-33>
+                <p class = "atributoAdministrador">
+                Ciclo :
+                </p>
+              </ion-col>
+              <ion-col><p class = "mostrarAtributo">{{division.ciclo.CicloEnCadena}}<p></ion-col>
+            </ion-row>
+            <ion-row>
+              <ion-col width-33>
+                <p class = "atributoAdministrador">
+                Aula :
+                </p>
+              </ion-col>
+              <ion-col><p class = "mostrarAtributo">{{division.aula.nombre}}<p></ion-col>
+            </ion-row>
+            <ion-row>
+              <ion-col width-33>
+                <p class = "atributoAdministrador">
+                Piso :
+                </p>
+              </ion-col>
+              <ion-col><p class = "mostrarAtributo">{{division.aula.piso}}<p></ion-col>
+            </ion-row>
+            <ion-row>
+              <ion-col width-33>
+                <p class = "atributoAdministrador">
+                Horario :
+                </p>
+              </ion-col>
+              <ion-col><p class = "mostrarAtributo">{{division.hora}}<p></ion-col>
+            </ion-row>
+            <ion-row>
+              <ion-col width-33>
+                <p class = "atributoAdministrador">
+                Dias :
+                </p>
+              </ion-col>
+              <ion-col><p class = "mostrarAtributo">{{division.dias.join('-')}}<p></ion-col>
+            </ion-row>
+            <ion-row>
+              <ion-col width-33>
+                <p class = "atributoAdministrador">
+                Estado :
+                </p>
+              </ion-col>
+              <ion-col><p class = "mostrarAtributo">{{division.estado}}<p></ion-col>
+            </ion-row>
+            <ion-row>
+              <ion-col width-33>
+                <p class = "atributoAdministrador">
+                Fecha Inicio :
+                </p>
+              </ion-col>
+              <ion-col><p class = "mostrarAtributo">{{ObtenerFecha(division.fechaInicio)}}<p></ion-col>
+            </ion-row>
+            <ion-row>
+              <ion-col width-33>
+                <p class = "atributoAdministrador">
+                Fecha Fin :
+                </p>
+              </ion-col>
+              <ion-col><p class = "mostrarAtributo">{{ObtenerFecha(division.fechaFin)}}<p></ion-col>
+            </ion-row>
+            <ion-row>
+              <ion-col width-33>
+                <p class = "atributoAdministrador">
+                Cupo :
+                </p>
+              </ion-col>
+              <ion-col><p class = "mostrarAtributo">{{division.cupoActual}}/{{division.cupoMaximo}}<p></ion-col>
+            </ion-row>
+            <ion-row>
+              <ion-col width-33>
+                <p class = "atributoAdministrador">
+                Nro Clases :
+                </p>
+              </ion-col>
+              <ion-col><p class = "mostrarAtributo">{{division.claseActual}}/{{division.cantClases}}<p></ion-col>
+            </ion-row>
+            <ion-row *ngIf = "division.fechaProxClase != null">
+              <ion-col width-33>
+                <p class = "atributoAdministrador">
+                Prox. Clase :
+                </p>
+              </ion-col>
+              <ion-col><p class = "mostrarAtributo">{{ObtenerFecha(division.fechaProxClase)}}<p></ion-col>
+            </ion-row>
+      </ion-grid>
+    </ion-item>
+
+    <!-- DATOS DEL PROFESOR -->
+    <div *ngIf = "division.profesor != null">
+      <p class = "atributoAdministrador">
+        Datos del Profesor
+      </p>
+      <ion-item text-wrap no-padding>
+              <ion-thumbnail item-left>
+                <img [src] = "'assets/images/administrador/profesor/' + division.profesor.img">
+              </ion-thumbnail>
+              <h2 class = "nombreUsuario">{{division.profesor.apellido}}, {{division.profesor.nombre}}</h2>
+              <ion-grid no-padding>
+              <ion-row>
+                <ion-col width-33>
+                  <p class = "atributoAdministradorSmall">
+                  Legajo :
+                  </p>
+                </ion-col>
+                <ion-col><p class = "mostrarAtributoSmall">{{division.profesor.legajo}}<p></ion-col>
+              </ion-row>
+              <ion-row>
+                <ion-col width-33>
+                  <p class = "atributoAdministradorSmall">
+                  Email :
+                  </p>
+                </ion-col>
+                <ion-col><p class = "mostrarAtributoSmall">{{division.profesor.email}}<p></ion-col>
+              </ion-row>
+              </ion-grid>
+        </ion-item>
+    </div>
+    <div *ngIf = "division.profesor == null">
+      <p class = "atributoAdministrador">
+        No hay profesor asignado.
+      </p>
     </div>
 
-    <div *ngIf="isGroupShown(0) && DevolverTipo(usuario) == 'Profesor'">
-      
-      <ion-list>
-        <ion-item *ngFor = "let d of filtrarDivisionesProfesor('En curso')" text-wrap no-padding>
-          <ion-avatar item-left>
-            <img [src] = "'assets/images/materias/' + d.materia.img">
-          </ion-avatar>
-          <h3>{{d.nombre}} {{d.ciclo}}</h3>
-          <p>Materia: {{d.materia.nombre}}</p>
-          <p>Dias: {{d.dias.join('-')}}</p>
-          <p>Final: {{ObtenerFecha(d.fechaFin)}}</p>
-        </ion-item>
-      </ion-list>
+    <!-- DATOS DE LOS ALUMNOS -->
+    <ion-item text-wrap (click)="toggleGroup(0)" no-padding *ngIf = "alumnosDivision.length > 0">
 
+      <p class = "atributoAdministrador">
+        Alumnos
+      </p>
+      <ion-icon item-right [name]="isGroupShown(0) ? 'arrow-dropdown' : 'arrow-dropright'" class = "iconoAdministrador"></ion-icon>
+
+      <div *ngIf="isGroupShown(0)">
+        
+        <ion-list>
+          <ion-item *ngFor = "let alumno of alumnosDivision" text-wrap no-padding>
+            <ion-thumbnail item-left>
+              <img [src] = "'assets/images/administrador/alumno/' + alumno.alumno.img">
+            </ion-thumbnail>
+              <h2 class = "nombreUsuario">{{alumno.alumno.apellido}}, {{alumno.alumno.nombre}}</h2>
+              <ion-grid no-padding>
+              <ion-row>
+                <ion-col width-33>
+                  <p class = "atributoAdministradorSmall">
+                  Legajo :
+                  </p>
+                </ion-col>
+                <ion-col><p class = "mostrarAtributoSmall">{{alumno.alumno.legajo}}<p></ion-col>
+              </ion-row>
+              <ion-row>
+                <ion-col width-33>
+                  <p class = "atributoAdministradorSmall">
+                  Email :
+                  </p>
+                </ion-col>
+                <ion-col><p class = "mostrarAtributoSmall">{{alumno.alumno.email}}<p></ion-col>
+              </ion-row>
+              <ion-row>
+                <ion-col width-33>
+                  <p class = "atributoAdministradorSmall">
+                  Faltas :
+                  </p>
+                </ion-col>
+                <ion-col><p class = "mostrarAtributoSmall">{{alumno.faltas}}<p></ion-col>
+              </ion-row>
+              </ion-grid>
+              <p class = "tipoUsuarioAdministrador">{{alumno.estado}}</p>
+          </ion-item>
+        </ion-list>
+
+      </div>
+
+    </ion-item>
+    <div *ngIf = "alumnosDivision.length == 0">
+      <p class = "atributoAdministrador">
+        No hay alumnos asignados.
+      </p>
     </div>
 
-  </ion-item>
- 
-  <!-- LISTA DESPLEGABLE DE DIVISIONES YA TERMINADAS -->
-  <ion-item text-wrap (click)="toggleGroup(1)" no-padding *ngIf = " DevolverTipo(usuario) != 'Administrativo' ">
-    <h3 style = "padding-left: 10px">Divisiones terminadas</h3>
-    <ion-icon item-right [name]="isGroupShown(1) ? 'arrow-dropdown' : 'arrow-dropright'"></ion-icon>
-
-    <div *ngIf="isGroupShown(1) && DevolverTipo(usuario) == 'Alumno'">
-      
-      <ion-list>
-        <ion-item *ngFor = "let d of filtrarDivisionesAlumno('Terminada')" text-wrap no-padding>
-          <ion-avatar item-left>
-            <img [src] = "'assets/images/materias/' + d.division.materia.img">
-          </ion-avatar>
-          <h3>{{d.division.nombre}} {{d.division.ciclo}}</h3>
-          <p>Materia: {{d.division.materia.nombre}}</p>
-        </ion-item>
-      </ion-list>
-
-    </div>
-
-    <div *ngIf="isGroupShown(1) && DevolverTipo(usuario) == 'Profesor'">
-      
-      <ion-list>
-        <ion-item *ngFor = "let d of filtrarDivisionesProfesor('Terminada')" text-wrap no-padding>
-          <ion-avatar item-left>
-            <img [src] = "'assets/images/materias/' + d.materia.img">
-          </ion-avatar>
-          <h3>{{d.nombre}} {{d.ciclo}}</h3>
-          <p>Materia: {{d.materia.nombre}}</p>
-        </ion-item>
-      </ion-list>
-
-    </div>
-
-  </ion-item>
-
-  <!-- LISTA DESPLEGABLE DE DIVISIONES NO EMPEZADAS -->
-  <ion-item text-wrap (click)="toggleGroup(2)" no-padding *ngIf = " DevolverTipo(usuario) != 'Administrativo' ">
-    <h3 style = "padding-left: 10px">Divisiones no empezadas</h3>
-    <ion-icon item-right [name]="isGroupShown(2) ? 'arrow-dropdown' : 'arrow-dropright'"></ion-icon>
-
-    <div *ngIf="isGroupShown(2) && DevolverTipo(usuario) == 'Alumno'">
-      
-      <ion-list>
-        <ion-item *ngFor = "let d of filtrarDivisionesAlumno('No empezada')" text-wrap no-padding>
-          <ion-avatar item-left>
-            <img [src] = "'assets/images/materias/' + d.division.materia.img">
-          </ion-avatar>
-          <h3>{{d.division.nombre}} {{d.division.ciclo}}</h3>
-          <p>Materia: {{d.division.materia.nombre}}</p>
-          <p>Inicio: {{ObtenerFecha(d.division.fechaInicio)}}</p>
-        </ion-item>
-      </ion-list>
-
-    </div>
-
-    <div *ngIf="isGroupShown(2) && DevolverTipo(usuario) == 'Profesor'">
-      
-      <ion-list>
-        <ion-item *ngFor = "let d of filtrarDivisionesProfesor('No empezada')" text-wrap no-padding>
-          <ion-avatar item-left>
-            <img [src] = "'assets/images/materias/' + d.materia.img">
-          </ion-avatar>
-          <h3>{{d.nombre}} {{d.ciclo}}</h3>
-          <p>Materia: {{d.materia.nombre}}</p>
-          <p>Inicio: {{ObtenerFecha(d.fechaInicio)}}</p>
-        </ion-item>
-      </ion-list>
-
-    </div>
-
-  </ion-item>
-
-  <!-- LISTA DESPLEGABLE DE DIVISIONES ABANDONADAS -->
-  <ion-item text-wrap (click)="toggleGroup(3)" no-padding *ngIf = " DevolverTipo(usuario) == 'Alumno' ">
-    <h3 style = "padding-left: 10px">Divisiones abandonadas</h3>
-    <ion-icon item-right [name]="isGroupShown(3) ? 'arrow-dropdown' : 'arrow-dropright'"></ion-icon>
-
-    <div *ngIf="isGroupShown(3)">
-      
-      <ion-list>
-        <ion-item *ngFor = "let d of filtrarDivisionesAlumno('Abandonada')" text-wrap no-padding>
-          <ion-avatar item-left>
-            <img [src] = "'assets/images/materias/' + d.division.materia.img">
-          </ion-avatar>
-          <h3>{{d.division.nombre}} {{d.division.ciclo}}</h3>
-          <p>Materia: {{d.division.materia.nombre}}</p>
-        </ion-item>
-      </ion-list>
-
-    </div>
-
-  </ion-item>
-
-  <!-- LISTA DESPLEGABLE DE DIVISIONES EN LAS QUE QUEDO LIBRE -->
-  <ion-item text-wrap (click)="toggleGroup(4)" no-padding *ngIf = " DevolverTipo(usuario) == 'Alumno' ">
-    <h3 style = "padding-left: 10px">Divisiones abandonadas</h3>
-    <ion-icon item-right [name]="isGroupShown(4) ? 'arrow-dropdown' : 'arrow-dropright'"></ion-icon>
-
-    <div *ngIf="isGroupShown(4)">
-      
-      <ion-list>
-        <ion-item *ngFor = "let d of filtrarDivisionesAlumno('Libre')" text-wrap no-padding>
-          <ion-avatar item-left>
-            <img [src] = "'assets/images/materias/' + d.division.materia.img">
-          </ion-avatar>
-          <h3>{{d.division.nombre}} {{d.division.ciclo}}</h3>
-          <p>Materia: {{d.division.materia.nombre}}</p>
-        </ion-item>
-      </ion-list>
-
-    </div>
-
-  </ion-item>
+  </div>
 
 </ion-content>

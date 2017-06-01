@@ -16,52 +16,107 @@
 
   <div *ngIf = "opciones.tipo == 'Usuario'">
 
-  <ion-item>
-      <ion-label>Filtrar por </ion-label>
-      <ion-select [(ngModel)]="filtro" (ionChange)="onChangeFiltro()">
-        <ion-option value="Todos">Todos</ion-option>
-        <ion-option value="Alumno">Alumnos</ion-option>
-        <ion-option value="Profesor">Profesores</ion-option>
-        <ion-option value="Administrativo">Administrativos</ion-option>
-      </ion-select>
-  </ion-item>
-  <ion-item>
-      <ion-label>Buscar por </ion-label>
-      <ion-select [(ngModel)]="buscar" (ionChange)="onChangeBuscar()">
-        <ion-option value="Apellido">Apellido</ion-option>
-        <ion-option value="Nombre">Nombre</ion-option>
-        <ion-option value="Legajo">Legajo</ion-option>
-      </ion-select>
-  </ion-item>
-  <ion-searchbar (ionInput)="getItems($event)" placeholder = '...'></ion-searchbar>
-
-  <ion-list>
-    <ion-item *ngFor="let usuario of usuarios" (click) = 'MostrarDatosUsuario(usuario)'>
-          <ion-thumbnail item-left>
-            <img src="https://avatars3.githubusercontent.com/u/17879446?v=3&s=460">
-          </ion-thumbnail>
-          <h2 class = "nombreUsuario">{{usuario.apellido}}, {{usuario.nombre}}</h2>
-          <ion-grid no-padding>
-          <ion-row class = "filaMostrar">
-            <ion-col width-33>
-              <p [ngClass] = "DevolverTipo(usuario) == 'Alumno' ? 'atributoAlumno' : (DevolverTipo(usuario) == 'Profesor' ? 'atributoProfesor' : 'atributoAdministrativo')">
-              Legajo :
-              </p>
-            </ion-col>
-            <ion-col><p class = "mostrarAtributo">{{usuario.legajo}}<p></ion-col>
-          </ion-row>
-          <ion-row class = "filaMostrar">
-            <ion-col width-33>
-              <p [ngClass] = "DevolverTipo(usuario) == 'Alumno' ? 'atributoAlumno' : (DevolverTipo(usuario) == 'Profesor' ? 'atributoProfesor' : 'atributoAdministrativo')">
-              Email :
-              </p>
-            </ion-col>
-            <ion-col><p class = "mostrarAtributo">{{usuario.email}}<p></ion-col>
-          </ion-row>
-          </ion-grid>
-          <p [ngClass] = "DevolverTipo(usuario) == 'Alumno' ? 'tipoUsuarioAlumno' : (DevolverTipo(usuario) == 'Profesor' ? 'tipoUsuarioProfesor' : 'tipoUsuarioAdministrativo')">{{DevolverTipo(usuario)}}</p>
+    <ion-item>
+        <ion-label>Filtrar por </ion-label>
+        <ion-select [(ngModel)]="filtro" (ionChange)="onChangeFiltro()">
+          <ion-option value="Todos">Todos</ion-option>
+          <ion-option value="Alumno">Alumnos</ion-option>
+          <ion-option value="Profesor">Profesores</ion-option>
+          <ion-option value="Administrativo">Administrativos</ion-option>
+        </ion-select>
     </ion-item>
-  </ion-list>
+    <ion-item>
+        <ion-label>Buscar por </ion-label>
+        <ion-select [(ngModel)]="buscar" (ionChange)="onChangeBuscar()">
+          <ion-option value="Apellido">Apellido</ion-option>
+          <ion-option value="Nombre">Nombre</ion-option>
+          <ion-option value="Legajo">Legajo</ion-option>
+        </ion-select>
+    </ion-item>
+    <ion-searchbar (ionInput)="getItems($event)" placeholder = '...'></ion-searchbar>
+
+    <ion-list>
+      <ion-item *ngFor="let usuario of usuarios" (click) = 'MostrarDatosUsuario(usuario)'>
+            <ion-thumbnail item-left>
+              <img src="https://avatars3.githubusercontent.com/u/17879446?v=3&s=460">
+            </ion-thumbnail>
+            <h2 class = "nombreUsuario">{{usuario.apellido}}, {{usuario.nombre}}</h2>
+            <ion-grid no-padding>
+            <ion-row class = "filaMostrar">
+              <ion-col width-33>
+                <p [ngClass] = "DevolverTipo(usuario) == 'Alumno' ? 'atributoAlumno' : (DevolverTipo(usuario) == 'Profesor' ? 'atributoProfesor' : 'atributoAdministrativo')">
+                Legajo :
+                </p>
+              </ion-col>
+              <ion-col><p class = "mostrarAtributo">{{usuario.legajo}}<p></ion-col>
+            </ion-row>
+            <ion-row class = "filaMostrar">
+              <ion-col width-33>
+                <p [ngClass] = "DevolverTipo(usuario) == 'Alumno' ? 'atributoAlumno' : (DevolverTipo(usuario) == 'Profesor' ? 'atributoProfesor' : 'atributoAdministrativo')">
+                Email :
+                </p>
+              </ion-col>
+              <ion-col><p class = "mostrarAtributo">{{usuario.email}}<p></ion-col>
+            </ion-row>
+            </ion-grid>
+            <p [ngClass] = "DevolverTipo(usuario) == 'Alumno' ? 'tipoUsuarioAlumno' : (DevolverTipo(usuario) == 'Profesor' ? 'tipoUsuarioProfesor' : 'tipoUsuarioAdministrativo')">{{DevolverTipo(usuario)}}</p>
+      </ion-item>
+    </ion-list>
+
+  </div>
+
+  <div *ngIf = "opciones.tipo == 'Division'">
+
+    <ion-item>
+        <ion-label>Filtrar por ciclo</ion-label>
+        <ion-select [(ngModel)]="filtro" (ionChange)="onChangeFiltro()">
+          <ion-option value = "Todos">Todos</ion-option>
+          <ion-option *ngFor = "let ciclo of ciclos" [value] = "ciclo.CicloEnCadena">{{ciclo.CicloEnCadena}}</ion-option>
+        </ion-select>
+    </ion-item>
+    <ion-item>
+        <ion-label>Buscar por </ion-label>
+        <ion-select [(ngModel)]="buscar" (ionChange)="onChangeBuscar()">
+          <ion-option value="Materia">Materia</ion-option>
+          <ion-option value="Nombre">Nombre</ion-option>
+        </ion-select>
+    </ion-item>
+    <ion-searchbar (ionInput)="getItems($event)" placeholder = '...'></ion-searchbar>
+
+    <ion-list>
+      <ion-item *ngFor="let division of divisiones" text-wrap (click) = "MostrarDatosDivision(division)">
+            <ion-thumbnail item-left>
+              <img [src] = "'assets/images/materias/' + division.materia.img">
+            </ion-thumbnail>
+            <h2 class = "nombreUsuario">{{division.nombre}} {{division.ciclo.CicloEnCadena}}</h2>
+            <ion-grid no-padding>
+            <ion-row class = "filaMostrar">
+              <ion-col width-33>
+                <p class = "atributo">
+                Materia :
+                </p>
+              </ion-col>
+              <ion-col><p class = "mostrarAtributo">{{division.materia.nombre}}<p></ion-col>
+            </ion-row>
+            <ion-row class = "filaMostrar">
+              <ion-col width-33>
+                <p class = "atributo">
+                Turno :
+                </p>
+              </ion-col>
+              <ion-col><p class = "mostrarAtributo">{{division.turno}}<p></ion-col>
+            </ion-row>
+            <ion-row class = "filaMostrar">
+              <ion-col width-33>
+                <p class = "atributo">
+                Estado :
+                </p>
+              </ion-col>
+              <ion-col><p class = "mostrarAtributo">{{division.estado}}<p></ion-col>
+            </ion-row>
+            </ion-grid>
+      </ion-item>
+    </ion-list>
 
   </div>
 
