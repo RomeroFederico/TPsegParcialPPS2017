@@ -16,7 +16,7 @@
 <ion-card>
 
   <ion-card-header>
-    Informacion
+    <h1 center text-center>Informacion</h1>
   </ion-card-header>
 
   <ion-card-content>
@@ -34,38 +34,38 @@
 <ion-card>
 
    <ion-card-header>
-   Materia
+   <ion-item><ion-avatar item-start>
+          <img src="assets/images/profesor/{{division.materia.img}}">
+        </ion-avatar><h1>Materia</h1></ion-item>
   </ion-card-header>
 
   <ion-card-content>
       <ion-item >
-        <ion-avatar item-start>
-          <img src="assets/images/profesor/{{division.materia.img}}">
-        </ion-avatar>
-        <h2>{{division.materia.nombre}}</h2>
-        <p>Aula: {{division.aula.nombre}}</p>
-        <p>Piso: {{division.aula.piso}}</p>
-        <p>Dias: {{division.dias[0]}}</p>
-        <p>Clase actual: {{division.claseActual}}</p>
-        <p>Cantidad de clases: {{division.cantClases}}</p>
-        <p>Inicio: {{ObtenerFecha(division.fechaInicio)}}</p>
-        <p>Fin: {{ObtenerFecha(division.fechaFin)}}</p>
-        <p>Proxima clase: {{ObtenerFecha(division.fechaProxClase)}}</p>
+        <h2><ion-icon name='md-eye' item-start style="color: green"></ion-icon>{{division.materia.nombre}}</h2>
+        <p><ion-icon name='md-eye' item-start style="color: green"></ion-icon>Aula: {{division.aula.nombre}}</p>
+        <p><ion-icon name='md-eye' item-start style="color: green"></ion-icon>Piso: {{division.aula.piso}}</p>
+        <p><ion-icon name='md-eye' item-start style="color: green"></ion-icon>Dias: {{division.dias[0]}}</p>
+        <p><ion-icon name='md-eye' item-start style="color: green"></ion-icon>Clase actual: {{division.claseActual}}</p>
+        <p><ion-icon name='md-eye' item-start style="color: green"></ion-icon>Cantidad de clases: {{division.cantClases}}</p>
+        <p><ion-icon name='md-eye' item-start style="color: green"></ion-icon>Inicio: {{ObtenerFecha(division.fechaInicio)}}</p>
+        <p><ion-icon name='md-eye' item-start style="color: green"></ion-icon>Fin: {{ObtenerFecha(division.fechaFin)}}</p>
+        <p><ion-icon name='md-eye' item-start style="color: green"></ion-icon>Proxima clase: {{ObtenerFecha(division.fechaProxClase)}}</p>
       </ion-item>
   </ion-card-content>
-
+</ion-card>
+<ion-card>
    <ion-card-header>
-    Profesor
+    <ion-item><ion-avatar item-start>
+          <img src="assets/images/profesor/{{division.profesor.img}}">
+        </ion-avatar><h1>Profesor</h1></ion-item>
   </ion-card-header>
 
   <ion-card-content>
     <ion-item >
-        <ion-avatar item-start>
-          <img src="assets/images/profesor/{{division.profesor.img}}">
-        </ion-avatar>
-        <h2>{{division.profesor.nombre}} {{division.profesor.apellido}}</h2>
-        <p>Legajo: {{division.profesor.legajo}}</p>
-        <p>E-mail: {{division.profesor.email}}</p>
+        
+        <h2><ion-icon name='md-eye' item-start style="color: green"></ion-icon>{{division.profesor.nombre}} {{division.profesor.apellido}}</h2>
+        <p><ion-icon name='md-eye' item-start style="color: green"></ion-icon>Legajo: {{division.profesor.legajo}}</p>
+        <p><ion-icon name='md-eye' item-start style="color: green"></ion-icon>E-mail: {{division.profesor.email}}</p>
       </ion-item>
       <div>
         <button ion-button block round (click)="MostrarAlumnos()">Ver alumnos!</button>
@@ -76,9 +76,9 @@
         <ion-avatar item-start>
           <img src="assets/images/profesor/{{item.img}}">
         </ion-avatar>
-        <h2>{{item.nombre}} {{item.nombre}}</h2>
-        <p>Legajo: {{item.legajo}}</p>
-        <p>E-Mail: {{item.email}}</p>
+        <h2><ion-icon name='md-eye' item-start style="color: green"></ion-icon>{{item.nombre}} {{item.apellido}}</h2>
+        <p><ion-icon name='md-eye' item-start style="color: green"></ion-icon>Legajo: {{item.legajo}}</p>
+        <p><ion-icon name='md-eye' item-start style="color: green"></ion-icon>E-Mail: {{item.email}}</p>
       </ion-item>
 
     </div>

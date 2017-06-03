@@ -13,9 +13,10 @@ export class Profesor extends Usuario
               email : string = "",
               password : string = "",
               edad : number = 0,
-              img : string = "")
+              img : string = "",
+              sexo : string = "")
   {
-    super (idUsuario, nombre, apellido, dni, legajo, email, password, edad, img);
+    super (idUsuario, nombre, apellido, dni, legajo, email, password, edad, img,sexo);
   }
 
   /**

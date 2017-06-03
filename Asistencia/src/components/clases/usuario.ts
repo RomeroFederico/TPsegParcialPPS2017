@@ -9,6 +9,7 @@ export class Usuario
   public password : string;
   public edad : number;
   public img : string;
+  public sexo : string;
 
   /**
   * Usuario del sistema.
@@ -21,7 +22,8 @@ export class Usuario
               email : string = "",
               password : string = "",
               edad : number = 0,
-              img : string = "") 
+              img : string = "",
+              sexo : string = "") 
   {
     this.idUsuario = idUsuario;
     this.nombre = nombre;
@@ -32,6 +34,7 @@ export class Usuario
     this.password = password;
     this.edad = edad;
     this.img = img;
+    this.sexo = sexo;
   }
 
   /**

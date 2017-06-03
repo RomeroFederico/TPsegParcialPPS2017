@@ -12,7 +12,7 @@ import { Profesor } from '../../components/clases/profesor';
 export class HomeProfesorPage 
 {
   loading : any;
-  profesor:Profesor = new Profesor(1,"Octavio","Villegas","99333222","100200","octavio@gmail.com","123",30,"profesor.png");
+  profesor:Profesor = new Profesor(1,"Octavio","Villegas","99333222","100200","octavio@gmail.com","123",30,"profesor.png","Masculino");
 
   constructor(public navCtrl: NavController, 
               public navParams: NavParams, 
