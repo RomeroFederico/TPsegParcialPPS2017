@@ -1,15 +1,70 @@
 <ion-header>
-  <ion-navbar>
+  <ion-navbar color = "primary">
     <button ion-button menuToggle>
       <ion-icon name="menu"></ion-icon>
     </button>
-    <ion-title>Principal Alumno</ion-title>
+    <ion-title>Alumno</ion-title>
   </ion-navbar>
 </ion-header>
 
 
-<ion-content padding>
+<ion-content padding  class = "home" text-center>
 
-  Bienvenido ALUMNO
+  <ion-row>
+      <ion-col class = "columnaOpcion">
+      <div (click) = "Aceptar('0')">
+      <ion-row class = "imgOpcion">
+        <ion-col class = "columnaCentrada">
+          <img src= "assets/images/alumno/alumno.png"/>
+        </ion-col>
+      </ion-row>
+      <ion-row class = "opcion">
+        <ion-col class = "columnaCentrada">
+          <ion-col>
+            Mis Datos
+          </ion-col>
+        </ion-col>
+      </ion-row>
+      </div>
+      </ion-col>
+      <ion-col class = "columnaOpcion">
+      <div (click) = "Aceptar('1')">
+      <ion-row class = "imgOpcion">
+        <ion-col class = "columnaCentrada">
+          <img src= "assets/images/alumno/divisiones.png"/>
+        </ion-col>
+      </ion-row>
+      <ion-row class = "opcion">
+        <ion-col class = "columnaCentrada">
+          <ion-col>
+            Lista divisiones
+          </ion-col>
+        </ion-col>
+      </ion-row>
+      </div>
+      </ion-col>
+    </ion-row>
+
+    <ion-row>
+      <ion-col class = "columnaOpcion">
+      <div (click) = "Aceptar('2')">
+      <ion-row class = "imgOpcion">
+        <ion-col class = "columnaCentrada">
+          <img src= "assets/images/alumno/notificacion.png"/>
+        </ion-col>
+      </ion-row>
+      <ion-row class = "opcion">
+        <ion-col class = "columnaCentrada">
+          <ion-col>
+            Notificaciones
+          </ion-col>
+        </ion-col>
+      </ion-row>
+      </div>
+      </ion-col>
+      <ion-col class = "columnaOpcion">
+
+      </ion-col>
+    </ion-row>
 
 </ion-content>
