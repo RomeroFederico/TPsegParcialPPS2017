@@ -28,6 +28,12 @@ export class DatosAdministradorPage {
   alumnos : Array<Alumno>;
   alumnosDivision : Array<any>;
 
+  materia : Materia;
+  divisionesMateria : Array<Division>;
+
+  aula : Aula;
+  divisionesAula : Array<Division>;
+
   // Array con cada una de los estados de la lista desplegable.
   shownGroup = [null, null, null, null, null];
 
@@ -53,6 +59,16 @@ export class DatosAdministradorPage {
 
       this.ObtenerAlumnos();
       this.ObtenerAlumnosDivision();
+    }
+    else if (this.tipo == "Materia")
+    {
+      this.materia = this.navParams.get("materia");
+      this.ObtenerDivisionesMateria();
+    }
+    else if (this.tipo == "Aula")
+    {
+      this.aula = this.navParams.get("aula");
+      this.ObtenerDivisionesAula();
     }
   }
 
@@ -155,6 +171,48 @@ export class DatosAdministradorPage {
     this.divisionesUsuario = new Array();
 
     this.divisionesUsuario = this.divisiones.filter((item) => { return item.profesor.idUsuario == this.usuario.idUsuario; });
+  }
+
+  /**
+  * Carga las divisiones de la materia. Luego se hara con la base de datos.
+  */
+  ObtenerDivisionesMateria()
+  {
+    this.divisionesMateria = new Array<Division>();
+
+    this.divisionesMateria.push(new Division(1, new Aula(1, "103", 1), this.materia,
+                                      new Profesor(2, "dos", "DOS", "456", "1002", "b@b.com", "789999", 35, "default.png"),
+                                      "4-A", new Ciclo(1, 2017, 1), "Mañana", new Date(2017, 3, 25), new Date(2017, 7, 5), "08:00", 
+                                      ["Martes"], "En curso", 20, 10, 15, 5, new Date(2017, 5, 25)));
+    this.divisionesMateria.push(new Division(2, new Aula(1, "103", 1), this.materia,
+                                      new Profesor(4, "cuatro", "CUATRO", "789", "1004", "d@d.com", "aw9999", 40, "default.png"),
+                                      "5-A", new Ciclo(1, 2017, 1), "Mañana",new Date(2017, 3, 25), new Date(2017, 7, 5), "08:00", 
+                                      ["Miercoles", "Viernes"], "En curso", 18, 9, 15, 4, new Date(2017, 5, 28)));
+    this.divisionesMateria.push(new Division(2, new Aula(1, "104", 1), this.materia,
+                                      new Profesor(4, "cuatro", "CUATRO", "789", "1004", "d@d.com", "aw9999", 40, "default.png"),
+                                      "4-A", new Ciclo(1, 2016, 2), "Mañana",new Date(2016, 9, 25), new Date(2016, 12, 5), "08:00", 
+                                      ["Lunes"], "Terminada", 18, 9, 15, 15, null));
+  }
+
+  /**
+  * Carga las divisiones del aula. Luego se hara con la base de datos.
+  */
+  ObtenerDivisionesAula()
+  {
+    this.divisionesAula = new Array<Division>();
+
+    this.divisionesAula.push(new Division(1, new Aula(1, "103", 1), new Materia(1, "Arquitectura y Diseño de Bases de Datos", "database.png"),
+                                      new Profesor(2, "dos", "DOS", "456", "1002", "b@b.com", "789999", 35, "default.png"),
+                                      "4-A", new Ciclo(1, 2017, 1), "Mañana", new Date(2017, 3, 25), new Date(2017, 7, 5), "08:00", 
+                                      ["Martes"], "En curso", 20, 10, 15, 5, new Date(2017, 5, 25)));
+    this.divisionesAula.push(new Division(2, new Aula(1, "103", 1), new Materia(2, "Matematica III", "matematica.png"),
+                                      new Profesor(4, "cuatro", "CUATRO", "789", "1004", "d@d.com", "aw9999", 40, "default.png"),
+                                      "5-A", new Ciclo(1, 2017, 1), "Mañana",new Date(2017, 3, 25), new Date(2017, 7, 5), "08:00", 
+                                      ["Miercoles", "Viernes"], "En curso", 18, 9, 15, 4, new Date(2017, 5, 28)));
+    this.divisionesAula.push(new Division(2, new Aula(1, "104", 1), new Materia(3, "Programacion II", "html.png"),
+                                      new Profesor(4, "cuatro", "CUATRO", "789", "1004", "d@d.com", "aw9999", 40, "default.png"),
+                                      "4-A", new Ciclo(1, 2016, 2), "Mañana",new Date(2016, 9, 25), new Date(2016, 12, 5), "08:00", 
+                                      ["Lunes"], "Terminada", 18, 9, 15, 15, null));
   }
 
   /**
