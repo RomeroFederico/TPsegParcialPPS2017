@@ -1,71 +1,81 @@
 <ion-header>
-  <ion-row>
-    <ion-col>
-          <button (click)="Admin()" style="background-color: #000000; color: red; width: 60px; height: 30px; font-size: 0.8em;">Admin</button>
-    </ion-col>
-    <ion-col>
-          <button (click)="Profesor()" style="background-color: #000000; color: red; width: 70px; height: 30px; font-size: 0.8em;">Profesor</button>
-    </ion-col>
-    <ion-col>
-          <button (click)="Alumno()" style="background-color: #000000; color: red; width: 70px; height: 30px; font-size: 0.8em;">Alumno</button>
-    </ion-col>
-    <ion-col>
-          <button (click)="Administrativo()" style="background-color: #000000; color: red; width: 85px; height: 30px; font-size: 0.8em;">Administrativo</button>
-    </ion-col>
-  </ion-row>
-  
+  <ion-navbar color="primary">
+    <ion-title>Login</ion-title>
+  </ion-navbar>
 </ion-header>
 
 <ion-content padding>
-
-    <div style="text-align: center">
-        <img style="width:150px; height: 150px; margin-top: 30px; margin-bottom: 20px; border-radius: 50%;" [src]="imagen"/>
-    </div>
-    <div class="div1">
-
-        <form #registerForm="ngForm" [formGroup]="todo">
-          <ion-row>
-              <ion-col>
-                <ion-list inset>
-
-                  <ion-item>
-                    <ion-input type="text" placeholder="Email" name="email" value="admin@admin.com" formControlName="email" required maxlength="35" (focusout)="CargarImagen()"></ion-input>
-                  </ion-item>
-
-                    <ion-item>
-                      <ion-input type="{{type}}" placeholder="{{Pass}}" name="password" value="123456" formControlName="password" required maxlength="15"></ion-input>
-                          <button ion-button item-right icon-left (click)="toggleShow()" clear>
-                            <ion-icon ios="{{ios1}}" md="{{ios2}}" style="font-size:30px; color:#4D86AD"></ion-icon>
-                          </button>
-                    </ion-item>
-
-                </ion-list>
-              </ion-col>
-          </ion-row>
-
-      <ion-row>
-        <ion-col class="signup-col">
-          <button ion-button class="acces-btn" type="submit" [disabled]="!todo.valid" (click)="Login()" >Acceder</button>
-          <!--button ion-button class="register-btn" block clear (click)="CrearCuenta()">Crear una cuenta</button-->
+  <ion-row>
+      <ion-col>
+      <div>
+      <ion-row >
+        <ion-col class = "columnaCentrada">
+          <ion-col>
+            <button ion-button block color="secondary" icon-left (click)="Aceptar('Alumno')" ><ion-icon name="star"></ion-icon>Alumno</button>
+          </ion-col>
         </ion-col>
       </ion-row>
-
-      <ion-row>
-        <ion-col>
-          <ion-icon ios="logo-github" md="logo-github" style="color: #FFFFFF; font-size:30px;"></ion-icon>
+      </div>
+      </ion-col>
+      <ion-col>
+      <div>
+      <ion-row >
+        <ion-col class = "columnaCentrada">
+          <ion-col>
+            <button ion-button block color="primary" icon-left (click)="Aceptar('Profesor')" ><ion-icon name="md-bookmarks"></ion-icon>Profesor</button>
+          </ion-col>
         </ion-col>
-        <ion-col>
-             <ion-icon ios="logo-facebook" md="logo-facebook" style="color: #3369FF; font-size:30px;"></ion-icon>
-        </ion-col>
-        <ion-col>
-            <ion-icon ios="logo-google" md="logo-google" style="color: red; font-size:30px;"></ion-icon>
-        </ion-col>
-      </ion-row>  
-      
+      </ion-row>
+      </div>
+      </ion-col>
+    </ion-row>
 
+    <ion-row>
+      <ion-col>
+      <div>
+      <ion-row >
+        <ion-col class = "columnaCentrada">
+          <ion-col>
+            <button ion-button block color="danger" icon-left (click)="Aceptar('Administrativo')" ><ion-icon name="md-clipboard"></ion-icon>Secretaria</button>
+          </ion-col>
+        </ion-col>
+      </ion-row>
+      </div>
+      </ion-col>
+      <ion-col>
+      <div>
+      <ion-row >
+        <ion-col class = "columnaCentrada">
+          <ion-col>
+            <button ion-button block color="dark" icon-left (click)="Aceptar('Administrador')" ><ion-icon name="md-briefcase"></ion-icon>Admin</button>
+          </ion-col>
+        </ion-col>
+      </ion-row>
+      </div>
+      </ion-col>
+    </ion-row>
 
-        <button ion-button class="out-btn" (click)="Salir()" >Salir</button>
-        </form>
-    </div>
+  <ion-list>
+
+  <ion-item>
+    <ion-label>E-Mail</ion-label>
+    <ion-input type="text" [(ngModel)]="mail" name="mail"></ion-input>
+  </ion-item>
+
+  <ion-item>
+    <ion-label>Password</ion-label>
+    <ion-input type="password" [(ngModel)]="pass" name="pass"></ion-input>
+  </ion-item>
+
+  <ion-item>
+    <ion-label>Tipo</ion-label>
+    <ion-input type="text" [(ngModel)]="tipo" disabled ></ion-input>
+  </ion-item>
+
+</ion-list>
+
+<div padding>
+  <button ion-button block (click)="Login()" >Login</button>
+</div>
+
 </ion-content>
-
