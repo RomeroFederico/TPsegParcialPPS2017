@@ -1,0 +1,33 @@
+page-modal-administrador {
+
+    .atributo {
+        color : white;
+        border-radius: 10px;
+        background-color: #222;
+        font-size: smaller;
+        padding-left: 10px;
+        opacity: 0.7;
+    }
+
+    .mostrarAtributo {
+        color : white;
+        border-radius: 10px;
+        background-color: gray;
+        font-size: smaller;
+        padding-left: 10px;
+        opacity: 0.7;
+        text-align: right;
+        padding-right: 10px;
+    }
+
+    .nombreUsuario {
+        color : white;
+        border-radius: 10px;
+        background-color: gray;
+        font-size: medium;
+        padding-left: 10px;
+        margin-top: 40px;
+        opacity: 0.7;
+    }
+
+}
