@@ -10,3 +10,44 @@
   </ion-navbar>
 
 </ion-header>
+
+
+<ion-content padding>
+  <ion-icon name="trash" style="font-size: 40px;" (click)="EliminarNotificacion()" *ngIf="eliminar"></ion-icon>
+
+
+  <ion-card *ngIf="notificacion1">
+    <ion-card-content>
+      <ion-card-title>
+        Feriado
+      </ion-card-title>
+      <p>
+        El dia Martes 7 de Abril no hay clases. Dia de Avellaneda.
+      </p>
+    </ion-card-content>
+
+    <ion-item>
+      <ion-label>Eliminar</ion-label>
+      <ion-checkbox [checked]="isChecked1" (ionChange)="Eliminar(1)" id="c1"></ion-checkbox>
+    </ion-item>
+  </ion-card>
+
+
+  <ion-card *ngIf="notificacion2">
+    <ion-card-content>
+      <ion-card-title>
+        Ausente
+      </ion-card-title>
+      <p>
+        El alumno Osmar Flores no asistio a clase el dia: Sabado 1 de Abril.
+      </p>
+    </ion-card-content>
+
+    <ion-item>
+      <ion-label>Eliminar</ion-label>
+      <ion-checkbox [checked]="isChecked2" (ionChange)="Eliminar(2)"></ion-checkbox>
+    </ion-item>
+  </ion-card>
+
+
+</ion-content>
