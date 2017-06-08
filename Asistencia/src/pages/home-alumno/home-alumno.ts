@@ -4,14 +4,14 @@ import { DatosAlumnoPage } from '../datos-alumno/datos-alumno';
 import { NotificacionesAlumnoPage } from '../notificaciones-alumno/notificaciones-alumno';
 import { ListadoDivisionesAlumnoPage } from '../listado-divisiones-alumno/listado-divisiones-alumno';
 import { Alumno } from '../../components/clases/alumno';
-
+import { LoginPage } from '../login/login';
+import { AsistenciaAlumnoPage } from '../asistencia-alumno/asistencia-alumno';
 
 @Component({
   selector: 'page-home-alumno',
   templateUrl: 'home-alumno.html'
 })
 export class HomeAlumnoPage {
-
 
   loading : any;
   alumno:Alumno = new Alumno(1,"Osmar","Flores","99333222","100200","ramzito@gmail.com","123",20,"alumno.png");
@@ -23,8 +23,6 @@ export class HomeAlumnoPage {
   ionViewDidLoad() {
     console.log('ionViewDidLoad HomeAlumnoPage');
   }
-
-
 
 
   Aceptar(opcion)
@@ -43,9 +41,12 @@ export class HomeAlumnoPage {
 
       case '2':
 
+        page = AsistenciaAlumnoPage;
+        break;
+     case '3':
+
         page = NotificacionesAlumnoPage;
         break;
-
     }
     let loading = this.loadingController.create({
       spinner: 'bubbles',
@@ -60,6 +61,11 @@ export class HomeAlumnoPage {
 
     this.loading = loading;
     this.loading.present();
+  }
+
+  Salir()
+  {
+    this.navCtrl.setRoot(LoginPage);
   }
 
 
