@@ -5,7 +5,15 @@ import { MyApp } from './app.component';
 
 import { LoginPage } from '../pages/login/login';
 import { MenuPage } from '../pages/menu/menu';
+
+//Alumno
 import { HomeAlumnoPage } from '../pages/home-alumno/home-alumno';
+import { DatosAlumnoPage } from '../pages/datos-alumno/datos-alumno';
+import { NotificacionesAlumnoPage } from '../pages/notificaciones-alumno/notificaciones-alumno';
+import { ListadoDivisionesAlumnoPage } from '../pages/listado-divisiones-alumno/listado-divisiones-alumno';
+import { DatosDivisionAlumnoPage } from '../pages/datos-division-alumno/datos-division-alumno';
+import { AsistenciaAlumnoPage } from '../pages/asistencia-alumno/asistencia-alumno';
+
 
 import { HomeAdministrativoPage } from '../pages/home-administrativo/home-administrativo';
 
@@ -32,7 +40,6 @@ import { IonicStorageModule } from '@ionic/storage';
     MyApp,
     LoginPage,
     MenuPage,
-    HomeAlumnoPage,
     HomeProfesorPage,
     HomeAdministrativoPage,
     HomeAdministradorPage,
@@ -42,7 +49,14 @@ import { IonicStorageModule } from '@ionic/storage';
     DatosProfesorPage,
     ListadoClasesProfesorPage,
     ListadoDivisionesProfesorPage,
-    DatosDivisionProfesorPage
+    DatosDivisionProfesorPage,
+    HomeAlumnoPage,
+    DatosAlumnoPage,
+    NotificacionesAlumnoPage,
+    ListadoDivisionesAlumnoPage,
+    DatosDivisionAlumnoPage,
+    AsistenciaAlumnoPage
+
   ],
   imports: [
     BrowserModule,
@@ -64,7 +78,12 @@ import { IonicStorageModule } from '@ionic/storage';
     DatosProfesorPage,
     ListadoClasesProfesorPage,
     ListadoDivisionesProfesorPage,
-    DatosDivisionProfesorPage
+    DatosDivisionProfesorPage,
+    DatosAlumnoPage,
+    NotificacionesAlumnoPage,
+    ListadoDivisionesAlumnoPage,
+    DatosDivisionAlumnoPage,
+    AsistenciaAlumnoPage
   ],
   providers: [
     StatusBar,

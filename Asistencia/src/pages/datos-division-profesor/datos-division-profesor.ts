@@ -16,9 +16,9 @@ export class DatosDivisionProfesorPage
   {
     this.division = this.navParams.get("Division");
     console.log(this.division);
-    this.alumnos.push(new Alumno(1, "Osmar", "Flores", "789", "1003", "osmar@gmail.com", "811124", 18, "alumno.png","Masculino"));
-    this.alumnos.push(new Alumno(2, "Federico", "Romero", "101", "1006", "fede@gmail.com", "811124", 21, "alumno.png","Masculino"));
-    this.alumnos.push(new Alumno(3, "Daniel", "Gueler", "999", "1009", "dani@gmail.com", "811124", 25, "alumno.png","Masculino"));
+    this.alumnos.push(new Alumno(1, "Osmar", "Flores", "789", "1003", "osmar@gmail.com", "811124", 18, "alumno.png"));
+    this.alumnos.push(new Alumno(2, "Federico", "Romero", "101", "1006", "fede@gmail.com", "811124", 21, "alumno.png"));
+    this.alumnos.push(new Alumno(3, "Daniel", "Gueler", "999", "1009", "dani@gmail.com", "811124", 25, "alumno.png"));
   }
 
   Volver()
@@ -32,8 +32,12 @@ export class DatosDivisionProfesorPage
   MostrarAlumnos()
   {
     if(this.mostrar==false)
+    {
       this.mostrar=true;
+    }
     else
+    {
       this.mostrar=false;
+    }
   }
 }

@@ -1,0 +1,47 @@
+<ion-header>
+
+  <ion-navbar color = "primary" hideBackButton>
+    <ion-buttons left>
+      <button ion-button (click)="Volver()">
+        <ion-icon name="md-arrow-back"></ion-icon>
+      </button>
+    </ion-buttons>
+    <ion-title>Datos Alumno</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+  <ion-card>
+    <img src="assets/images/alumno/alumno.png" height="270" />
+    <ion-card-content>
+      <ion-card-title>
+        {{alumno.nombre}} {{alumno.apellido}}
+      </ion-card-title>
+      <p>
+        Alumno de la UTN Facultad regional de avellaneda.
+      </p>
+    </ion-card-content>
+
+    <ion-item>
+      <ion-icon name='md-information-circle' item-start style="color: black"></ion-icon>
+      Legajo
+      <ion-badge item-end color="dark" >{{alumno.legajo}}</ion-badge>
+    </ion-item>
+
+    <ion-item>
+      <ion-icon name='md-at' item-start style="color: #55acee"></ion-icon>
+      E-Mail
+      <ion-badge item-end color="primary" >{{alumno.email}}</ion-badge>
+    </ion-item>
+
+    <ion-item>
+      <ion-icon name='md-eye' item-start style="color: green"></ion-icon>
+      Edad
+      <ion-badge item-end color="secondary">{{alumno.edad}}</ion-badge>
+    </ion-item>
+
+  </ion-card>
+
+</ion-content>
