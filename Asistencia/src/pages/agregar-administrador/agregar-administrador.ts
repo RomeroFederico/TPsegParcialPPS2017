@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams, ModalController } from 'ionic-angular';
+import { NavController, NavParams, ModalController, AlertController } from 'ionic-angular';
 
 import { ModalAdministradorPage } from '../modal-administrador/modal-administrador';
 import { HomeAdministradorPage } from '../home-administrador/home-administrador'; 
@@ -28,16 +28,16 @@ export class AgregarAdministradorPage {
 
   rutaImagen : string = "No se ha elegido una imagen";
 
-  sexo : string = "Masculino";
-
   divisionesActuales : Array<{division : Division, faltas : number}>;
   divisionesNoEmpezadas : Array<{division : Division, faltas : number}>;
   divisionesTerminadas : Array<{division : Division, faltas : number}>;
   divisionesAbandonadas : Array<{division : Division, faltas : number}>;
   divisionesLibre : Array<{division : Division, faltas : number}>;
 
+  usuario : Usuario = new Alumno();
+
   constructor(public navCtrl: NavController, public navParams: NavParams,
-              public modal : ModalController)
+              public modal : ModalController, public alertCtrl: AlertController)
   {
     this.opciones = this.navParams.get("opciones");
 
@@ -46,11 +46,6 @@ export class AgregarAdministradorPage {
     this.divisionesTerminadas = new Array<{division : Division, faltas : number}>();
     this.divisionesAbandonadas = new Array<{division : Division, faltas : number}>();
     this.divisionesLibre = new Array<{division : Division, faltas : number}>();
-
-    // this.divisionesActuales.push({division : new Division(1, new Aula(1, "103", 1), new Materia(1, "Arquitectura y Diseño de Bases de Datos", "default.png"),
-    //                                   new Profesor(2, "dos", "DOS", "456", "1002", "b@b.com", "789999", 35, "default.png","Masculino"),
-    //                                   "4-A", new Ciclo(1, 2017, 1), "Mañana", new Date(2017, 3, 25), new Date(2017, 7, 5), "08:00", 
-    //                                   ["Martes"], "En curso", 20, 10, 15, 5, new Date(2017, 5, 25)), faltas : 0});
   }
 
   ionViewDidLoad() {
@@ -184,14 +179,97 @@ export class AgregarAdministradorPage {
       this.divisionesLibre = this.divisionesLibre.filter((d) => { return d.division.idDivision != idDivision });
   }
 
-  // CargarDivisiones()
-  // {
-  //   this.contador++;
+  EstablecerFaltas(divisionConFaltas)
+  {
+    let alert = this.alertCtrl.create({
+      title: 'Establecer Faltas (Maximo: ' + divisionConFaltas.division.claseActual + ")",
+      inputs: [
+        {
+          value: divisionConFaltas.faltas,
+          name: 'faltas',
+          placeholder: 'Faltas',
+          type: 'number'
+        },
+      ],
+      buttons: [
+        {
+          text: 'Cancelar',
+          role: 'cancel',
+        },
+        {
+          text: 'Asignar',
+          handler: data => {
+            if (data.faltas > divisionConFaltas.division.claseActual || Number(data.faltas) < 0)
+              this.MostrarMensaje("Error", "No se ha ingresado un numero valido!!!");
+            else
+              divisionConFaltas.faltas = data.faltas;
+          }
+        }
+      ]
+    });
+    alert.present();
+}
 
-  //   return new Division(this.contador, new Aula(1, "103", 1), new Materia(1, "Arquitectura y Diseño de Bases de Datos", "default.png"),
-  //                                     new Profesor(2, "dos", "DOS", "456", "1002", "b@b.com", "789999", 35, "default.png","Masculino"),
-  //                                     "4-A", new Ciclo(1, 2017, 1), "Mañana", new Date(2017, 3, 25), new Date(2017, 7, 5), "08:00", 
-  //                                     ["Martes"], "En curso", 20, 10, 15, 5, new Date(2017, 5, 25))
-  // }
+  AgregarUsuario()
+  {
+    if (!this.ValidarDatosUsuario())
+      this.MostrarMensaje("Error", "No se han ingresado todos los datos.");
+    else if (!this.ValidarUsuario())
+      this.MostrarMensaje("Error", "El legajo, email o dni ya se ha ingresado.");
+    else
+    {
+      //Agregar usuario en la base de datos.
+      this.MostrarMensaje("Exito", this.tipo + " registrado con exito.");
+      this.Volver();
+    }
+  }
+
+  ValidarUsuario()
+  {
+    //Validar con base de datos que no se repita el email, legajo y dni.
+    return true;
+  }
+
+  ValidarDatosUsuario()
+  {
+    if (this.usuario.nombre == "" || this.usuario.apellido == "" || this.usuario.dni == "" || this.usuario.email == "" ||
+        this.usuario.legajo == "" || this.usuario.edad == 0)
+      return false;
+    return true;
+  }
+
+  MostrarMensaje(titulo : string, mensaje : string)
+  {
+    let alert = this.alertCtrl.create({
+      title: titulo,
+      subTitle: mensaje,
+      buttons: [{
+        text: 'OK',
+        role: 'cancel'
+      }]
+    });
+    alert.present();
+  }
+
+  Cancelar()
+  {
+    let alert = this.alertCtrl.create({
+      title: "Salir",
+      subTitle: "Desea cancelar el registro?",
+      buttons: [
+      {
+        text: 'Cancelar',
+        role: 'cancel'
+      },
+      {
+        text: 'Ok',
+        handler: () => {
+          this.Volver();
+        }
+      }
+    ]
+    });
+    alert.present();
+  }
 
 }
