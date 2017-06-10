@@ -3,13 +3,13 @@ export class Usuario
   public idUsuario : number;
   public nombre : string;
   public apellido : string;
-  public sexo : string;
   public dni : string;
   public legajo : string;
   public email : string;
   public password : string;
   public edad : number;
   public img : string;
+  public sexo : string;
 
   /**
   * Usuario del sistema.
@@ -23,7 +23,7 @@ export class Usuario
               password : string = "",
               edad : number = 0,
               img : string = "",
-              sexo : string = "Masculino") 
+              sexo : string = "") 
   {
     this.idUsuario = idUsuario;
     this.nombre = nombre;

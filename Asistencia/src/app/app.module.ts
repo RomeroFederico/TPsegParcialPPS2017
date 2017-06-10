@@ -22,7 +22,6 @@ import { HomeAdministradorPage } from '../pages/home-administrador/home-administ
 import { ListadoAdministradorPage } from '../pages/listado-administrador/listado-administrador';
 import { AgregarAdministradorPage } from '../pages/agregar-administrador/agregar-administrador';
 import { DatosAdministradorPage } from '../pages/datos-administrador/datos-administrador';
-import { ModalAdministradorPage} from '../pages/modal-administrador/modal-administrador';
 
 //Profesor
 import { HomeProfesorPage } from '../pages/home-profesor/home-profesor';
@@ -50,7 +49,6 @@ import { IonicStorageModule } from '@ionic/storage';
     ListadoAdministradorPage,
     AgregarAdministradorPage,
     DatosAdministradorPage,
-    ModalAdministradorPage,
     DatosProfesorPage,
     ListadoClasesProfesorPage,
     ListadoDivisionesProfesorPage,
@@ -82,7 +80,6 @@ import { IonicStorageModule } from '@ionic/storage';
     ListadoAdministradorPage,
     AgregarAdministradorPage,
     DatosAdministradorPage,
-    ModalAdministradorPage,
     DatosProfesorPage,
     ListadoClasesProfesorPage,
     ListadoDivisionesProfesorPage,

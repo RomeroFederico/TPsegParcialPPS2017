@@ -14,9 +14,9 @@ export class Alumno extends Usuario
               password : string = "",
               edad : number = 0,
               img : string = "",
-              sexo : string = "Masculino")
+              sexo : string = "")
   {
-    super (idUsuario, nombre, apellido, dni, legajo, email, password, edad, img, sexo);
+    super (idUsuario, nombre, apellido, dni, legajo, email, password, edad, img , sexo);
   }
 
   /**
