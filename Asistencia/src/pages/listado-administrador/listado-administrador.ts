@@ -28,8 +28,14 @@ export class ListadoAdministradorPage {
 
   ciclos : Array<Ciclo>;
 
+  materias : Array<Materia>;
+  materiasBase : Array<Materia>;
+
   divisionesBase : Array<Division>;
   divisiones : Array<Division>;
+
+  aulasBase : Array<Aula>;
+  aulas : Array<Aula>;
 
   filtro : string = "Todos";
   buscar : string;
@@ -53,6 +59,18 @@ export class ListadoAdministradorPage {
       this.CargarDivisiones();
       this.InicializarListadoDivisiones();
       this.buscar = "Materia";
+    }
+    else if (this.opciones.tipo == "Materia")
+    {
+      this.CargarMaterias();
+      this.InicializarListadoMaterias();
+      this.buscar = "Nombre";
+    }
+    else if (this.opciones.tipo == "Aula")
+    {
+      this.CargarAulas();
+      this.InicializarListadoAulas();
+      this.buscar = "Nombre";
     }
   }
 
@@ -87,18 +105,37 @@ export class ListadoAdministradorPage {
   }
 
   /**
-  * Carga los usuarios. Luego se hara con la base de datos
+  * Muestra la materia seleccionada, en la pagina DatosAdministradorPage.
+  * @param materia materia a mostrar.
+  */
+  MostrarDatosMateria(materia : Materia)
+  {
+    this.navCtrl.push(DatosAdministradorPage, {tipo : 'Materia', materia : materia});
+  }
+
+  /**
+  * Muestra el aula seleccionada, en la pagina DatosAdministradorPage.
+  * @param aulña aula a mostrar.
+  */
+  MostrarDatosAula(aula : Aula)
+  {
+    this.navCtrl.push(DatosAdministradorPage, {tipo : 'Aula', aula : aula});
+  }
+
+  /**
+  * Carga los usuarios. Luego se hara con la base de datos.
   */
   CargarUsuarios()
   {
     this.usuariosBase = new Array<Usuario>();
 
-    this.usuariosBase.push(new Administrativo(1, "uno", "UNO", "123", "1001", "a@a.com", "123456", 21, "default.png"));
-    this.usuariosBase.push(new Profesor(2, "dos", "DOS", "456", "1002", "b@b.com", "789999", 35, "default.png"));
-    this.usuariosBase.push(new Alumno(3, "tres", "TRES", "789", "1003", "c@c.com", "811124", 18, "default.png"));
+    this.usuariosBase.push(new Administrativo(1, "uno", "UNO", "123", "1001", "a@a.com", "123456", 21, "default.png","Masculino"));
+    this.usuariosBase.push(new Profesor(2, "dos", "DOS", "456", "1002", "b@b.com", "789999", 35, "default.png","Masculino"));
+    this.usuariosBase.push(new Alumno(3, "tres", "TRES", "789", "1003", "c@c.com", "811124", 18, "default.png","Masculino"));
   }
 
   /*
+  * Carga los ciclos lectivos de la facultad. Luego se hara con la base de datos.
   */
   CargarCiclos()
   {
@@ -108,8 +145,33 @@ export class ListadoAdministradorPage {
     this.ciclos.push(new Ciclo(3, 2016, 1));
   }
 
+  /*
+  * Carga las materias de la facultad. Luego se hara con la base de datos.
+  */
+  CargarMaterias()
+  {
+    this.materiasBase = new Array<Materia>();
+
+    this.materiasBase.push(new Materia(1, "Matematica II", "matematica.png"));
+    this.materiasBase.push(new Materia(2, "Programacion III", "html.png"));
+    this.materiasBase.push(new Materia(3, "Arquitectura y Diseño de Bases de Datos", "database.png"));
+  }
+
+  /*
+  * Carga las aulas de la facultad. Luego se hara con la base de datos.
+  */
+  CargarAulas()
+  {
+    this.aulasBase = new Array<Aula>();
+
+    this.aulasBase.push(new Aula(1, "103", 1));
+    this.aulasBase.push(new Aula(2, "203", 2));
+    this.aulasBase.push(new Aula(3, "LAB 5", 3));
+    this.aulasBase.push(new Aula(4, "003", 0));
+  }
+
   /**
-  * Carga las divisiones. Luego se hara con la base de datos
+  * Carga las divisiones. Luego se hara con la base de datos.
   */
   CargarDivisiones()
   {
@@ -212,6 +274,36 @@ export class ListadoAdministradorPage {
   }
 
   /**
+  * Inicializa el listado de materias.
+  */
+  InicializarListadoMaterias()
+  {
+    this.materias = this.materiasBase;
+  }
+
+  /**
+  * Inicializa el listado de aulas.
+  */
+  InicializarListadoAulas()
+  {
+    if (this.filtro == "Todos")
+      this.aulas = this.aulasBase;
+    else 
+    {
+      this.aulas = this.aulasBase.filter((item) => {
+        if (this.filtro == "PlantaBaja")
+          return (item.piso == 0);
+        else if (this.filtro == "PisoUno")
+          return (item.piso == 1);
+        else if (this.filtro == "PisoDos")
+          return (item.piso == 2);
+        else
+          return (item.piso == 3);
+      })
+    }
+  }
+
+  /**
   * Devuelve el tipo de usuario en formato de cadena.
   * @param usuario usuario del sistema.
   */
@@ -238,6 +330,10 @@ export class ListadoAdministradorPage {
       this.InicializarListadoUsuarios();
     else if (this.opciones.tipo == "Division")
       this.InicializarListadoDivisiones();
+    else if (this.opciones.tipo == "Materia")
+      this.InicializarListadoMaterias();
+    else if (this.opciones.tipo == "Aula")
+      this.InicializarListadoAulas();
 
     // Ajusto val al valor ingresado en el buscador.
     let val = ev.target.value;
@@ -261,6 +357,18 @@ export class ListadoAdministradorPage {
           if (this.buscar == "Materia")
             return (item.materia.nombre.toLowerCase().indexOf(val.toLowerCase()) > -1);
           else
+            return (item.nombre.toLowerCase().indexOf(val.toLowerCase()) > -1);
+        })
+      }
+      else if (this.opciones.tipo == "Materia")
+      {
+        this.materias = this.materias.filter((item) => {
+            return (item.nombre.toLowerCase().indexOf(val.toLowerCase()) > -1);
+        })
+      }
+      else if (this.opciones.tipo == "Aula")
+      {
+        this.aulas = this.aulas.filter((item) => {
             return (item.nombre.toLowerCase().indexOf(val.toLowerCase()) > -1);
         })
       }
@@ -293,6 +401,8 @@ export class ListadoAdministradorPage {
         this.InicializarListadoUsuarios();
       else if (this.opciones.tipo == "Division")
         this.InicializarListadoDivisiones();
+      else if (this.opciones.tipo == "Aula")
+        this.InicializarListadoAulas();
     }
   }
 

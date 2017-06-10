@@ -1,0 +1,41 @@
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>Modificar Listado Divisiones {{opciones.tipoListado}}</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+
+    <ion-item *ngIf = "opciones.tipoListado != 'Actuales' && opciones.tipoListado != 'No Empezadas' && opciones.tipoListado != 'Terminadas'">
+        <ion-label>Filtrar por ciclo</ion-label>
+        <ion-select [(ngModel)]="filtro" (ionChange)="onChangeFiltro()">
+          <ion-option value = "Todos">Todos</ion-option>
+          <ion-option *ngFor = "let ciclo of ciclos" [value] = "ciclo.CicloEnCadena">{{ciclo.CicloEnCadena}}</ion-option>
+        </ion-select>
+    </ion-item>
+    <ion-item>
+        <ion-label>Buscar por </ion-label>
+        <ion-select [(ngModel)]="buscar" (ionChange)="onChangeBuscar()">
+          <ion-option value="Materia">Materia</ion-option>
+          <ion-option value="Nombre">Nombre</ion-option>
+        </ion-select>
+    </ion-item>
+    <ion-searchbar (ionInput)="getItems($event)" placeholder = '...'></ion-searchbar>
+
+    <ion-list>
+      <ion-item *ngFor="let division of divisiones" text-wrap>
+        <ion-checkbox color = "secondary" [checked] = "ObtenerMarcador(division.idDivision)" (ionChange) = "CambioElMarcador($event, division.idDivision)"></ion-checkbox>
+        <ion-avatar item-right>
+          <img [src] = "'assets/images/materias/' + division.materia.img">
+        </ion-avatar>
+        <ion-label>{{division.nombre}} {{division.ciclo.CicloEnCadena}}. {{division.materia.nombre}}. Turno : {{division.turno}}</ion-label>
+      </ion-item>
+    </ion-list>
+
+  <button ion-button block (click) = 'ModificarListado()' color = "secondary">Modificar</button>
+  <button ion-button block (click) = 'Cancelar()' color = "danger">Cancelar</button>
+
+</ion-content>
