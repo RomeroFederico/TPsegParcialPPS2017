@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams,AlertController } from 'ionic-angular';
+import {NavController, NavParams } from 'ionic-angular';
 import { Division } from '../../components/clases/division';
 import { Aula } from '../../components/clases/aula';
 import { Materia } from '../../components/clases/materia';
@@ -7,16 +7,17 @@ import { Profesor } from '../../components/clases/profesor';
 import { Ciclo } from '../../components/clases/ciclo';
 
 @Component({
-  selector: 'page-listado-clases-profesor',
-  templateUrl: 'listado-clases-profesor.html',
+  selector: 'page-listado-materias-profesor',
+  templateUrl: 'listado-materias-profesor.html',
 })
-export class ListadoClasesProfesorPage 
-{
+export class ListadoMateriasProfesorPage {
+
   profesor:Profesor ;
   divisiones: Array<Division>;
   materias: Array<Materia>;
   aulas: Array<Aula>;
-  constructor(public navCtrl: NavController, public navParams: NavParams,public alert: AlertController) 
+
+  constructor(public navCtrl: NavController, public navParams: NavParams) 
   {
     this.profesor = new Profesor(1,"Cristian","Baus","88777222","333222","cristian@gmail.com","123",30,"profesor.png","Masculino");
 
@@ -71,18 +72,13 @@ export class ListadoClasesProfesorPage
 
     console.log(this.divisiones);
   }
+
+  ionViewDidLoad() {
+    console.log('ionViewDidLoad ListadoMateriasProfesor');
+  }
   Volver()
   {
     this.navCtrl.pop();
-  }
-  PedirFalta()
-  {
-    let alert = this.alert.create({
-      title: 'Implementar!',
-      subTitle: 'Implementaremos esta funcion muy pronto!',
-      buttons: ['OK']
-    });
-    alert.present();
   }
 
 }

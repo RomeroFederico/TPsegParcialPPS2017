@@ -1,0 +1,31 @@
+<ion-header>
+
+  <ion-navbar color = "primary" hideBackButton>
+    <ion-buttons left>
+      <button ion-button (click)="Volver()">
+        <ion-icon name="md-arrow-back"></ion-icon>
+      </button>
+    </ion-buttons>
+    <ion-title>Mis Materias</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+
+    
+    <ion-list>
+      <div *ngFor="let item of divisiones">
+      <ion-item >
+        <ion-thumbnail item-start>
+          <img src="assets/images/materias/{{item.materia.img}}">
+        </ion-thumbnail>
+        <h2>{{item.nombre}} {{item.materia.nombre}} </h2>
+        <h3>Aula: {{item.aula.nombre}} - Estado: {{item.estado}}</h3>
+        <h3>Turno: {{item.turno}} - Hora: {{item.hora}}</h3>
+      </ion-item>
+      </div>
+    </ion-list>
+  
+</ion-content>

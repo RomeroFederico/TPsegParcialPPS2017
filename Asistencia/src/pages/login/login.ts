@@ -14,10 +14,10 @@ import { Usuario } from '../../components/clases/usuario';
 export class LoginPage {
 
   tipo:string = "Alumno";
-  profesor:Profesor = new Profesor(1,"Octavio","Villegas","99333222","100200","profesor@gmail.com","123",30,"profesor.png");
-  alumno:Alumno = new Alumno(1,"Osmar","Flores","99333222","100200","alumno@gmail.com","123",30,"profesor.png");
-  administrativo:Administrativo = new Administrativo(1,"Daniel","Gueler","99333222","100200","administrativo@gmail.com","123",30,"profesor.png");
-  administrador:Usuario = new Usuario(1,"Federico","Romero","99333222","100200","administrador@gmail.com","123",30,"profesor.png");
+  profesor:Profesor = new Profesor(1,"Octavio","Villegas","99333222","999888","profesor@gmail.com","123",30,"profesor.png","Masculino");
+  alumno:Alumno = new Alumno(1,"Osmar","Flores","99333222","100200","alumno@gmail.com","123",30,"profesor.png","Masculino");
+  administrativo:Administrativo = new Administrativo(1,"Daniel","Gueler","99333222","100200","administrativo@gmail.com","123",30,"profesor.png","Masculino");
+  administrador:Usuario = new Usuario(1,"Federico","Romero","99333222","100200","administrador@gmail.com","123",30,"profesor.png","Masculino");
 
   mail:string;
   pass:string;

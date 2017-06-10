@@ -11,7 +11,7 @@
 </ion-header>
 
 <ion-content padding>
-  <ion-list>
+  <!--ion-list>
 
     <ion-list-header>Today</ion-list-header>
 
@@ -26,5 +26,21 @@
       </ion-item>
 
     </div>
+  </ion-list-->
+    <ion-list no-border>
+
+    <ion-list-header>
+      Mis divisiones
+    </ion-list-header>
+    <div *ngFor="let item of divisiones" >
+    <ion-item (click)="Aceptar(item)">
+      <ion-icon name='planet' item-start></ion-icon>
+       {{item.nombre}}
+      <ion-note item-end>
+      {{item.estado}}
+      </ion-note>
+    </ion-item>
+    </div>
   </ion-list>
+
 </ion-content>

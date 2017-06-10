@@ -1,11 +1,17 @@
 import { Component } from '@angular/core';
-import { NavController,NavParams } from 'ionic-angular';
+import { NavController,NavParams,AlertController } from 'ionic-angular';
 
 import { LoginPage } from '../login/login';
 import { HomeAlumnoPage } from '../home-alumno/home-alumno';
 import { HomeProfesorPage } from '../home-profesor/home-profesor';
 import { HomeAdministradorPage } from '../home-administrador/home-administrador';
 import { HomeAdministrativoPage } from '../home-administrativo/home-administrativo';
+
+import { DatosProfesorPage } from '../datos-profesor/datos-profesor';
+import { ListadoClasesProfesorPage } from '../listado-clases-profesor/listado-clases-profesor';
+import { ListadoDivisionesProfesorPage } from '../listado-divisiones-profesor/listado-divisiones-profesor';
+import { ListadoMateriasProfesorPage } from '../listado-materias-profesor/listado-materias-profesor';
+import { NotificacionesProfesorPage } from '../notificaciones-profesor/notificaciones-profesor';
 
 @Component({
   selector: 'page-menu',
@@ -17,7 +23,7 @@ export class MenuPage {
   rootPage: any; //Pagina Principal
   tipo:string = "";
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) 
+  constructor(public navCtrl: NavController,public alertCtrl: AlertController, public navParams: NavParams) 
   {
     this.tipo = this.navParams.get("Tipo");
 
@@ -50,7 +56,48 @@ export class MenuPage {
   }
   Salir()
   {
-    this.navCtrl.setRoot(LoginPage);
+    let alert = this.alertCtrl.create({
+      title: 'Log Out',
+      message: 'Desea cerrar sesion?',
+      buttons: [
+        {
+          text: 'Cancelar',
+          role: 'cancel',
+          handler: () => {
+           console.log('Salir cancelado!');
+          }
+        },
+        {
+          text: 'Aceptar',
+          handler: () => {
+            this.navCtrl.setRoot(LoginPage);
+            console.log("Cerrando sesion!");
+          }
+       }
+      ]
+    });
+    alert.present();
   }
+  DatosProfesor()
+  {
+    this.navCtrl.push(DatosProfesorPage);
+  }
+  ClasesHoyProfesor()
+  {
+    this.navCtrl.push(ListadoClasesProfesorPage);
+  }
+  DivisionesProfesor()
+  {
+    this.navCtrl.push(ListadoDivisionesProfesorPage);
+  }
+  NotificacionesProfesor()
+  {
+    this.navCtrl.push(NotificacionesProfesorPage);
+  }
+  MateriasProfesor()
+  {
+    this.navCtrl.push(ListadoMateriasProfesorPage);
+  }
+  
 
 }

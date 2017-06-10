@@ -14,9 +14,10 @@ import { ListadoDivisionesAlumnoPage } from '../pages/listado-divisiones-alumno/
 import { DatosDivisionAlumnoPage } from '../pages/datos-division-alumno/datos-division-alumno';
 import { AsistenciaAlumnoPage } from '../pages/asistencia-alumno/asistencia-alumno';
 
-
+//Administrativo
 import { HomeAdministrativoPage } from '../pages/home-administrativo/home-administrativo';
 
+//Administrador
 import { HomeAdministradorPage } from '../pages/home-administrador/home-administrador';
 import { ListadoAdministradorPage } from '../pages/listado-administrador/listado-administrador';
 import { AgregarAdministradorPage } from '../pages/agregar-administrador/agregar-administrador';
@@ -27,8 +28,10 @@ import { ModalAdministradorPage} from '../pages/modal-administrador/modal-admini
 import { HomeProfesorPage } from '../pages/home-profesor/home-profesor';
 import { DatosProfesorPage } from '../pages/datos-profesor/datos-profesor';
 import { ListadoClasesProfesorPage } from '../pages/listado-clases-profesor/listado-clases-profesor';
+import { ListadoMateriasProfesorPage } from '../pages/listado-materias-profesor/listado-materias-profesor';
 import { ListadoDivisionesProfesorPage } from '../pages/listado-divisiones-profesor/listado-divisiones-profesor';
 import { DatosDivisionProfesorPage } from '../pages/datos-division-profesor/datos-division-profesor';
+import { NotificacionesProfesorPage } from '../pages/notificaciones-profesor/notificaciones-profesor';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
@@ -51,7 +54,9 @@ import { IonicStorageModule } from '@ionic/storage';
     DatosProfesorPage,
     ListadoClasesProfesorPage,
     ListadoDivisionesProfesorPage,
+    ListadoMateriasProfesorPage,
     DatosDivisionProfesorPage,
+    NotificacionesProfesorPage,
     HomeAlumnoPage,
     DatosAlumnoPage,
     NotificacionesAlumnoPage,
@@ -81,7 +86,9 @@ import { IonicStorageModule } from '@ionic/storage';
     DatosProfesorPage,
     ListadoClasesProfesorPage,
     ListadoDivisionesProfesorPage,
+    ListadoMateriasProfesorPage,
     DatosDivisionProfesorPage,
+    NotificacionesProfesorPage,
     DatosAlumnoPage,
     NotificacionesAlumnoPage,
     ListadoDivisionesAlumnoPage,

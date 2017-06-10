@@ -15,11 +15,11 @@
       <button menuClose ion-item (click)="Salir()"><ion-icon name="md-close-circle"></ion-icon> Salir</button>
       </div>
       <div *ngIf="tipo =='Profesor'">
-      <button menuClose ion-item ><ion-icon name="md-person"></ion-icon> Datos Profesor </button>
-      <button menuClose ion-item ><ion-icon name="md-document"></ion-icon> Materias </button>
-      <button menuClose ion-item ><ion-icon name="md-copy"></ion-icon> Asistencia </button>
-      <button menuClose ion-item ><ion-icon name="md-attach"></ion-icon> Divisiones </button>
-      <button menuClose ion-item ><ion-icon name="md-notifications"></ion-icon> Notificaciones </button>
+      <button menuClose ion-item (click)="DatosProfesor()" ><ion-icon name="md-person"></ion-icon> Datos Profesor </button>
+      <button menuClose ion-item (click)="ClasesHoyProfesor()" ><ion-icon name="md-document"></ion-icon> Clases de Hoy </button>
+      <button menuClose ion-item (click)="DivisionesProfesor()" ><ion-icon name="md-copy"></ion-icon> Divisiones </button>
+      <button menuClose ion-item (click)="MateriasProfesor()" ><ion-icon name="md-attach"></ion-icon> Mis Materias </button>
+      <button menuClose ion-item (click)="NotificacionesProfesor()" ><ion-icon name="md-notifications"></ion-icon> Notificaciones </button>
       <button menuClose ion-item (click)="Salir()"><ion-icon name="md-close-circle"></ion-icon> Salir</button>
       </div>
       <div *ngIf="tipo =='Administrativo'">
