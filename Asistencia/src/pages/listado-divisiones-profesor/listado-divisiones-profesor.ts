@@ -16,13 +16,13 @@ import { DatosDivisionProfesorPage } from '../datos-division-profesor/datos-divi
 })
 export class ListadoDivisionesProfesorPage 
 {
-  profesor : Profesor = new Profesor();
+  profesor:Profesor = new Profesor();
   divisiones: Array<Division>;
   materias: Array<Materia>;
   aulas: Array<Aula>;
   constructor(public navCtrl: NavController, public navParams: NavParams, private storage: Storage) 
   {
-    //console.log(this.storage.get("Profesor"));
+    console.log(this.storage.get("Profesor"));
     this.storage.get("Profesor")
     .then(data => 
       {
@@ -35,6 +35,7 @@ export class ListadoDivisionesProfesorPage
         this.profesor.password=data.password;
         this.profesor.edad=data.edad;
         this.profesor.img=data.img;
+        this.profesor.sexo=data.sexo;
       });
     console.log(this.profesor);
     this.divisiones = new Array<Division>();

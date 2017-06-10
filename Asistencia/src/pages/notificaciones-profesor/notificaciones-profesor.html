@@ -1,6 +1,11 @@
 <ion-header>
 
-  <ion-navbar>
+  <ion-navbar color = "primary" hideBackButton>
+    <ion-buttons left>
+      <button ion-button (click)="Volver()">
+        <ion-icon name="md-arrow-back"></ion-icon>
+      </button>
+    </ion-buttons>
     <ion-title>Notificaciones Profesor</ion-title>
   </ion-navbar>
 
@@ -8,5 +13,24 @@
 
 
 <ion-content padding>
+  <ion-icon name="trash" style="font-size: 40px;" (click)="EliminarNotificaciones()"></ion-icon>
+
+  <div *ngFor="let item of notificaciones">
+
+  <ion-card >
+    <ion-card-content>
+      <ion-card-title style="text-align: right;">
+        {{item.fecha}}
+      </ion-card-title>
+      <label style="font-size: 1.3em;">{{item.tipo}}</label>
+      <p>
+        {{item.descripcion}}
+      </p>
+    </ion-card-content>
+
+
+  </ion-card>
+
+  </div>
 
 </ion-content>

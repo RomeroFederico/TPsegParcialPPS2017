@@ -5,81 +5,38 @@
         <ion-icon name="md-arrow-back"></ion-icon>
       </button>
     </ion-buttons>
-    <ion-title>Lista de Clas</ion-title>
+    <ion-title>Clases de Hoy</ion-title>
   </ion-navbar>
 
 </ion-header>
 
-<ion-content padding>
-  <div>
-    <ion-list>
-      <ion-item (click)="Volver()">
-        <ion-thumbnail item-start>
-          <img src="assets/images/profesor/html.png">
-        </ion-thumbnail>
-        <h2>Programacion 2</h2>
-        <h2>nombre aula</h2>
-        <h2>horario</h2>
-      </ion-item>
-      <ion-item (click)="Volver()">
-        <ion-thumbnail item-start>
-          <img src="assets/images/profesor/css.png">
-        </ion-thumbnail>
-        <h2>Laboratorio 2</h2>
-      </ion-item>
-      <ion-item (click)="Volver()">
-        <ion-thumbnail item-start>
-          <img src="assets/images/profesor/json-file.png">
-        </ion-thumbnail>
-        <h2>Programacion 3</h2>
-      </ion-item>
-      <ion-item (click)="Volver()">
-        <ion-thumbnail item-start>
-          <img src="assets/images/profesor/javascript.png">
-        </ion-thumbnail>
-        <h2>Laboratorio 3</h2>
-      </ion-item>
-    </ion-list>
-  </div>
+<ion-content class="list-avatar-page">
   <ion-list>
 
-    <ion-list-header>Today</ion-list-header>
-
+    <ion-list-header>Hoy</ion-list-header>
+    <div *ngFor="let item of divisiones">
     <ion-item>
       <ion-avatar item-start>
-        <img src="assets/images/profesor/java.png">
+        <img src="assets/images/materias/{{item.materia.img}}">
       </ion-avatar>
-      <h2>Woody</h2>
-      <p>This town ain't big enough for the two of us!</p>
-      <ion-note item-end>3:43 pm</ion-note>
+      <h2>{{item.materia.nombre}}</h2>
+      <p>Division: {{item.nombre}} Turno: {{item.turno}}</p>
+      <button ion-button round color="danger" icon-left (click)="PedirFalta()" ><ion-icon name="md-alert"></ion-icon>Pedir falta!</button>
+      <ion-note item-end style="color:green">{{item.hora}}</ion-note>
     </ion-item>
-
+    </div>
+    <ion-list-header>Mañana</ion-list-header>
+    <div *ngFor="let item of divisiones">
     <ion-item>
       <ion-avatar item-start>
-        <img src="assets/images/profesor/java.png">
+        <img src="assets/images/materias/{{item.materia.img}}">
       </ion-avatar>
-      <h2>Buzz Lightyear</h2>
-      <p>My eyeballs could have been sucked from their sockets!</p>
-      <ion-note item-end>1:12 pm</ion-note>
+      <h2>{{item.materia.nombre}}</h2>
+      <p>Division: {{item.nombre}} Turno: {{item.turno}}</p>
+      <ion-note item-end>{{item.hora}}</ion-note>
     </ion-item>
-
-    <ion-item>
-      <ion-avatar item-start>
-        <img src="assets/images/profesor/java.png">
-      </ion-avatar>
-      <h2>Jessie</h2>
-      <p>Well aren't you just the sweetest space toy I ever did meet!</p>
-      <ion-note item-end>10:03 am</ion-note>
-    </ion-item>
-
-    <ion-item>
-      <ion-avatar item-start>
-        <img src="assets/images/profesor/java.png">
-      </ion-avatar>
-      <h2>Mr. Potato Head</h2>
-      <p>You're not turning me into a Mashed Potato.</p>
-      <ion-note item-end>5:47 am</ion-note>
-    </ion-item>
-
+    
+  </div>
   </ion-list>
+
 </ion-content>
