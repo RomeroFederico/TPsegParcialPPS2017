@@ -404,4 +404,66 @@
     <button ion-button block (click) = 'Cancelar()' color = "danger">Cancelar</button>
   </div>
 
+  <div *ngIf = "opciones.tipo == 'Materia'">
+    <ion-list>
+      <ion-item>
+        <ion-label color = "dark" floating>Nombre</ion-label>
+        <ion-input type="text" [(ngModel)]="materia.nombre" ></ion-input>
+      </ion-item>
+      <ion-list-header color = "dark" style = "margin-top: 10px; margin-bottom: 0px !important;" text-right>
+        Imagen
+      </ion-list-header>
+      <ion-item text-wrap>
+        <ion-thumbnail item-left>
+          <img src = "assets/images/materias/default.png">
+        </ion-thumbnail>
+          {{rutaImagen}}
+        <button ion-button clear item-right color = "dark">Elegir</button>
+      </ion-item>
+    </ion-list>
+
+    <button ion-button block (click) = 'AgregarMateria()' color = "secondary">Agregar</button>
+    <button ion-button block (click) = 'Cancelar()' color = "danger">Cancelar</button>
+  </div>
+
+  <div *ngIf = "opciones.tipo == 'Aula'">
+    <ion-list>
+      <ion-item>
+        <ion-label color = "dark" floating>Nombre</ion-label>
+        <ion-input type="text" [(ngModel)]="aula.nombre" ></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label color = "dark">Piso</ion-label>
+        <ion-select [(ngModel)]="piso" multiple="false">
+          <ion-option>Planta baja</ion-option>
+          <ion-option>Primer piso</ion-option>
+          <ion-option>Segundo piso</ion-option>
+          <ion-option>Tercer piso</ion-option>
+        </ion-select>
+      </ion-item>
+    </ion-list>
+
+    <button ion-button block (click) = 'AgregarAula()' color = "secondary">Agregar</button>
+    <button ion-button block (click) = 'Cancelar()' color = "danger">Cancelar</button>
+  </div>
+
+  <div *ngIf = "opciones.tipo == 'Ciclo'">
+    <ion-list>
+      <ion-item>
+        <ion-label color = "dark" floating>Año</ion-label>
+        <ion-input type="number" [(ngModel)]="year" ></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label color = "dark">Cuatrimestre</ion-label>
+        <ion-select [(ngModel)]="cuatrimestre" multiple="false">
+          <ion-option>Primer cuatrimestre</ion-option>
+          <ion-option>Segundo cuatrimestre</ion-option>
+        </ion-select>
+      </ion-item>
+    </ion-list>
+
+    <button ion-button block (click) = 'AgregarCiclo()' color = "secondary">Agregar</button>
+    <button ion-button block (click) = 'Cancelar()' color = "danger">Cancelar</button>
+  </div>
+
 </ion-content>

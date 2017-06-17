@@ -45,6 +45,15 @@ export class AgregarAdministradorPage {
   alumnosAbandonadas : Array<{alumno : Alumno, faltas : number}>;
   alumnosLibre : Array<{alumno : Alumno, faltas : number}>;
 
+  materia : Materia;
+
+  aula : Aula;
+  piso : string = "Planta baja";
+
+  ciclo : Ciclo;
+  year : number = 0;
+  cuatrimestre : string = "Primer cuatrimestre";
+
   constructor(public navCtrl: NavController, public navParams: NavParams,
               public modal : ModalController, public alertCtrl: AlertController)
   {
@@ -72,6 +81,21 @@ export class AgregarAdministradorPage {
 
       this.CargarCiclos();
       this.fechas = {fechaInicio : new Date(Date.now()).toISOString(), fechaFin : new Date(Date.now()).toISOString(), fechaProxClase : new Date(Date.now()).toISOString()}
+    }
+    else if (this.opciones.tipo == "Materia")
+    {
+      this.tipo = this.opciones.tipo;
+      this.materia = new Materia();
+    }
+    else if (this.opciones.tipo == "Aula")
+    {
+      this.tipo = this.opciones.tipo;
+      this.aula = new Aula();
+    }
+    else if (this.opciones.tipo == "Ciclo")
+    {
+      this.tipo = this.opciones.tipo;
+      this.ciclo = new Ciclo();
     }
   }
 
@@ -482,6 +506,87 @@ export class AgregarAdministradorPage {
   ValidarDivision()
   {
     //Validar con base de datos que no se repitan divisiones.
+    return true;
+  }
+
+  AgregarMateria()
+  {
+    if (!this.ValidarDatosMateria())
+      this.MostrarMensaje("Error", "No se han ingresado todos los datos.");
+    else if (!this.ValidarMateria())
+      this.MostrarMensaje("Error", "El nombre ya se ha ingresado.");
+    else
+    {
+      //Agregar materia en la base de datos.
+      this.MostrarMensaje("Exito", this.tipo + " registrado con exito.");
+      this.Volver();
+    }
+  }
+
+  ValidarDatosMateria()
+  {
+    if (this.materia.nombre == "")
+      return false
+    return true;
+  }
+
+  ValidarMateria()
+  {
+    //Validar con base de datos que no se repitan las materias.
+    return true;
+  }
+
+  AgregarAula()
+  {
+    if (!this.ValidarDatosAula())
+      this.MostrarMensaje("Error", "No se han ingresado todos los datos.");
+    else if (!this.ValidarAula())
+      this.MostrarMensaje("Error", "El nombre ya se ha ingresado.");
+    else
+    {
+      //Agregar aula en la base de datos.
+      this.MostrarMensaje("Exito", this.tipo + " registrado con exito.");
+      this.Volver();
+    }
+  }
+
+  ValidarDatosAula()
+  {
+    if (this.aula.nombre == "")
+      return false
+    return true;
+  }
+
+  ValidarAula()
+  {
+    //Validar con base de datos que no se repita el aula.
+    return true;
+  }
+
+  AgregarCiclo()
+  {
+    if (!this.ValidarDatosCiclo())
+      this.MostrarMensaje("Error", "No se han ingresado todos los datos.");
+    else if (!this.ValidarCiclo())
+      this.MostrarMensaje("Error", "El año y cuatrimestre ya se ha ingresado.");
+    else
+    {
+      //Agregar ciclo en la base de datos.
+      this.MostrarMensaje("Exito", this.tipo + " registrado con exito.");
+      this.Volver();
+    }
+  }
+
+  ValidarDatosCiclo()
+  {
+    if (this.year == 0)
+      return false
+    return true;
+  }
+
+  ValidarCiclo()
+  {
+    //Validar con base de datos que no se repita el ciclo.
     return true;
   }
 

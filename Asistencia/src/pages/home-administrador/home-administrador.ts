@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams, LoadingController, ActionSheetController } from 'ionic-angular';
+import { NavController, NavParams, LoadingController, ActionSheetController, Platform, AlertController } from 'ionic-angular';
 import { ListadoAdministradorPage } from '../listado-administrador/listado-administrador';
 import { AgregarAdministradorPage } from '../agregar-administrador/agregar-administrador';
+import { LoginPage } from '../login/login';
 
 @Component({
   selector: 'page-home-administrador',
@@ -9,14 +10,15 @@ import { AgregarAdministradorPage } from '../agregar-administrador/agregar-admin
 })
 export class HomeAdministradorPage {
 
-  animacionSeleccion : Array<string> = ["", "", "", "", "", "", "", ""];
+  animacionSeleccion : Array<string> = ["", "", "", "", "", "", "", "", "", ""];
   seleccionAnimar : number;
 
   loading : any;
   iconos : string = "Grandes";
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
-              public loadingController : LoadingController, public actionSheetController : ActionSheetController) 
+              public loadingController : LoadingController, public actionSheetController : ActionSheetController, private platform: Platform,
+              public alertCtrl: AlertController) 
   {
   }
 
@@ -34,7 +36,14 @@ export class HomeAdministradorPage {
     this.animacionSeleccion[opcion] = "animated flash infinite";
     this.seleccionAnimar = opcion;
 
-    this.MostrarLoading(this.SeleccionOpcion(opcion));
+    if (opcion != 9)
+      this.MostrarLoading(this.SeleccionOpcion(opcion));
+    else
+    {
+      this.Salir();
+      this.animacionSeleccion[opcion] = "";
+      this.seleccionAnimar = 0;
+    }
   }
 
   /**
@@ -91,11 +100,18 @@ export class HomeAdministradorPage {
         objOpcion.tipo = "Aula";
         break;
     
-      default:
+      case 7:
 
         objOpcion.mensaje = "Agregar aula";
         objOpcion.ruta = "agregar-administrador";
         objOpcion.tipo = "Aula";
+        break;
+
+      default:
+
+        objOpcion.mensaje = "Agregar ciclo";
+        objOpcion.ruta = "agregar-administrador";
+        objOpcion.tipo = "Ciclo";
         break;
     }
 
@@ -167,6 +183,41 @@ export class HomeAdministradorPage {
     this.loading = loading;
 
     this.loading.present();
+  }
+
+  Salir()
+  {
+    let alert = this.alertCtrl.create();
+    alert.setTitle('¿Que desea hacer?');
+
+    alert.addInput({
+      type: 'radio',
+      label: 'Cerrar sesion, ir a Login',
+      value: 'cerrarSesion',
+      checked: true
+    });
+
+    alert.addInput({
+      type: 'radio',
+      label: 'Salir de la aplicacion',
+      value: 'salir'
+    });
+
+    alert.addButton('Cancelar');
+    alert.addButton({
+      text: 'Aceptar',
+      handler: data => {
+        if(data == "cerrarSesion")
+        {
+            this.navCtrl.setRoot(LoginPage);
+        }
+        else
+        {
+            this.platform.exitApp();
+        }
+      }
+    });
+    alert.present();
   }
 
 }
