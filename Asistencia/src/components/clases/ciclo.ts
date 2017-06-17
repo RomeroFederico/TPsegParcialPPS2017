@@ -10,7 +10,7 @@ export class Ciclo
  * @param año año del ciclo.
  * @param cuatrimestre primer o segundo del año. 
  */
-  constructor(idCiclo : number = 1, año : number = 2010, cuatrimestre : number = 1) 
+  constructor(idCiclo : number = 0, año : number = 2010, cuatrimestre : number = 1) 
   {
     this.idCiclo = idCiclo;
     this.año = año;
