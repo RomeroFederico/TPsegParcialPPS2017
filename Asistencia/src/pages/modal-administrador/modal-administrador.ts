@@ -31,6 +31,21 @@ export class ModalAdministradorPage {
 
   ciclos : Array<Ciclo>;
 
+  materias : Array<Materia>;
+  materiasBase : Array<Materia>;
+
+  materiaSeleccionada : number;
+
+  aulasBase : Array<Aula>;
+  aulas : Array<Aula>;
+
+  aulaSeleccionada : number;
+
+  profesoresBase : Array<Profesor>;
+  profesores : Array<Profesor>;
+
+  profesorSeleccionado : number;
+
   constructor(public navCtrl: NavController, public navParams: NavParams,
               public view : ViewController)
   {
@@ -53,6 +68,27 @@ export class ModalAdministradorPage {
       this.InicializarListadoDivisiones();
       this.buscar = "Materia";
     }
+    else if (this.opciones.tipo == "Materia")
+    {
+      this.CargarMaterias();
+      this.InicializarListadoMaterias();
+      this.buscar = "Nombre";
+      this.materiaSeleccionada = this.opciones.materiaSeleccionada;
+    }
+    else if (this.opciones.tipo == "Aula")
+    {
+      this.CargarAulas();
+      this.InicializarListadoAulas();
+      this.buscar = "Nombre";
+      this.aulaSeleccionada = this.opciones.aulaSeleccionada;
+    }
+    else if (this.opciones.tipo == "Profesor")
+    {
+      this.CargarProfesores();
+      this.InicializarListadoProfesores();
+      this.buscar = "Apellido";
+      this.profesorSeleccionado = this.opciones.profesorSeleccionado;
+    }
   }
 
   ionViewDidLoad() {
@@ -66,6 +102,43 @@ export class ModalAdministradorPage {
     this.ciclos.push(new Ciclo(2, 2016, 2));
     this.ciclos.push(new Ciclo(3, 2016, 1));
     this.ciclos.push(new Ciclo(4, 2017, 2));
+  }
+
+  /*
+  * Carga las materias de la facultad. Luego se hara con la base de datos.
+  */
+  CargarMaterias()
+  {
+    this.materiasBase = new Array<Materia>();
+
+    this.materiasBase.push(new Materia(1, "Matematica II", "matematica.png"));
+    this.materiasBase.push(new Materia(2, "Programacion III", "html.png"));
+    this.materiasBase.push(new Materia(3, "Arquitectura y Diseño de Bases de Datos", "database.png"));
+  }
+
+  /*
+  * Carga las aulas de la facultad. Luego se hara con la base de datos.
+  */
+  CargarAulas()
+  {
+    this.aulasBase = new Array<Aula>();
+
+    this.aulasBase.push(new Aula(1, "103", 1));
+    this.aulasBase.push(new Aula(2, "203", 2));
+    this.aulasBase.push(new Aula(3, "LAB 5", 3));
+    this.aulasBase.push(new Aula(4, "003", 0));
+  }
+
+  /**
+  * Carga los profesores. Luego se hara con la base de datos.
+  */
+  CargarProfesores()
+  {
+    this.profesoresBase = new Array<Profesor>();
+
+    this.profesoresBase.push(new Profesor(1, "uno", "UNO", "456", "1001", "b@b.com", "789999", 35, "default.png","Masculino"));
+    this.profesoresBase.push(new Profesor(2, "dos", "DOS", "456", "1002", "b@b.com", "789999", 35, "default.png","Masculino"));
+    this.profesoresBase.push(new Profesor(3, "tres", "TRES", "456", "1003", "b@b.com", "789999", 35, "default.png","Masculino"));
   }
 
   /**
@@ -184,6 +257,44 @@ export class ModalAdministradorPage {
   }
 
   /**
+  * Inicializa el listado de materias.
+  */
+  InicializarListadoMaterias()
+  {
+    this.materias = this.materiasBase;
+  }
+
+  /**
+  * Inicializa el listado de aulas.
+  */
+  InicializarListadoAulas()
+  {
+    if (this.filtro == "Todos")
+      this.aulas = this.aulasBase;
+    else 
+    {
+      this.aulas = this.aulasBase.filter((item) => {
+        if (this.filtro == "PlantaBaja")
+          return (item.piso == 0);
+        else if (this.filtro == "PisoUno")
+          return (item.piso == 1);
+        else if (this.filtro == "PisoDos")
+          return (item.piso == 2);
+        else
+          return (item.piso == 3);
+      })
+    }
+  }
+
+  /**
+  * Inicializa el listado de profesores.
+  */
+  InicializarListadoProfesores()
+  {
+    this.profesores = this.profesoresBase;
+  }
+
+  /**
   * Funcion utilizada para el buscador. Permite filtrar el listado de acuerdo al string ingresado y el filtro utilizado.
   * @param ev evento ionInput del buscador.
   */
@@ -196,27 +307,29 @@ export class ModalAdministradorPage {
     //   this.InicializarListadoUsuarios();
     if (this.opciones.tipo == "Division")
       this.InicializarListadoDivisiones();
-    // else if (this.opciones.tipo == "Materia")
-    //   this.InicializarListadoMaterias();
-    // else if (this.opciones.tipo == "Aula")
-    //   this.InicializarListadoAulas();
+    else if (this.opciones.tipo == "Materia")
+      this.InicializarListadoMaterias();
+    else if (this.opciones.tipo == "Aula")
+      this.InicializarListadoAulas();
+    else if (this.opciones.tipo == "Profesor")
+      this.InicializarListadoProfesores();
 
     // Ajusto val al valor ingresado en el buscador.
     let val = ev.target.value;
 
     // Si el valor ingresado esta vacio no realizo la busqueda.
     if (val && val.trim() != '') {
-      // if (this.opciones.tipo == "Usuario")
-      // {
-      //   this.usuarios = this.usuarios.filter((item) => {
-      //     if (this.buscar == "Apellido")
-      //       return (item.apellido.toLowerCase().indexOf(val.toLowerCase()) > -1);
-      //     else if (this.buscar == "Nombre")
-      //       return (item.nombre.toLowerCase().indexOf(val.toLowerCase()) > -1);
-      //     else
-      //       return (item.legajo.toLowerCase().indexOf(val.toLowerCase()) > -1);
-      //   })
-      // }
+      if (this.opciones.tipo == "Profesor")
+      {
+        this.profesores = this.profesores.filter((item) => {
+          if (this.buscar == "Apellido")
+            return (item.apellido.toLowerCase().indexOf(val.toLowerCase()) > -1);
+          else if (this.buscar == "Nombre")
+            return (item.nombre.toLowerCase().indexOf(val.toLowerCase()) > -1);
+          else
+            return (item.legajo.toLowerCase().indexOf(val.toLowerCase()) > -1);
+        })
+      }
       if (this.opciones.tipo == "Division")
       {
         this.divisiones = this.divisiones.filter((item) => {
@@ -226,18 +339,18 @@ export class ModalAdministradorPage {
             return (item.nombre.toLowerCase().indexOf(val.toLowerCase()) > -1);
         })
       }
-      // else if (this.opciones.tipo == "Materia")
-      // {
-      //   this.materias = this.materias.filter((item) => {
-      //       return (item.nombre.toLowerCase().indexOf(val.toLowerCase()) > -1);
-      //   })
-      // }
-      // else if (this.opciones.tipo == "Aula")
-      // {
-      //   this.aulas = this.aulas.filter((item) => {
-      //       return (item.nombre.toLowerCase().indexOf(val.toLowerCase()) > -1);
-      //   })
-      // }
+      else if (this.opciones.tipo == "Materia")
+      {
+        this.materias = this.materias.filter((item) => {
+            return (item.nombre.toLowerCase().indexOf(val.toLowerCase()) > -1);
+        })
+      }
+      else if (this.opciones.tipo == "Aula")
+      {
+        this.aulas = this.aulas.filter((item) => {
+            return (item.nombre.toLowerCase().indexOf(val.toLowerCase()) > -1);
+        })
+      }
     }
   }
 
@@ -267,8 +380,8 @@ export class ModalAdministradorPage {
       //   this.InicializarListadoUsuarios();
       if (this.opciones.tipo == "Division")
         this.InicializarListadoDivisiones();
-      // else if (this.opciones.tipo == "Aula")
-      //   this.InicializarListadoAulas();
+      else if (this.opciones.tipo == "Aula")
+        this.InicializarListadoAulas();
     }
   }
 
@@ -276,27 +389,37 @@ export class ModalAdministradorPage {
   {
     var resultado = false;
 
-    this.divisionesSeleccionadas.forEach((id) => 
+    if (this.opciones.tipo == "Division")
     {
-      if (id == idSeleccion)
-        resultado = true;
-    })
+      this.divisionesSeleccionadas.forEach((id) => 
+      {
+        if (id == idSeleccion)
+          resultado = true;
+      })
+    }
+
     return resultado;
   }
 
   CambioElMarcador($event, id)
   {
-    // console.log(id);
-    // console.log($event._checked);
-    if ($event._checked)
-      this.divisionesSeleccionadas.push(id);
-    else
-      this.divisionesSeleccionadas = this.divisionesSeleccionadas.filter((idSeleccionada) => { return idSeleccionada != id; });
+    if (this.opciones.tipo == "Division")
+    {
+      if ($event.checked)
+      {
+        console.log(id);
+        this.divisionesSeleccionadas.push(id);
+      }
+      else
+        this.divisionesSeleccionadas = this.divisionesSeleccionadas.filter((idSeleccionada) => { return idSeleccionada != id; });
+    }
   }
 
   ModificarListado()
   {
-    var listado = this.divisionesBase.filter((division) => {
+    if (this.opciones.tipo == "Division")
+    {
+      var listado = this.divisionesBase.filter((division) => {
 
       var retorno = false;
       
@@ -304,11 +427,32 @@ export class ModalAdministradorPage {
         if (division.idDivision == id)
           retorno = true;
       });
-      return retorno;
-    });
 
-    var datos = { resultado : true, listado : listado };
-    this.view.dismiss(datos);
+      return retorno;
+      });
+
+      var datos = { resultado : true, listado : listado };
+
+      this.view.dismiss(datos);
+    }
+    else if (this.opciones.tipo == "Materia")
+    {
+      var datosMateria = { resultado : true, materia : this.materias.find((materia) => {return materia.idMateria == this.materiaSeleccionada; })};
+
+      this.view.dismiss(datosMateria);
+    }
+    else if (this.opciones.tipo == "Aula")
+    {
+      var datosAula = { resultado : true, aula : this.aulas.find((aula) => {return aula.idAula == this.aulaSeleccionada; })};
+
+      this.view.dismiss(datosAula);
+    }
+    else if (this.opciones.tipo == "Profesor")
+    {
+      var datosProfesor= { resultado : true, profesor : this.profesores.find((profesor) => {return profesor.idUsuario == this.profesorSeleccionado; })};
+
+      this.view.dismiss(datosProfesor);
+    }
   } 
 
   Cancelar()

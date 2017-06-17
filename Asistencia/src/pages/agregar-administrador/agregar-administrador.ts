@@ -20,7 +20,7 @@ import { Ciclo } from '../../components/clases/ciclo';
 })
 export class AgregarAdministradorPage {
 
-  contador = 1;
+  ciclos : Array<Ciclo>;
 
   opciones : any;
 
@@ -35,17 +35,32 @@ export class AgregarAdministradorPage {
   divisionesLibre : Array<{division : Division, faltas : number}>;
 
   usuario : Usuario = new Alumno();
+  
+  division : Division = new Division();
+  fechas : {fechaInicio : string, fechaFin : string, fechaProxClase : string};
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
               public modal : ModalController, public alertCtrl: AlertController)
   {
     this.opciones = this.navParams.get("opciones");
 
-    this.divisionesActuales = new Array<{division : Division, faltas : number}>();
-    this.divisionesNoEmpezadas = new Array<{division : Division, faltas : number}>();
-    this.divisionesTerminadas = new Array<{division : Division, faltas : number}>();
-    this.divisionesAbandonadas = new Array<{division : Division, faltas : number}>();
-    this.divisionesLibre = new Array<{division : Division, faltas : number}>();
+    console.log(this.opciones);
+
+    if (this.opciones.tipo == "Usuario")
+    {
+      this.divisionesActuales = new Array<{division : Division, faltas : number}>();
+      this.divisionesNoEmpezadas = new Array<{division : Division, faltas : number}>();
+      this.divisionesTerminadas = new Array<{division : Division, faltas : number}>();
+      this.divisionesAbandonadas = new Array<{division : Division, faltas : number}>();
+      this.divisionesLibre = new Array<{division : Division, faltas : number}>();
+    }
+    else if (this.opciones.tipo == "Division")
+    {
+      this.tipo = this.opciones.tipo;
+      console.log("division");
+      this.CargarCiclos();
+      this.fechas = {fechaInicio : new Date(Date.now()).toISOString(), fechaFin : new Date(Date.now()).toISOString(), fechaProxClase : new Date(Date.now()).toISOString()}
+    }
   }
 
   ionViewDidLoad() {
@@ -67,12 +82,25 @@ export class AgregarAdministradorPage {
 
   DevolverColor()
   {
+    if (this.opciones.tipo != "Usuario")
+      return 'dark';
     if (this.tipo == "Administrativo")
       return 'danger';
     else if (this.tipo == "Profesor")
       return 'secondary';
     else
         return 'primary';
+  }
+
+  /*
+  * Carga los ciclos lectivos de la facultad. Luego se hara con la base de datos.
+  */
+  CargarCiclos()
+  {
+    this.ciclos = new Array<Ciclo>();
+    this.ciclos.push(new Ciclo(1, 2017, 1));
+    this.ciclos.push(new Ciclo(2, 2016, 2));
+    this.ciclos.push(new Ciclo(3, 2016, 1));
   }
 
   ObtenerTodosLosIdDivisionesSeleccionadas(noIncluir : string)
@@ -106,7 +134,6 @@ export class AgregarAdministradorPage {
   AddAlListadoDivisiones(tipoListado)
   {
     var ListadoAModificar : any;
-    var tipo : any;
 
     switch (tipoListado) {
       case "Actuales":
@@ -208,7 +235,7 @@ export class AgregarAdministradorPage {
       ]
     });
     alert.present();
-}
+  }
 
   AgregarUsuario()
   {
@@ -235,6 +262,80 @@ export class AgregarAdministradorPage {
     if (this.usuario.nombre == "" || this.usuario.apellido == "" || this.usuario.dni == "" || this.usuario.email == "" ||
         this.usuario.legajo == "" || this.usuario.edad == 0)
       return false;
+    return true;
+  }
+
+  AsignarMateria()
+  {
+    let profileModal = this.modal.create(ModalAdministradorPage, { opciones : { tipo : "Materia", materiaSeleccionada : this.division.materia.idMateria }});
+
+    profileModal.onDidDismiss(data => {
+
+        console.log(data);
+
+        if (data.resultado && data.materia)
+          this.division.materia = data.materia;
+    });
+
+    profileModal.present();
+  }
+
+  AsignarAula()
+  {
+    let profileModal = this.modal.create(ModalAdministradorPage, { opciones : { tipo : "Aula", aulaSeleccionada : this.division.aula.idAula }});
+
+    profileModal.onDidDismiss(data => {
+
+        console.log(data);
+
+        if (data.resultado && data.aula)
+          this.division.aula = data.aula;
+    });
+
+    profileModal.present();
+  }
+
+  AsignarProfesor()
+  {
+    let profileModal = this.modal.create(ModalAdministradorPage, { opciones : { tipo : "Profesor", profesorSeleccionado : this.division.profesor.idUsuario }});
+
+    profileModal.onDidDismiss(data => {
+
+        console.log(data);
+
+        if (data.resultado && data.profesor)
+          this.division.profesor = data.profesor;
+    });
+
+    profileModal.present();
+  }
+
+  ValidarDatosDivision()
+  {
+    if (this.division.nombre == "" || this.division.ciclo.idCiclo == 0 || this.division.materia.idMateria == 0 || 
+        this.division.aula.idAula == 0 || this.division.profesor.idUsuario == 0 || this.division.estado == "" || this.division.dias.length == 0 ||
+        this.division.cupoMaximo == 0)
+      return false;
+    return true;
+  }
+
+  AgregarDivision()
+  {
+    if (!this.ValidarDatosDivision())
+      this.MostrarMensaje("Error", "No se han ingresado todos los datos.");
+    else if (!this.ValidarDivision())
+      this.MostrarMensaje("Error", "La division se esta repitiendo.");
+    else
+    {
+      //Agregar usuario en la base de datos.
+      this.MostrarMensaje("Exito", this.tipo + " registrado con exito.");
+      this.Volver();
+    }
+  }
+
+  ValidarDivision()
+  {
+    //Validar con base de datos que no se repitan divisiones.
     return true;
   }
 

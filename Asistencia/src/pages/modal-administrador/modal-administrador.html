@@ -1,7 +1,10 @@
 <ion-header>
 
   <ion-navbar>
-    <ion-title>Modificar Listado Divisiones {{opciones.tipoListado}}</ion-title>
+    <ion-title *ngIf = "opciones.tipo == 'Division'">Modificar Listado Divisiones {{opciones.tipoListado}}</ion-title>
+    <ion-title *ngIf = "opciones.tipo == 'Materia'">Modificar Materia</ion-title>
+    <ion-title *ngIf = "opciones.tipo == 'Aula'">Modificar Aula</ion-title>
+    <ion-title *ngIf = "opciones.tipo == 'Profesor'">Modificar Profesor</ion-title>
   </ion-navbar>
 
 </ion-header>
@@ -9,33 +12,111 @@
 
 <ion-content padding>
 
-    <ion-item *ngIf = "opciones.tipoListado != 'Actuales' && opciones.tipoListado != 'No Empezadas' && opciones.tipoListado != 'Terminadas'">
-        <ion-label>Filtrar por ciclo</ion-label>
+  <div *ngIf = "opciones.tipo == 'Division'">
+      <ion-item *ngIf = "opciones.tipoListado != 'Actuales' && opciones.tipoListado != 'No Empezadas' && opciones.tipoListado != 'Terminadas'">
+          <ion-label>Filtrar por ciclo</ion-label>
+          <ion-select [(ngModel)]="filtro" (ionChange)="onChangeFiltro()">
+            <ion-option value = "Todos">Todos</ion-option>
+            <ion-option *ngFor = "let ciclo of ciclos" [value] = "ciclo.CicloEnCadena">{{ciclo.CicloEnCadena}}</ion-option>
+          </ion-select>
+      </ion-item>
+      <ion-item>
+          <ion-label>Buscar por </ion-label>
+          <ion-select [(ngModel)]="buscar" (ionChange)="onChangeBuscar()">
+            <ion-option value="Materia">Materia</ion-option>
+            <ion-option value="Nombre">Nombre</ion-option>
+          </ion-select>
+      </ion-item>
+      <ion-searchbar (ionInput)="getItems($event)" placeholder = '...'></ion-searchbar>
+
+      <ion-list>
+        <ion-item *ngFor="let division of divisiones" text-wrap>
+          <ion-checkbox color = "secondary" [checked] = "ObtenerMarcador(division.idDivision)" (ionChange) = "CambioElMarcador($event, division.idDivision)"></ion-checkbox>
+          <ion-avatar item-right>
+            <img [src] = "'assets/images/materias/' + division.materia.img">
+          </ion-avatar>
+          <ion-label>{{division.nombre}} {{division.ciclo.CicloEnCadena}}. {{division.materia.nombre}}. Turno : {{division.turno}}</ion-label>
+        </ion-item>
+      </ion-list>
+
+    <button ion-button block (click) = 'ModificarListado()' color = "secondary">Asignar</button>
+    <button ion-button block (click) = 'Cancelar()' color = "danger">Cancelar</button>
+  </div>
+
+  <div *ngIf = "opciones.tipo == 'Materia'">
+
+    <ion-searchbar (ionInput)="getItems($event)" placeholder = 'Buscar por nombre...'></ion-searchbar>
+
+    <ion-list radio-group [(ngModel)]="materiaSeleccionada">
+      <ion-item *ngFor="let materia of materias" text-wrap>
+            <ion-radio [value]="materia.idMateria" [checked] = "materiaSeleccionada == materia.idMateria"></ion-radio>
+            <ion-thumbnail item-left>
+              <img [src] = "'assets/images/materias/' + materia.img">
+            </ion-thumbnail>
+            <ion-label>{{materia.nombre}}</ion-label>
+      </ion-item>
+    </ion-list>
+
+    <button ion-button block (click) = 'ModificarListado()' color = "secondary">Asignar</button>
+    <button ion-button block (click) = 'Cancelar()' color = "danger">Cancelar</button>
+
+  </div>
+
+  <div *ngIf = "opciones.tipo == 'Aula'">
+
+    <ion-item>
+        <ion-label>Filtrar por piso</ion-label>
         <ion-select [(ngModel)]="filtro" (ionChange)="onChangeFiltro()">
-          <ion-option value = "Todos">Todos</ion-option>
-          <ion-option *ngFor = "let ciclo of ciclos" [value] = "ciclo.CicloEnCadena">{{ciclo.CicloEnCadena}}</ion-option>
+          <ion-option value = "Todos">Todos los pisos</ion-option>
+          <ion-option value = "PlantaBaja">Planta baja</ion-option>
+          <ion-option value = "PisoUno">Primer piso</ion-option>
+          <ion-option value = "PisoDos">Segundo piso</ion-option>
+          <ion-option value = "PisoTres">Tercer piso</ion-option>
         </ion-select>
     </ion-item>
+    <ion-searchbar (ionInput)="getItems($event)" placeholder = 'Buscar por nombre...'></ion-searchbar>
+
+    <ion-list radio-group [(ngModel)]="aulaSeleccionada">
+      <ion-item *ngFor="let aula of aulas" text-wrap>
+            <ion-radio [value]="aula.idAula" [checked] = "aulaSeleccionada == aula.idAula"></ion-radio>
+            <ion-thumbnail item-left>
+              <img src = "assets/images/administrador/info.png">
+            </ion-thumbnail>
+            <ion-label>Piso: {{aula.piso}}, Aula {{aula.nombre}}</ion-label>
+      </ion-item>
+    </ion-list>
+
+    <button ion-button block (click) = 'ModificarListado()' color = "secondary">Asignar</button>
+    <button ion-button block (click) = 'Cancelar()' color = "danger">Cancelar</button>
+
+  </div>
+
+  <div *ngIf = "opciones.tipo == 'Profesor'">
+
     <ion-item>
         <ion-label>Buscar por </ion-label>
         <ion-select [(ngModel)]="buscar" (ionChange)="onChangeBuscar()">
-          <ion-option value="Materia">Materia</ion-option>
+          <ion-option value="Apellido">Apellido</ion-option>
           <ion-option value="Nombre">Nombre</ion-option>
+          <ion-option value="Legajo">Legajo</ion-option>
         </ion-select>
     </ion-item>
     <ion-searchbar (ionInput)="getItems($event)" placeholder = '...'></ion-searchbar>
 
-    <ion-list>
-      <ion-item *ngFor="let division of divisiones" text-wrap>
-        <ion-checkbox color = "secondary" [checked] = "ObtenerMarcador(division.idDivision)" (ionChange) = "CambioElMarcador($event, division.idDivision)"></ion-checkbox>
-        <ion-avatar item-right>
-          <img [src] = "'assets/images/materias/' + division.materia.img">
-        </ion-avatar>
-        <ion-label>{{division.nombre}} {{division.ciclo.CicloEnCadena}}. {{division.materia.nombre}}. Turno : {{division.turno}}</ion-label>
+    <ion-list radio-group [(ngModel)]="profesorSeleccionado">
+      <ion-item *ngFor="let profesor of profesores" text-wrap>
+            <ion-radio [value]="profesor.idUsuario" [checked] = "profesorSeleccionado == profesor.idUsuario"></ion-radio>
+            <ion-thumbnail item-left>
+              <img [src] = "'assets/images/administrador/profesor/' + profesor.img">
+            </ion-thumbnail>
+            <ion-label>{{profesor.apellido}}, {{profesor.nombre}}</ion-label>
+            <ion-label>Legajo: {{profesor.legajo}}</ion-label>
       </ion-item>
     </ion-list>
 
-  <button ion-button block (click) = 'ModificarListado()' color = "secondary">Modificar</button>
-  <button ion-button block (click) = 'Cancelar()' color = "danger">Cancelar</button>
+    <button ion-button block (click) = 'ModificarListado()' color = "secondary">Asignar</button>
+    <button ion-button block (click) = 'Cancelar()' color = "danger">Cancelar</button>
+
+  </div>
 
 </ion-content>

@@ -23,7 +23,6 @@
 <ion-content padding>
 
   <div *ngIf = "opciones.tipo == 'Usuario'">
-      <!--<button ion-button block (click) = 'presentProfileModal()'>Presentar Modal</button>-->
     <ion-list>
       <ion-list-header [color] = "DevolverColor()" style = "margin-bottom: 0px !important;" text-left>
         Datos Personales
@@ -84,11 +83,11 @@
             </ion-thumbnail>
           <h3>{{d.division.nombre}} {{d.division.ciclo.CicloEnCadena}}</h3>
           <p>Materia: {{d.division.materia.nombre}}</p>
-          <p *ngIf = "tipo == 'Alumno'">Faltas : {{d.faltas}} <small  (click) = "EstablecerFaltas(d)">ASIGNAR</small></p>
-          <button ion-button clear item-right  (click) = "QuitarDelListadoDivisiones('Actuales', d.division.idDivision)">Quitar</button>
+          <p *ngIf = "tipo == 'Alumno'">Faltas : {{d.faltas}} <small ion-text [color] = "DevolverColor()" (click) = "EstablecerFaltas(d)">ASIGNAR</small></p>
+          <button ion-button clear item-right [color] = "DevolverColor()" (click) = "QuitarDelListadoDivisiones('Actuales', d.division.idDivision)">Quitar</button>
         </ion-item>
       </div>
-      <ion-list-header  style = "margin-top: 10px; margin-bottom: 0px !important;" text-left *ngIf = "tipo != 'Administrativo'">
+      <ion-list-header [color] = "DevolverColor()" style = "margin-top: 10px; margin-bottom: 0px !important;" text-left *ngIf = "tipo != 'Administrativo'">
         Divisiones no Empezadas:
         <button ion-button clear item-right color = "light" (click) = "AddAlListadoDivisiones('No Empezadas')">Añadir</button>
       </ion-list-header>
@@ -119,7 +118,7 @@
             </ion-thumbnail>
           <h3>{{d.division.nombre}} {{d.division.ciclo.CicloEnCadena}}</h3>
           <p>Materia: {{d.division.materia.nombre}}</p>
-          <p *ngIf = "tipo == 'Alumno'">Faltas : {{d.faltas}} <small  (click) = "EstablecerFaltas(d)">ASIGNAR</small></p>
+          <p *ngIf = "tipo == 'Alumno'">Faltas : {{d.faltas}} <small ion-text [color] = "DevolverColor()" (click) = "EstablecerFaltas(d)">ASIGNAR</small></p>
           <button ion-button clear item-right [color] = "DevolverColor()" (click) = "QuitarDelListadoDivisiones('Terminadas', d.division.idDivision)">Quitar</button>
         </ion-item>
       </div>
@@ -138,7 +137,7 @@
             </ion-thumbnail>
           <h3>{{d.division.nombre}} {{d.division.ciclo.CicloEnCadena}}</h3>
           <p>Materia: {{d.division.materia.nombre}}</p>
-          <p>Faltas : {{d.faltas}} <small  (click) = "EstablecerFaltas(d)">ASIGNAR</small></p>
+          <p>Faltas : {{d.faltas}} <small ion-text [color] = "DevolverColor()" (click) = "EstablecerFaltas(d)">ASIGNAR</small></p>
           <button ion-button clear item-right [color] = "DevolverColor()" (click) = "QuitarDelListadoDivisiones('Abandonadas', d.division.idDivision)">Quitar</button>
         </ion-item>
       </div>
@@ -156,15 +155,140 @@
             </ion-thumbnail>
           <h3>{{d.division.nombre}} {{d.division.ciclo.CicloEnCadena}}</h3>
           <p>Materia: {{d.division.materia.nombre}}</p>
-          <p>Faltas : {{d.faltas}} <small  (click) = "EstablecerFaltas(d)">ASIGNAR</small></p>
-          <button ion-button clear item-right  (click) = "QuitarDelListadoDivisiones('Libre', d.division.idDivision)">Quitar</button>
+          <p>Faltas : {{d.faltas}} <small ion-text [color] = "DevolverColor()" (click) = "EstablecerFaltas(d)">ASIGNAR</small></p>
+          <button ion-button clear item-right [color] = "DevolverColor()" (click) = "QuitarDelListadoDivisiones('Libre', d.division.idDivision)">Quitar</button>
         </ion-item>
       </div>
       </div>
       </div>
     </ion-list>
 
-    <button ion-button block (click) = 'AgregarUsuario()' color = "secondary">Modificar</button>
+    <button ion-button block (click) = 'AgregarUsuario()' color = "secondary">Agregar</button>
+    <button ion-button block (click) = 'Cancelar()' color = "danger">Cancelar</button>
+  </div>
+
+  <div *ngIf = "opciones.tipo == 'Division'">
+    <ion-list>
+      <ion-item>
+        <ion-label color = "dark" floating>Nombre</ion-label>
+        <ion-input type="text" [(ngModel)]="division.nombre" ></ion-input>
+      </ion-item>
+      <ion-item style = "margin-top : 24px;">
+        <ion-label color = "dark">Turno</ion-label>
+        <ion-select [(ngModel)] = "division.turno">
+          <ion-option value="Mañana">Mañana</ion-option>
+          <ion-option value="Noche">Noche</ion-option>
+        </ion-select> 
+      </ion-item>
+      <ion-item style = "margin-top : 24px;">
+        <ion-label color = "dark">Ciclo</ion-label>
+        <ion-select [(ngModel)] = "division.ciclo">
+          <ion-option *ngFor = "let ciclo of ciclos" [value] = "ciclo">{{ciclo.CicloEnCadena}}</ion-option>
+        </ion-select> 
+      </ion-item>
+      <ion-list-header color = "dark" style = "margin-top: 10px; margin-bottom: 0px !important;" text-left *ngIf = "tipo != 'Administrativo'">
+        Materia :
+        <button ion-button clear item-right color = "light" (click) = "AsignarMateria()">ASIGNAR</button>
+      </ion-list-header>
+      <ion-item *ngIf = "division.materia.idMateria == 0">
+        No se asigno una materia.
+      </ion-item>
+      <div *ngIf ="division.materia.idMateria != 0">
+        <ion-item text-wrap>
+          <ion-thumbnail item-left>
+              <img [src] = "'assets/images/materias/' + division.materia.img">
+          </ion-thumbnail>
+          <h3>Materia: {{division.materia.nombre}}</h3>
+        </ion-item>
+      </div>
+      <ion-list-header color = "dark" style = "margin-top: 10px; margin-bottom: 0px !important;" text-left *ngIf = "tipo != 'Administrativo'">
+        Aula :
+        <button ion-button clear item-right color = "light" (click) = "AsignarAula()">ASIGNAR</button>
+      </ion-list-header>
+      <ion-item *ngIf = "division.aula.idAula == 0">
+        No se asigno un aula.
+      </ion-item>
+      <div *ngIf ="division.aula.idAula != 0">
+        <ion-item text-wrap>
+          <ion-thumbnail item-left>
+            <img src = "assets/images/administrador/info.png">
+          </ion-thumbnail>
+          <h3>Aula: {{division.aula.nombre}}</h3>
+          <p>Piso: {{division.aula.piso}}
+        </ion-item>
+      </div>
+      <ion-list-header color = "dark" style = "margin-top: 10px; margin-bottom: 0px !important;" text-left *ngIf = "tipo != 'Administrativo'">
+        Profesor :
+        <button ion-button clear item-right color = "light" (click) = "AsignarProfesor()">ASIGNAR</button>
+      </ion-list-header>
+      <ion-item *ngIf = "division.profesor.idUsuario == 0">
+        No se asigno un profesor.
+      </ion-item>
+      <div *ngIf ="division.profesor.idUsuario != 0">
+        <ion-item text-wrap>
+          <ion-thumbnail item-left>
+              <img [src] = "'assets/images/administrador/profesor/' + division.profesor.img">
+          </ion-thumbnail>
+          <h3>{{division.profesor.apellido}}, {{division.profesor.nombre}}</h3>
+          <p>Legajo: {{division.profesor.legajo}}</p>
+          <p>Email : {{division.profesor.email}}</p>
+        </ion-item>
+      </div>
+      <ion-item style = "margin-top : 24px;">
+        <ion-label color = "dark">Estado</ion-label>
+        <ion-select [(ngModel)] = "division.estado">
+          <ion-option value="Terminada">Terminada</ion-option>
+          <ion-option value="Cursando">Cursando</ion-option>
+          <ion-option value="No empezada">No empezada</ion-option>
+        </ion-select> 
+      </ion-item>
+      <ion-item>
+        <ion-label color = "dark">Hora</ion-label>
+        <ion-datetime displayFormat="HH:mm" [(ngModel)]="division.hora" item-right>
+        </ion-datetime>
+      </ion-item>
+      <ion-item>
+        <ion-label color = "dark">Dias</ion-label>
+        <ion-select [(ngModel)]="division.dias" multiple="true">
+          <ion-option>Lunes</ion-option>
+          <ion-option>Martes</ion-option>
+          <ion-option>Miercoles</ion-option>
+          <ion-option>Jueves</ion-option>
+          <ion-option>Viernes</ion-option>
+          <ion-option>Sabado</ion-option>
+        </ion-select>
+      </ion-item>
+      <ion-item>
+        <ion-label color = "dark">Hora</ion-label>
+        <ion-datetime displayFormat="HH:mm" [(ngModel)]="division.hora" item-right>
+        </ion-datetime>
+      </ion-item>
+      <ion-item>
+        <ion-label color = "dark">Fecha inicio</ion-label>
+        <ion-datetime displayFormat="DD/MM/YYYY" [(ngModel)]="fechas.fechaInicio" item-right>
+        </ion-datetime>
+      </ion-item>
+      <ion-item>
+        <ion-label color = "dark">Fecha fin</ion-label>
+        <ion-datetime displayFormat="DD/MM/YYYY" [(ngModel)]="fechas.fechaFin" item-right>
+        </ion-datetime>
+      </ion-item>
+      <ion-item>
+        <ion-label color = "dark">Prox. Clase</ion-label>
+        <ion-datetime displayFormat="DD/MM/YYYY" [(ngModel)]="fechas.fechaProxClase" item-right>
+        </ion-datetime>
+      </ion-item>
+      <ion-item>
+        <ion-label color = "dark" floating>Cupo Maximo</ion-label>
+        <ion-input type="number" [(ngModel)]="division.cupoMaximo" ></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label color = "dark" floating>Cupo Actual</ion-label>
+        <ion-input type="number" [(ngModel)]="division.cupoActual" ></ion-input>
+      </ion-item>
+    </ion-list>
+
+    <button ion-button block (click) = 'AgregarDivision()' color = "secondary">Agregar</button>
     <button ion-button block (click) = 'Cancelar()' color = "danger">Cancelar</button>
   </div>
 
