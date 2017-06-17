@@ -7,7 +7,10 @@ import { Alumno } from '../../components/clases/alumno';
 import { Administrativo } from '../../components/clases/administrativo';
 import { Usuario } from '../../components/clases/usuario';
 
+import { Ws } from '../../providers/ws';
+
 @Component({
+  providers:[Ws],
   selector: 'page-login',
   templateUrl: 'login.html'
 })
@@ -22,9 +25,9 @@ export class LoginPage {
   mail:string;
   pass:string;
 
-  constructor(public navCtrl: NavController,private storage: Storage) 
+  constructor(public navCtrl: NavController,private storage: Storage,public ws:Ws) 
   {
-
+    this.ws.TraerDatos().then(data => {console.log(data);});
 
   }
   Aceptar(tipo)
