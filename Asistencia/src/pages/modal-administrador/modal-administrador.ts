@@ -46,6 +46,11 @@ export class ModalAdministradorPage {
 
   profesorSeleccionado : number;
 
+  alumnosBase : Array<Alumno>;
+  alumnos : Array<Alumno>;
+
+  alumnosSeleccionados : Array<number>;
+
   constructor(public navCtrl: NavController, public navParams: NavParams,
               public view : ViewController)
   {
@@ -88,6 +93,20 @@ export class ModalAdministradorPage {
       this.InicializarListadoProfesores();
       this.buscar = "Apellido";
       this.profesorSeleccionado = this.opciones.profesorSeleccionado;
+    }
+    else if (this.opciones.tipo == "Alumno")
+    {
+      console.log(this.opciones);
+
+      this.alumnosSeleccionados = new Array<number>();
+
+      this.opciones.listado.forEach(a => {
+        this.alumnosSeleccionados.push(a.alumno.idUsuario);
+      });
+
+      this.CargarAlumnos();
+      this.InicializarListadoAlumnos();
+      this.buscar = "Apellido";
     }
   }
 
@@ -241,6 +260,26 @@ export class ModalAdministradorPage {
     })
   }
 
+  CargarAlumnos()
+  {
+    this.alumnosBase = new Array<Profesor>();
+
+    this.alumnosBase.push(new Alumno(1, "uno", "UNO", "456", "1001", "b@b.com", "789999", 35, "default.png","Masculino"));
+    this.alumnosBase.push(new Alumno(2, "dos", "DOS", "456", "1002", "b@b.com", "789999", 35, "default.png","Masculino"));
+    this.alumnosBase.push(new Alumno(3, "tres", "TRES", "456", "1003", "b@b.com", "789999", 35, "default.png","Masculino"));
+
+    this.alumnosBase = this.alumnosBase.filter((alumno) => 
+    {
+      var resultado = true;
+
+      this.opciones.noMostrar.forEach(id => {
+        if (alumno.idUsuario == id)
+          resultado = false;
+      });
+      return resultado;
+    })
+  }
+
   /**
   * Inicializa el listado de acuerdo al filtro seleccionado (Todos, por ciclo).
   */
@@ -294,6 +333,11 @@ export class ModalAdministradorPage {
     this.profesores = this.profesoresBase;
   }
 
+  InicializarListadoAlumnos()
+  {
+    this.alumnos = this.alumnosBase;
+  }
+
   /**
   * Funcion utilizada para el buscador. Permite filtrar el listado de acuerdo al string ingresado y el filtro utilizado.
   * @param ev evento ionInput del buscador.
@@ -313,6 +357,8 @@ export class ModalAdministradorPage {
       this.InicializarListadoAulas();
     else if (this.opciones.tipo == "Profesor")
       this.InicializarListadoProfesores();
+    else if (this.opciones.tipo == "Alumno")
+      this.InicializarListadoAlumnos();
 
     // Ajusto val al valor ingresado en el buscador.
     let val = ev.target.value;
@@ -349,6 +395,17 @@ export class ModalAdministradorPage {
       {
         this.aulas = this.aulas.filter((item) => {
             return (item.nombre.toLowerCase().indexOf(val.toLowerCase()) > -1);
+        })
+      }
+      else if (this.opciones.tipo == "Alumno")
+      {
+        this.alumnos = this.alumnos.filter((item) => {
+          if (this.buscar == "Apellido")
+            return (item.apellido.toLowerCase().indexOf(val.toLowerCase()) > -1);
+          else if (this.buscar == "Nombre")
+            return (item.nombre.toLowerCase().indexOf(val.toLowerCase()) > -1);
+          else
+            return (item.legajo.toLowerCase().indexOf(val.toLowerCase()) > -1);
         })
       }
     }
@@ -397,6 +454,14 @@ export class ModalAdministradorPage {
           resultado = true;
       })
     }
+    else if (this.opciones.tipo == "Alumno")
+    {
+      this.alumnosSeleccionados.forEach((id) => 
+      {
+        if (id == idSeleccion)
+          resultado = true;
+      })
+    }
 
     return resultado;
   }
@@ -412,6 +477,16 @@ export class ModalAdministradorPage {
       }
       else
         this.divisionesSeleccionadas = this.divisionesSeleccionadas.filter((idSeleccionada) => { return idSeleccionada != id; });
+    }
+    else if (this.opciones.tipo == "Alumno")
+    {
+      if ($event.checked)
+      {
+        console.log(id);
+        this.alumnosSeleccionados.push(id);
+      }
+      else
+        this.alumnosSeleccionados = this.alumnosSeleccionados.filter((idSeleccionada) => { return idSeleccionada != id; });
     }
   }
 
@@ -449,9 +524,27 @@ export class ModalAdministradorPage {
     }
     else if (this.opciones.tipo == "Profesor")
     {
-      var datosProfesor= { resultado : true, profesor : this.profesores.find((profesor) => {return profesor.idUsuario == this.profesorSeleccionado; })};
+      var datosProfesor = { resultado : true, profesor : this.profesores.find((profesor) => {return profesor.idUsuario == this.profesorSeleccionado; })};
 
       this.view.dismiss(datosProfesor);
+    }
+    else if (this.opciones.tipo == "Alumno")
+    {
+      var listadoAlumnos = this.alumnosBase.filter((alumno) => {
+
+      var retorno = false;
+      
+      this.alumnosSeleccionados.forEach(id => {
+        if (alumno.idUsuario == id)
+          retorno = true;
+      });
+
+      return retorno;
+      });
+
+      var datosAlumno = { resultado : true, listado : listadoAlumnos };
+
+      this.view.dismiss(datosAlumno);
     }
   } 
 

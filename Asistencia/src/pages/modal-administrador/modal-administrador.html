@@ -119,4 +119,32 @@
 
   </div>
 
+  <div *ngIf = "opciones.tipo == 'Alumno'">
+
+    <ion-item>
+        <ion-label>Buscar por </ion-label>
+        <ion-select [(ngModel)]="buscar" (ionChange)="onChangeBuscar()">
+          <ion-option value="Apellido">Apellido</ion-option>
+          <ion-option value="Nombre">Nombre</ion-option>
+          <ion-option value="Legajo">Legajo</ion-option>
+        </ion-select>
+    </ion-item>
+    <ion-searchbar (ionInput)="getItems($event)" placeholder = '...'></ion-searchbar>
+
+    <ion-list>
+      <ion-item *ngFor="let alumno of alumnos" text-wrap>
+            <ion-checkbox color = "secondary" [checked] = "ObtenerMarcador(alumno.idUsuario)" (ionChange) = "CambioElMarcador($event, alumno.idUsuario)"></ion-checkbox>
+            <ion-avatar item-right>
+              <img [src] = "'assets/images/administrador/alumno/' + alumno.img">
+            </ion-avatar>
+            <ion-label>{{alumno.apellido}}, {{alumno.nombre}}</ion-label>
+            <ion-label>Legajo: {{alumno.legajo}}</ion-label>
+      </ion-item>
+    </ion-list>
+
+    <button ion-button block (click) = 'ModificarListado()' color = "secondary">Asignar</button>
+    <button ion-button block (click) = 'Cancelar()' color = "danger">Cancelar</button>
+
+  </div>
+
 </ion-content>

@@ -39,6 +39,12 @@ export class AgregarAdministradorPage {
   division : Division = new Division();
   fechas : {fechaInicio : string, fechaFin : string, fechaProxClase : string};
 
+  alumnosActuales : Array<{alumno : Alumno, faltas : number}>;
+  alumnosNoEmpezadas : Array<{alumno : Alumno, faltas : number}>;
+  alumnosTerminadas : Array<{alumno : Alumno, faltas : number}>;
+  alumnosAbandonadas : Array<{alumno : Alumno, faltas : number}>;
+  alumnosLibre : Array<{alumno : Alumno, faltas : number}>;
+
   constructor(public navCtrl: NavController, public navParams: NavParams,
               public modal : ModalController, public alertCtrl: AlertController)
   {
@@ -57,7 +63,13 @@ export class AgregarAdministradorPage {
     else if (this.opciones.tipo == "Division")
     {
       this.tipo = this.opciones.tipo;
-      console.log("division");
+      
+      this.alumnosActuales = new Array<{alumno : Alumno, faltas : number}>();
+      this.alumnosNoEmpezadas = new Array<{alumno : Alumno, faltas : number}>();
+      this.alumnosTerminadas = new Array<{alumno : Alumno, faltas : number}>();
+      this.alumnosAbandonadas = new Array<{alumno : Alumno, faltas : number}>();
+      this.alumnosLibre = new Array<{alumno : Alumno, faltas : number}>();
+
       this.CargarCiclos();
       this.fechas = {fechaInicio : new Date(Date.now()).toISOString(), fechaFin : new Date(Date.now()).toISOString(), fechaProxClase : new Date(Date.now()).toISOString()}
     }
@@ -131,6 +143,34 @@ export class AgregarAdministradorPage {
     return divisionesId;
   }
 
+  ObtenerTodosLosIdAlumnosSeleccionados(noIncluir : string)
+  {
+    var alumnosId : Array<number> = new Array<number>();
+
+    if (noIncluir != "Actuales")
+      this.alumnosActuales.forEach(a => {
+        alumnosId.push(a.alumno.idUsuario);
+      });
+    if (noIncluir != "No Empezadas")
+      this.alumnosNoEmpezadas.forEach(a => {
+        alumnosId.push(a.alumno.idUsuario);
+      });
+    if (noIncluir != "Terminadas")
+      this.alumnosTerminadas.forEach(a => {
+        alumnosId.push(a.alumno.idUsuario);
+      });
+    if (noIncluir != "Abandonadas")
+      this.alumnosAbandonadas.forEach(a => {
+        alumnosId.push(a.alumno.idUsuario);
+      });
+    if (noIncluir != "Libre")
+      this.alumnosLibre.forEach(a => {
+        alumnosId.push(a.alumno.idUsuario);
+      });
+
+    return alumnosId;
+  }
+
   AddAlListadoDivisiones(tipoListado)
   {
     var ListadoAModificar : any;
@@ -192,6 +232,67 @@ export class AgregarAdministradorPage {
     profileModal.present();
   }
 
+  AddAlListadoAlumnos(tipoListado)
+  {
+    var ListadoAModificar : any;
+
+    switch (tipoListado) {
+      case "Actuales":
+        
+        ListadoAModificar = this.alumnosActuales;
+        break;
+
+      case "No Empezadas":
+        
+        ListadoAModificar = this.alumnosNoEmpezadas;
+        break;
+        
+      case "Terminadas":
+        
+        ListadoAModificar = this.alumnosTerminadas;
+        break;
+
+      case "Abandonadas":
+        
+        ListadoAModificar = this.alumnosAbandonadas;
+        break;
+
+      default:
+
+        ListadoAModificar = this.alumnosLibre;
+        break;
+    }
+
+    let profileModal = this.modal.create(ModalAdministradorPage, { opciones : {listado : ListadoAModificar, tipoListado : tipoListado, tipo : 'Alumno', noMostrar : this.ObtenerTodosLosIdAlumnosSeleccionados(tipoListado) }});
+
+      profileModal.onDidDismiss(data => {
+
+        console.log(data);
+
+        if (data.resultado)
+        {
+          let alumnosResultado : Array<{alumno : Alumno, faltas : number}> = new Array<{alumno : Alumno, faltas : number}>();
+
+          data.listado.forEach(element => {
+            alumnosResultado.push({alumno : element, faltas : 0});
+          });
+
+          if (tipoListado == "Actuales")
+            this.alumnosActuales = alumnosResultado;
+          else if (tipoListado == "No Empezadas")
+            this.alumnosNoEmpezadas = alumnosResultado;
+          else if (tipoListado == "Terminadas")
+            this.alumnosTerminadas = alumnosResultado;
+          else if (tipoListado == "Abandonadas")
+            this.alumnosAbandonadas = alumnosResultado;
+          else
+            this.alumnosLibre = alumnosResultado;
+        }
+    });
+
+    profileModal.present();
+  }
+
   QuitarDelListadoDivisiones(tipoListado, idDivision)
   {
     if (tipoListado == "Actuales")
@@ -204,6 +305,20 @@ export class AgregarAdministradorPage {
       this.divisionesAbandonadas = this.divisionesAbandonadas.filter((d) => { return d.division.idDivision != idDivision });
     else
       this.divisionesLibre = this.divisionesLibre.filter((d) => { return d.division.idDivision != idDivision });
+  }
+
+  QuitarDelListadoAlumnos(tipoListado, idAlumno)
+  {
+    if (tipoListado == "Actuales")
+      this.alumnosActuales = this.alumnosActuales.filter((a) => { return a.alumno.idUsuario != idAlumno });
+    else if (tipoListado == "No Empezadas")
+      this.alumnosNoEmpezadas = this.alumnosNoEmpezadas.filter((a) => { return a.alumno.idUsuario != idAlumno });
+    else if (tipoListado == "Terminadas")
+      this.alumnosTerminadas = this.alumnosTerminadas.filter((a) => { return a.alumno.idUsuario != idAlumno });
+    else if (tipoListado == "Abandonadas")
+      this.alumnosAbandonadas = this.alumnosAbandonadas.filter((a) => { return a.alumno.idUsuario != idAlumno });
+    else
+      this.alumnosLibre = this.alumnosLibre.filter((a) => { return a.alumno.idUsuario != idAlumno });
   }
 
   EstablecerFaltas(divisionConFaltas)
@@ -226,10 +341,41 @@ export class AgregarAdministradorPage {
         {
           text: 'Asignar',
           handler: data => {
-            if (data.faltas > divisionConFaltas.division.claseActual || Number(data.faltas) < 0)
+            if (data.faltas > Number(divisionConFaltas.division.claseActual) || data.faltas < 0)
               this.MostrarMensaje("Error", "No se ha ingresado un numero valido!!!");
             else
               divisionConFaltas.faltas = data.faltas;
+          }
+        }
+      ]
+    });
+    alert.present();
+  }
+
+  EstablecerFaltasAlumno(alumnoYFaltas)
+  {
+    let alert = this.alertCtrl.create({
+      title: 'Establecer Faltas (Maximo: ' + this.division.claseActual + ")",
+      inputs: [
+        {
+          value: alumnoYFaltas.faltas,
+          name: 'faltas',
+          placeholder: 'Faltas',
+          type: 'number'
+        },
+      ],
+      buttons: [
+        {
+          text: 'Cancelar',
+          role: 'cancel',
+        },
+        {
+          text: 'Asignar',
+          handler: data => {
+            if (data.faltas > Number(this.division.claseActual) || data.faltas < 0)
+              this.MostrarMensaje("Error", "No se ha ingresado un numero valido!!!");
+            else
+              alumnoYFaltas.faltas = data.faltas;
           }
         }
       ]
@@ -327,7 +473,7 @@ export class AgregarAdministradorPage {
       this.MostrarMensaje("Error", "La division se esta repitiendo.");
     else
     {
-      //Agregar usuario en la base de datos.
+      //Agregar division en la base de datos.
       this.MostrarMensaje("Exito", this.tipo + " registrado con exito.");
       this.Volver();
     }

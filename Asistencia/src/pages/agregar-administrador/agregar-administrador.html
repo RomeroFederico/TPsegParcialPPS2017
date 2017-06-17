@@ -286,6 +286,118 @@
         <ion-label color = "dark" floating>Cupo Actual</ion-label>
         <ion-input type="number" [(ngModel)]="division.cupoActual" ></ion-input>
       </ion-item>
+      <ion-item>
+        <ion-label color = "dark" floating>Cantidad de clases</ion-label>
+        <ion-input type="number" [(ngModel)]="division.cantClases" ></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label color = "dark" floating>Clase actual</ion-label>
+        <ion-input type="number" [(ngModel)]="division.claseActual" ></ion-input>
+      </ion-item>
+      <!-- Listado de alumnos cursando de la division -->
+      <div *ngIf = "division.estado == 'Cursando'">
+        <ion-list-header color = "dark" style = "margin-top: 10px; margin-bottom: 0px !important;">
+          Alumnos en curso:
+          <button ion-button clear item-right color = "light" (click) = "AddAlListadoAlumnos('Actuales')">Añadir</button>
+        </ion-list-header>
+        <ion-item *ngIf = "alumnosActuales.length == 0">
+          No hay alumnos asignadas.
+        </ion-item>
+        <div *ngIf = "alumnosActuales.length > 0">
+          <ion-item text-wrap *ngFor = "let a of alumnosActuales">
+            <ion-thumbnail item-left>
+              <img [src] = "'assets/images/administrador/alumno/' + a.alumno.img">
+            </ion-thumbnail>
+            <h3>{{a.alumno.apellido}}, {{a.alumno.nombre}}</h3>
+            <p>Legajo: {{a.alumno.legajo}}</p>
+            <p>Faltas : {{a.faltas}} <small ion-text color = "dark" (click) = "EstablecerFaltasAlumno(a)">ASIGNAR</small></p>
+            <button ion-button clear item-right color = "dark" (click) = "QuitarDelListadoAlumnos('Actuales', a.alumno.idUsuario)">Quitar</button>
+          </ion-item>
+        </div>
+      </div>
+      <!-- Listado de alumnos terminados de la division -->
+      <div *ngIf = "division.estado == 'Terminada'">
+        <ion-list-header color = "dark" style = "margin-top: 10px; margin-bottom: 0px !important;">
+          Alumnos que terminaron:
+          <button ion-button clear item-right color = "light" (click) = "AddAlListadoAlumnos('Terminadas')">Añadir</button>
+        </ion-list-header>
+        <ion-item *ngIf = "alumnosTerminadas.length == 0">
+          No hay alumnos asignadas.
+        </ion-item>
+        <div *ngIf = "alumnosTerminadas.length > 0">
+          <ion-item text-wrap *ngFor = "let a of alumnosTerminadas">
+            <ion-thumbnail item-left>
+              <img [src] = "'assets/images/administrador/alumno/' + a.alumno.img">
+            </ion-thumbnail>
+            <h3>{{a.alumno.apellido}}, {{a.alumno.nombre}}</h3>
+            <p>Legajo: {{a.alumno.legajo}}</p>
+            <p>Faltas : {{a.faltas}} <small ion-text color = "dark" (click) = "EstablecerFaltasAlumno(a)">ASIGNAR</small></p>
+            <button ion-button clear item-right color = "dark" (click) = "QuitarDelListadoAlumnos('Terminadas', a.alumno.idUsuario)">Quitar</button>
+          </ion-item>
+        </div>
+      </div>
+      <!-- Listado de alumnos que no empezaron de la division -->
+      <div *ngIf = "division.estado == 'No empezada'">
+        <ion-list-header color = "dark" style = "margin-top: 10px; margin-bottom: 0px !important;">
+          Alumnos inscriptos:
+          <button ion-button clear item-right color = "light" (click) = "AddAlListadoAlumnos('No Empezadas')">Añadir</button>
+        </ion-list-header>
+        <ion-item *ngIf = "alumnosNoEmpezadas.length == 0">
+          No hay alumnos asignadas.
+        </ion-item>
+        <div *ngIf = "alumnosNoEmpezadas.length > 0">
+          <ion-item text-wrap *ngFor = "let a of alumnosNoEmpezadas">
+            <ion-thumbnail item-left>
+              <img [src] = "'assets/images/administrador/alumno/' + a.alumno.img">
+            </ion-thumbnail>
+            <h3>{{a.alumno.apellido}}, {{a.alumno.nombre}}</h3>
+            <p>Legajo: {{a.alumno.legajo}}</p>
+            <button ion-button clear item-right color = "dark" (click) = "QuitarDelListadoAlumnos('No Empezadas', a.alumno.idUsuario)">Quitar</button>
+          </ion-item>
+        </div>
+      </div>
+      <!-- Listado de alumnos que abandonaron de la division -->
+      <div *ngIf = "division.estado == 'Cursando' || division.estado == 'Terminada'">
+        <ion-list-header color = "dark" style = "margin-top: 10px; margin-bottom: 0px !important;">
+          Alumnos que abandonaron:
+          <button ion-button clear item-right color = "light" (click) = "AddAlListadoAlumnos('Abandonadas')">Añadir</button>
+        </ion-list-header>
+        <ion-item *ngIf = "alumnosAbandonadas.length == 0">
+          No hay alumnos asignadas.
+        </ion-item>
+        <div *ngIf = "alumnosAbandonadas.length > 0">
+          <ion-item text-wrap *ngFor = "let a of alumnosAbandonadas">
+            <ion-thumbnail item-left>
+              <img [src] = "'assets/images/administrador/alumno/' + a.alumno.img">
+            </ion-thumbnail>
+            <h3>{{a.alumno.apellido}}, {{a.alumno.nombre}}</h3>
+            <p>Legajo: {{a.alumno.legajo}}</p>
+            <p>Faltas : {{a.faltas}} <small ion-text color = "dark" (click) = "EstablecerFaltasAlumno(a)">ASIGNAR</small></p>
+            <button ion-button clear item-right color = "dark" (click) = "QuitarDelListadoAlumnos('Abandonadas', a.alumno.idUsuario)">Quitar</button>
+          </ion-item>
+        </div>
+      </div>
+      <!-- Listado de alumnos que quedaron libres de la division -->
+      <div *ngIf = "division.estado == 'Cursando' || division.estado == 'Terminada'">
+        <ion-list-header color = "dark" style = "margin-top: 10px; margin-bottom: 0px !important;">
+          Alumnos que quedaron libres:
+          <button ion-button clear item-right color = "light" (click) = "AddAlListadoAlumnos('Libre')">Añadir</button>
+        </ion-list-header>
+        <ion-item *ngIf = "alumnosLibre.length == 0">
+          No hay alumnos asignadas.
+        </ion-item>
+        <div *ngIf = "alumnosLibre.length > 0">
+          <ion-item text-wrap *ngFor = "let a of alumnosLibre">
+            <ion-thumbnail item-left>
+              <img [src] = "'assets/images/administrador/alumno/' + a.alumno.img">
+            </ion-thumbnail>
+            <h3>{{a.alumno.apellido}}, {{a.alumno.nombre}}</h3>
+            <p>Legajo: {{a.alumno.legajo}}</p>
+            <p>Faltas : {{a.faltas}} <small ion-text color = "dark" (click) = "EstablecerFaltasAlumno(a)">ASIGNAR</small></p>
+            <button ion-button clear item-right color = "dark" (click) = "QuitarDelListadoAlumnos('Libre', a.alumno.idUsuario)">Quitar</button>
+          </ion-item>
+        </div>
+      </div>
     </ion-list>
 
     <button ion-button block (click) = 'AgregarDivision()' color = "secondary">Agregar</button>
