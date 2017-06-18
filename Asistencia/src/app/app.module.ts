@@ -16,6 +16,8 @@ import { AsistenciaAlumnoPage } from '../pages/asistencia-alumno/asistencia-alum
 
 //Administrativo
 import { HomeAdministrativoPage } from '../pages/home-administrativo/home-administrativo';
+import { ListadoAdministrativoPage } from '../pages/listado-administrativo/listado-administrativo';
+import { AsistenciaAdministrativoPage } from '../pages/asistencia-administrativo/asistencia-administrativo';
 
 //Administrador
 import { HomeAdministradorPage } from '../pages/home-administrador/home-administrador';
@@ -46,6 +48,8 @@ import { IonicStorageModule } from '@ionic/storage';
     MenuPage,
     HomeProfesorPage,
     HomeAdministrativoPage,
+    ListadoAdministrativoPage,
+    AsistenciaAdministrativoPage,
     HomeAdministradorPage,
     ListadoAdministradorPage,
     AgregarAdministradorPage,
@@ -79,6 +83,8 @@ import { IonicStorageModule } from '@ionic/storage';
     HomeAlumnoPage,
     HomeProfesorPage,
     HomeAdministrativoPage,
+    AsistenciaAdministrativoPage,
+    ListadoAdministrativoPage,
     HomeAdministradorPage,
     ListadoAdministradorPage,
     AgregarAdministradorPage,

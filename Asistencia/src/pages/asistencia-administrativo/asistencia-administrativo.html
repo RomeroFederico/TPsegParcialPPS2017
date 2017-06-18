@@ -1,0 +1,55 @@
+<ion-header>
+
+  <ion-navbar hideBackButton color = "danger">
+    <ion-buttons left>
+      <button ion-button (click)="Volver()">
+        <ion-icon class="customIcon" name="arrow-back"></ion-icon>
+      </button>
+    </ion-buttons>
+    <ion-label class = "titulo">Tomar Lista</ion-label>
+  </ion-navbar>
+
+</ion-header>
+
+<ion-content padding>
+
+  <ion-grid no-padding class = "miHeader administrador">
+
+      <ion-row>
+
+        <ion-col width-33 style = "padding: 10px 10px 0px 10px">
+
+            <img class = 'imagenPerfil' [src] = "'assets/images/materias/' + division.materia.img">
+
+        </ion-col>
+
+        <ion-col class = 'columnaCentrada' style = "padding-top: 10px;">
+
+          <div>
+          <h3 class = "tituloUsuario">{{division.nombre}}</h3>
+          
+          <p class = "subtituloUsuario">{{division.materia.nombre}}</p>
+          <p class = "subtituloUsuario">Turno {{division.turno}}</p>
+          </div>
+
+        </ion-col>
+
+      </ion-row>
+
+      <p class = "tipoUsuario">{{division.ciclo.CicloEnCadena}}</p>
+
+  </ion-grid>
+
+  <ion-list>
+
+    <ion-item *ngFor = "let alumno of alumnos">
+      <ion-avatar item-left>
+        <img [src] = "'assets/images/administrador/alumno/' + alumno.alumno.img">
+      </ion-avatar>
+      <ion-label><small>{{alumno.alumno.legajo}}: {{alumno.alumno.apellido}}, {{alumno.alumno.nombre}}</small></ion-label>
+      <ion-checkbox color = "danger" item-right [(ngModel)]="alumno.asistio"></ion-checkbox>
+    </ion-item>
+
+  </ion-list>
+
+</ion-content>
