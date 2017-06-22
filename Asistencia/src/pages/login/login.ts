@@ -25,7 +25,7 @@ export class LoginPage {
   mail:string;
   pass:string;
 
-  constructor(public navCtrl: NavController,private storage: Storage,public ws:Ws,private auth :Auth,public alert: AlertController) 
+  constructor(public navCtrl: NavController,private storage: Storage,public ws:Ws,private auth :Auth, public alert: AlertController) 
   {
     this.ws.TraerUsuarios().then(data => {console.log(data);});
   }
