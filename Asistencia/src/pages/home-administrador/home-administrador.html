@@ -156,6 +156,41 @@
       </ion-col>
     </ion-row>
 
+    <ion-row>
+      <ion-col class = "columnaOpcion">
+      <div [ngClass] = "animacionSeleccion[8]" (click) = "Seleccion(8)">
+      <ion-row class = "imgOpcion">
+        <ion-col class = "columnaCentrada">
+          <img src= "assets/images/administrador/agregar-ciclo.png"/>
+        </ion-col>
+      </ion-row>
+      <ion-row class = "opcion">
+        <ion-col class = "columnaCentrada">
+          <ion-col>
+            Agregar Ciclo
+          </ion-col>
+        </ion-col>
+      </ion-row>
+      </div>
+      </ion-col>
+      <ion-col class = "columnaOpcion">
+      <div [ngClass] = "animacionSeleccion[9]" (click) = "Seleccion(9)">
+      <ion-row class = "imgOpcion">
+        <ion-col class = "columnaCentrada">
+          <img src= "assets/images/administrador/salir.png"/>
+        </ion-col>
+      </ion-row>
+      <ion-row class = "opcion">
+        <ion-col class = "columnaCentrada">
+          <ion-col>
+            Salir
+          </ion-col>
+        </ion-col>
+      </ion-row>
+      </div>
+      </ion-col>
+    </ion-row>
+
   </ion-grid>
 
   <ion-grid class = "animated slideInUp" *ngIf = "iconos == 'Pequeños'">
@@ -293,6 +328,41 @@
       </ion-col>
     </ion-row>
 
+    <ion-row>
+      <ion-col col-3 class = "columnaOpcion">
+      <div [ngClass] = "animacionSeleccion[8]" (click) = "Seleccion(8)">
+      <ion-row class = "imgOpcion">
+        <ion-col class = "columnaCentrada">
+          <img src= "assets/images/administrador/agregar-ciclo.png"/>
+        </ion-col>
+      </ion-row>
+      <ion-row class = "opcion">
+        <ion-col class = "columnaCentrada">
+          <ion-col>
+            Agregar Ciclo
+          </ion-col>
+        </ion-col>
+      </ion-row>
+      </div>
+      </ion-col>
+      <ion-col col-3 class = "columnaOpcion">
+      <div [ngClass] = "animacionSeleccion[9]" (click) = "Seleccion(9)">
+      <ion-row class = "imgOpcion">
+        <ion-col class = "columnaCentrada">
+          <img src= "assets/images/administrador/salir.png"/>
+        </ion-col>
+      </ion-row>
+      <ion-row class = "opcion">
+        <ion-col class = "columnaCentrada">
+          <ion-col>
+            Salir
+          </ion-col>
+        </ion-col>
+      </ion-row>
+      </div>
+      </ion-col>
+    </ion-row>
+
   </ion-grid>
 
   <ion-list class = "animated slideInUp" *ngIf = "iconos == 'Lista'">
@@ -374,6 +444,26 @@
       </ion-thumbnail>
 
       <h2>Agregar Aula</h2>
+
+    </ion-item>
+
+    <ion-item [ngClass] = "animacionSeleccion[8]" (click) = "Seleccion(8)">
+
+      <ion-thumbnail item-left>
+        <img src= "assets/images/administrador/agregar-ciclo.png">
+      </ion-thumbnail>
+
+      <h2>Agregar Ciclo</h2>
+
+    </ion-item>
+
+    <ion-item [ngClass] = "animacionSeleccion[9]" (click) = "Seleccion(9)">
+
+      <ion-thumbnail item-left>
+        <img src= "assets/images/administrador/salir.png">
+      </ion-thumbnail>
+
+      <h2>Salir</h2>
 
     </ion-item>
 

@@ -1,15 +1,382 @@
 <ion-header>
-  <ion-navbar>
+  <ion-navbar color = "danger">
     <button ion-button menuToggle>
       <ion-icon name="menu"></ion-icon>
     </button>
-    <ion-title>Principal Administrativo</ion-title>
+    <ion-buttons right>
+      <button ion-button (click)="MostrarOpcionesVista()">
+        <ion-icon name="color-fill"></ion-icon>
+      </button>
+    </ion-buttons>
+    <ion-title>Administrativo</ion-title>
   </ion-navbar>
 </ion-header>
 
+<ion-content padding class = "home" text-center>
 
-<ion-content padding>
+  <ion-grid class = "animated slideInUp" *ngIf = "iconos == 'Grandes'">
 
-  Bienvenido ADMINISTRATIVO
+    <ion-row>
+      <ion-col class = "columnaOpcion">
+      <div [ngClass] = "animacionSeleccion[0]" (click) = "Seleccion(0)">
+      <ion-row class = "imgOpcion">
+        <ion-col class = "columnaCentrada">
+          <img src= "assets/images/administrativo/asistencia.png"/>
+        </ion-col>
+      </ion-row>
+      <ion-row class = "opcion">
+        <ion-col class = "columnaCentrada">
+          <ion-col>
+            Tomar Asistencias
+          </ion-col>
+        </ion-col>
+      </ion-row>
+      </div>
+      </ion-col>
+      <ion-col class = "columnaOpcion">
+      <div [ngClass] = "animacionSeleccion[1]" (click) = "Seleccion(1)">
+      <ion-row class = "imgOpcion">
+        <ion-col class = "columnaCentrada">
+          <img src= "assets/images/administrativo/datos.png"/>
+        </ion-col>
+      </ion-row>
+      <ion-row class = "opcion">
+        <ion-col class = "columnaCentrada">
+          <ion-col>
+            Mis Datos
+          </ion-col>
+        </ion-col>
+      </ion-row>
+      </div>
+      </ion-col>
+    </ion-row>
+
+    <ion-row>
+      <ion-col class = "columnaOpcion">
+      <div [ngClass] = "animacionSeleccion[2]" (click) = "Seleccion(2)">
+      <ion-row class = "imgOpcion">
+        <ion-col class = "columnaCentrada">
+          <img src= "assets/images/administrativo/divisiones.png"/>
+        </ion-col>
+      </ion-row>
+      <ion-row class = "opcion">
+        <ion-col class = "columnaCentrada">
+          <ion-col>
+            Listado de Divisiones
+          </ion-col>
+        </ion-col>
+      </ion-row>
+      </div>
+      </ion-col>
+      <ion-col class = "columnaOpcion">
+      <div [ngClass] = "animacionSeleccion[3]" (click) = "Seleccion(3)">
+      <ion-row class = "imgOpcion">
+        <ion-col class = "columnaCentrada">
+          <img src= "assets/images/administrativo/alumnos.png"/>
+        </ion-col>
+      </ion-row>
+      <ion-row class = "opcion">
+        <ion-col class = "columnaCentrada">
+          <ion-col>
+            Listado de Alumnos
+          </ion-col>
+        </ion-col>
+      </ion-row>
+      </div>
+      </ion-col>
+    </ion-row>
+
+    <ion-row>
+      <ion-col class = "columnaOpcion">
+      <div [ngClass] = "animacionSeleccion[4]" (click) = "Seleccion(4)">
+      <ion-row class = "imgOpcion">
+        <ion-col class = "columnaCentrada">
+          <img src= "assets/images/administrativo/profesores.png"/>
+        </ion-col>
+      </ion-row>
+      <ion-row class = "opcion">
+        <ion-col class = "columnaCentrada">
+          <ion-col>
+            Listado de Profesores
+          </ion-col>
+        </ion-col>
+      </ion-row>
+      </div>
+      </ion-col>
+      <ion-col class = "columnaOpcion">
+      <div [ngClass] = "animacionSeleccion[5]" (click) = "Seleccion(5)">
+      <ion-row class = "imgOpcion">
+        <ion-col class = "columnaCentrada">
+          <img src= "assets/images/administrativo/calendario.png"/>
+        </ion-col>
+      </ion-row>
+      <ion-row class = "opcion">
+        <ion-col class = "columnaCentrada">
+          <ion-col>
+            Ver Calendario
+          </ion-col>
+        </ion-col>
+      </ion-row>
+      </div>
+      </ion-col>
+    </ion-row>
+
+    <ion-row>
+      <ion-col class = "columnaOpcion">
+      <div [ngClass] = "animacionSeleccion[6]" (click) = "Seleccion(6)">
+      <ion-row class = "imgOpcion">
+        <ion-col class = "columnaCentrada">
+          <img src= "assets/images/administrativo/notificacion.png"/>
+        </ion-col>
+      </ion-row>
+      <ion-row class = "opcion">
+        <ion-col class = "columnaCentrada">
+          <ion-col>
+            Notificaciones
+          </ion-col>
+        </ion-col>
+      </ion-row>
+      </div>
+      </ion-col>
+      <ion-col class = "columnaOpcion">
+      <div [ngClass] = "animacionSeleccion[7]" (click) = "Seleccion(7)">
+      <ion-row class = "imgOpcion">
+        <ion-col class = "columnaCentrada">
+          <img src= "assets/images/administrativo/salir.png"/>
+        </ion-col>
+      </ion-row>
+      <ion-row class = "opcion">
+        <ion-col class = "columnaCentrada">
+          <ion-col>
+            Salir
+          </ion-col>
+        </ion-col>
+      </ion-row>
+      </div>
+      </ion-col>
+    </ion-row>
+
+  </ion-grid>
+
+  <ion-grid class = "animated slideInUp" *ngIf = "iconos == 'Pequeños'">
+
+    <ion-row>
+      <ion-col class = "columnaOpcion">
+      <div [ngClass] = "animacionSeleccion[0]" (click) = "Seleccion(0)">
+      <ion-row class = "imgOpcion">
+        <ion-col class = "columnaCentrada">
+          <img src= "assets/images/administrativo/asistencia.png"/>
+        </ion-col>
+      </ion-row>
+      <ion-row class = "opcion">
+        <ion-col class = "columnaCentrada">
+          <ion-col>
+            Tomar Asistencias
+          </ion-col>
+        </ion-col>
+      </ion-row>
+      </div>
+      </ion-col>
+      <ion-col class = "columnaOpcion">
+      <div [ngClass] = "animacionSeleccion[1]" (click) = "Seleccion(1)">
+      <ion-row class = "imgOpcion">
+        <ion-col class = "columnaCentrada">
+          <img src= "assets/images/administrativo/datos.png"/>
+        </ion-col>
+      </ion-row>
+      <ion-row class = "opcion">
+        <ion-col class = "columnaCentrada">
+          <ion-col>
+            Mis Datos
+          </ion-col>
+        </ion-col>
+      </ion-row>
+      </div>
+      </ion-col>
+      <ion-col class = "columnaOpcion">
+      <div [ngClass] = "animacionSeleccion[2]" (click) = "Seleccion(2)">
+      <ion-row class = "imgOpcion">
+        <ion-col class = "columnaCentrada">
+          <img src= "assets/images/administrativo/divisiones.png"/>
+        </ion-col>
+      </ion-row>
+      <ion-row class = "opcion">
+        <ion-col class = "columnaCentrada">
+          <ion-col>
+            Listado de Divisiones
+          </ion-col>
+        </ion-col>
+      </ion-row>
+      </div>
+      </ion-col>
+      <ion-col class = "columnaOpcion">
+      <div [ngClass] = "animacionSeleccion[3]" (click) = "Seleccion(3)">
+      <ion-row class = "imgOpcion">
+        <ion-col class = "columnaCentrada">
+          <img src= "assets/images/administrativo/alumnos.png"/>
+        </ion-col>
+      </ion-row>
+      <ion-row class = "opcion">
+        <ion-col class = "columnaCentrada">
+          <ion-col>
+            Listado de Alumnos
+          </ion-col>
+        </ion-col>
+      </ion-row>
+      </div>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col col-3 class = "columnaOpcion">
+      <div [ngClass] = "animacionSeleccion[4]" (click) = "Seleccion(4)">
+      <ion-row class = "imgOpcion">
+        <ion-col class = "columnaCentrada">
+          <img src= "assets/images/administrativo/profesores.png"/>
+        </ion-col>
+      </ion-row>
+      <ion-row class = "opcion">
+        <ion-col class = "columnaCentrada">
+          <ion-col>
+            Listado de Profesores
+          </ion-col>
+        </ion-col>
+      </ion-row>
+      </div>
+      </ion-col>
+      <ion-col col-3 class = "columnaOpcion">
+      <div [ngClass] = "animacionSeleccion[5]" (click) = "Seleccion(5)">
+      <ion-row class = "imgOpcion">
+        <ion-col class = "columnaCentrada">
+          <img src= "assets/images/administrativo/calendario.png"/>
+        </ion-col>
+      </ion-row>
+      <ion-row class = "opcion">
+        <ion-col class = "columnaCentrada">
+          <ion-col>
+            Ver Calendario
+          </ion-col>
+        </ion-col>
+      </ion-row>
+      </div>
+      </ion-col>
+      <ion-col col-3 class = "columnaOpcion">
+      <div [ngClass] = "animacionSeleccion[6]" (click) = "Seleccion(6)">
+      <ion-row class = "imgOpcion">
+        <ion-col class = "columnaCentrada">
+          <img src= "assets/images/administrativo/notificacion.png"/>
+        </ion-col>
+      </ion-row>
+      <ion-row class = "opcion">
+        <ion-col class = "columnaCentrada">
+          <ion-col>
+            Notificaciones
+          </ion-col>
+        </ion-col>
+      </ion-row>
+      </div>
+      </ion-col>
+      <ion-col col-3 class = "columnaOpcion">
+      <div [ngClass] = "animacionSeleccion[7]" (click) = "Seleccion(7)">
+      <ion-row class = "imgOpcion">
+        <ion-col class = "columnaCentrada">
+          <img src= "assets/images/administrativo/salir.png"/>
+        </ion-col>
+      </ion-row>
+      <ion-row class = "opcion">
+        <ion-col class = "columnaCentrada">
+          <ion-col>
+            Salir
+          </ion-col>
+        </ion-col>
+      </ion-row>
+      </div>
+      </ion-col>
+    </ion-row>
+
+  </ion-grid>
+
+  <ion-list class = "animated slideInUp" *ngIf = "iconos == 'Lista'">
+
+    <ion-item [ngClass] = "animacionSeleccion[0]" (click) = "Seleccion(0)">
+
+      <ion-thumbnail item-left>
+        <img src= "assets/images/administrativo/asistencia.png">
+      </ion-thumbnail>
+
+      <h2>Tomar Asistencias</h2>
+
+    </ion-item>
+
+    <ion-item [ngClass] = "animacionSeleccion[1]" (click) = "Seleccion(1)">
+
+      <ion-thumbnail item-left>
+        <img src= "assets/images/administrativo/datos.png">
+      </ion-thumbnail>
+
+      <h2>Mis Datos</h2>
+
+    </ion-item>
+
+    <ion-item [ngClass] = "animacionSeleccion[2]" (click) = "Seleccion(2)">
+
+      <ion-thumbnail item-left>
+        <img src= "assets/images/administrativo/divisiones.png">
+      </ion-thumbnail>
+
+      <h2>Listado de Divisiones</h2>
+
+    </ion-item>
+
+    <ion-item [ngClass] = "animacionSeleccion[3]" (click) = "Seleccion(3)">
+
+      <ion-thumbnail item-left>
+        <img src= "assets/images/administrativo/alumnos.png">
+      </ion-thumbnail>
+
+      <h2>Listado de Alumnos</h2>
+
+    </ion-item>
+
+    <ion-item [ngClass] = "animacionSeleccion[4]" (click) = "Seleccion(4)">
+
+      <ion-thumbnail item-left>
+        <img src= "assets/images/administrativo/profesores.png">
+      </ion-thumbnail>
+
+      <h2>Listado de Profesores</h2>
+
+    </ion-item>
+
+    <ion-item [ngClass] = "animacionSeleccion[5]" (click) = "Seleccion(5)">
+
+      <ion-thumbnail item-left>
+        <img src= "assets/images/administrativo/calendario.png">
+      </ion-thumbnail>
+
+      <h2>Ver Calendario</h2>
+
+    </ion-item>
+
+    <ion-item [ngClass] = "animacionSeleccion[6]" (click) = "Seleccion(6)">
+
+      <ion-thumbnail item-left>
+        <img src= "assets/images/administrativo/notificacion.png">
+      </ion-thumbnail>
+
+      <h2>Notificaciones</h2>
+
+    </ion-item>
+
+    <ion-item [ngClass] = "animacionSeleccion[9]" (click) = "Seleccion(9)">
+
+      <ion-thumbnail item-left>
+        <img src= "assets/images/administrativo/salir.png">
+      </ion-thumbnail>
+
+      <h2>Salir</h2>
+
+    </ion-item>
+
+  </ion-list>
 
 </ion-content>
