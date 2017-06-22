@@ -88,6 +88,13 @@ export class Ws
     .then(this.extractData)
     .catch(this.handleError);
   }
+  TraerDivisionesDelDia()
+  {
+    return this.http.get('http://asistencianull.hol.es/index.php/divisiones/dia')
+    .toPromise()
+    .then(this.extractData)
+    .catch(this.handleError);
+  }
   AgregarDivision(obj)
   {
     return this.http.get("http://asistencianull.hol.es/index.php/agregar/division/"+JSON.stringify(obj))

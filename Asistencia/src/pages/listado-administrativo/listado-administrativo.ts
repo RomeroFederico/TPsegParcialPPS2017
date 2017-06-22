@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams } from 'ionic-angular';
+import { NavController, NavParams, LoadingController, AlertController } from 'ionic-angular';
+
+import { Ws } from '../../providers/ws';
 
 import { HomeAdministrativoPage } from '../home-administrativo/home-administrativo';
 import { AsistenciaAdministrativoPage } from '../asistencia-administrativo/asistencia-administrativo';
@@ -17,7 +19,8 @@ import { Materia } from '../../components/clases/materia';
 
 @Component({
   selector: 'page-listado-administrativo',
-  templateUrl: 'listado-administrativo.html'
+  templateUrl: 'listado-administrativo.html',
+  providers: [Ws]
 })
 export class ListadoAdministrativoPage {
 
@@ -32,7 +35,7 @@ export class ListadoAdministrativoPage {
   // materiasBase : Array<Materia>;
 
   divisionesBase : Array<Division>;
-  divisiones : Array<Division>;
+  divisiones : Array<Division> = null;
 
   // aulasBase : Array<Aula>;
   // aulas : Array<Aula>;
@@ -42,7 +45,10 @@ export class ListadoAdministrativoPage {
 
   eventoFiltrar : any;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams)
+  cargando : any = null;
+
+  constructor(public navCtrl: NavController, public navParams: NavParams, public ws : Ws, 
+              public loadingController : LoadingController, public alertCtrl: AlertController)
   {
     this.opciones = this.navParams.get("opciones");
     console.log(this.opciones);
@@ -50,7 +56,7 @@ export class ListadoAdministrativoPage {
     if (this.opciones.tipo == "Asistencia")
     {
       this.CargarDivisionesConActividades();
-      this.InicializarListadoDivisionesConActividades();
+      //this.InicializarListadoDivisionesConActividades();
       this.buscar = "Materia";
     }
     // else if (this.opciones.tipo == "Division")
@@ -88,6 +94,17 @@ export class ListadoAdministrativoPage {
   {
     // Le paso por ahora la division completa, luego se pasara la id solamente para trabajar con la base de datos.
     this.navCtrl.push(AsistenciaAdministrativoPage, {division : division});
+  }
+
+  MostrarLoading(mensaje : string) 
+  {
+    this.cargando = this.loadingController.create({
+      spinner: 'bubbles',
+      content: `Cargando ` + mensaje + `, 
+      Por Favor Espere un Momento...`,
+    });
+
+    this.cargando.present();
   }
 
   // /**
@@ -143,63 +160,115 @@ export class ListadoAdministrativoPage {
   */
   CargarDivisionesConActividades()
   {
-    this.divisionesBase = new Array<Division>();
+    // this.divisionesBase = new Array<Division>();
 
-    this.divisionesBase.push(new Division(1, new Aula(1, "103", 1), new Materia(1, "Arquitectura y Diseño de Bases de Datos", "default.png"),
-                                      new Profesor(2, "dos", "DOS", "456", "1002", "b@b.com", "789999", 35, "default.png"),
-                                      "4-A", new Ciclo(1, 2017, 1), "Mañana", new Date(2017, 3, 25), new Date(2017, 7, 5), "08:00", 
-                                      ["Martes"], "En curso", 20, 10, 15, 5, new Date(2017, 5, 25)));
-    this.divisionesBase.push(new Division(2, new Aula(1, "103", 1), new Materia(2, "Matematica III", "default.png"),
-                                      new Profesor(4, "cuatro", "CUATRO", "789", "1004", "d@d.com", "aw9999", 40, "default.png"),
-                                      "5-A", new Ciclo(1, 2017, 1), "Mañana",new Date(2017, 3, 25), new Date(2017, 7, 5), "08:00", 
-                                      ["Miercoles", "Viernes"], "En curso", 18, 9, 15, 4, new Date(2017, 5, 28)));
+    // this.divisionesBase.push(new Division(1, new Aula(1, "103", 1), new Materia(1, "Arquitectura y Diseño de Bases de Datos", "default.png"),
+    //                                   new Profesor(2, "dos", "DOS", "456", "1002", "b@b.com", "789999", 35, "default.png"),
+    //                                   "4-A", new Ciclo(1, 2017, 1), "Mañana", new Date(2017, 3, 25), new Date(2017, 7, 5), "08:00", 
+    //                                   ["Martes"], "En curso", 20, 10, 15, 5, new Date(2017, 5, 25)));
+    // this.divisionesBase.push(new Division(2, new Aula(1, "103", 1), new Materia(2, "Matematica III", "default.png"),
+    //                                   new Profesor(4, "cuatro", "CUATRO", "789", "1004", "d@d.com", "aw9999", 40, "default.png"),
+    //                                   "5-A", new Ciclo(1, 2017, 1), "Mañana",new Date(2017, 3, 25), new Date(2017, 7, 5), "08:00", 
+    //                                   ["Miercoles", "Viernes"], "En curso", 18, 9, 15, 4, new Date(2017, 5, 28)));
 
-    var materias = new Array<Materia>();
-    var aulas = new Array<Aula>();
-    var profesor = new Profesor(4, "cuatro", "CUATRO", "789", "1004", "d@d.com", "aw9999", 40, "default.png");
+    // var materias = new Array<Materia>();
+    // var aulas = new Array<Aula>();
+    // var profesor = new Profesor(4, "cuatro", "CUATRO", "789", "1004", "d@d.com", "aw9999", 40, "default.png");
 
-    materias.push(new Materia(1,"Matematica I","default.png"));
-    materias.push(new Materia(2,"Programacion I","java.png"));
-    materias.push(new Materia(3,"Laboratorio I","javascript.png"));
-    materias.push(new Materia(4,"Ingles I","xml.png"));
+    // materias.push(new Materia(1,"Matematica I","default.png"));
+    // materias.push(new Materia(2,"Programacion I","java.png"));
+    // materias.push(new Materia(3,"Laboratorio I","javascript.png"));
+    // materias.push(new Materia(4,"Ingles I","xml.png"));
 
-    aulas.push(new Aula(1,"100-A",3));
-    aulas.push(new Aula(2,"LAB-1",2));
+    // aulas.push(new Aula(1,"100-A",3));
+    // aulas.push(new Aula(2,"LAB-1",2));
 
-    this.divisionesBase.push(new Division
-    (1,aulas[0],materias[0],
-    profesor,"1-A",new Ciclo(1, 2017, 1), "Mañana",
-    new Date(2017,3,16),new Date(2017,6,20),"8:30 am",
-    ["Jueves","Martes"],"Cursando",
-    30,20,16,1,new Date(2017,3,17)));
+    // this.divisionesBase.push(new Division
+    // (1,aulas[0],materias[0],
+    // profesor,"1-A",new Ciclo(1, 2017, 1), "Mañana",
+    // new Date(2017,3,16),new Date(2017,6,20),"8:30 am",
+    // ["Jueves","Martes"],"Cursando",
+    // 30,20,16,1,new Date(2017,3,17)));
 
-    this.divisionesBase.push(new Division
-    (2,aulas[0],materias[3],
-    profesor,"1-B",new Ciclo(1, 2017, 1), "Mañana",
-    new Date(2017,3,16),new Date(2017,6,20),"8:30 am",
-    ["Martes"],"Cursando",
-    30,20,16,1,new Date(2017,3,17)));
+    // this.divisionesBase.push(new Division
+    // (2,aulas[0],materias[3],
+    // profesor,"1-B",new Ciclo(1, 2017, 1), "Mañana",
+    // new Date(2017,3,16),new Date(2017,6,20),"8:30 am",
+    // ["Martes"],"Cursando",
+    // 30,20,16,1,new Date(2017,3,17)));
 
-    this.divisionesBase.push(new Division
-    (3,aulas[1],materias[1],
-    profesor,"1-C",new Ciclo(1, 2017, 1), "Mañana",
-    new Date(2017,3,16),new Date(2017,6,20),"8:30 am",
-    ["Lunes"],"Cursando",
-    30,20,16,1,new Date(2017,3,17)));
+    // this.divisionesBase.push(new Division
+    // (3,aulas[1],materias[1],
+    // profesor,"1-C",new Ciclo(1, 2017, 1), "Mañana",
+    // new Date(2017,3,16),new Date(2017,6,20),"8:30 am",
+    // ["Lunes"],"Cursando",
+    // 30,20,16,1,new Date(2017,3,17)));
 
-    this.divisionesBase.push(new Division
-    (4,aulas[1],materias[2],
-    profesor,"2-A",new Ciclo(1, 2017, 1), "Mañana",
-    new Date(2017,3,16),new Date(2017,6,20),"8:30 am",
-    ["Miercoles"],"Cursando",
-    30,20,16,1,new Date(2017,3,17)));
+    // this.divisionesBase.push(new Division
+    // (4,aulas[1],materias[2],
+    // profesor,"2-A",new Ciclo(1, 2017, 1), "Mañana",
+    // new Date(2017,3,16),new Date(2017,6,20),"8:30 am",
+    // ["Miercoles"],"Cursando",
+    // 30,20,16,1,new Date(2017,3,17)));
 
-    this.divisionesBase.push(new Division
-    (4,aulas[1],materias[2],
-    profesor,"2-B",new Ciclo(1, 2017, 1), "Mañana",
-    new Date(2017,3,16),new Date(2017,6,20),"8:30 am",
-    ["Miercoles"],"Cursando",
-    30,20,16,1,new Date(2017,3,17)));
+    // this.divisionesBase.push(new Division
+    // (4,aulas[1],materias[2],
+    // profesor,"2-B",new Ciclo(1, 2017, 1), "Mañana",
+    // new Date(2017,3,16),new Date(2017,6,20),"8:30 am",
+    // ["Miercoles"],"Cursando",
+    // 30,20,16,1,new Date(2017,3,17)));
+
+    this.MostrarLoading("divisiones con actividades en el dia");
+
+    this.ws.TraerDivisionesDelDia().then((data) => {
+
+      this.cargando.dismiss()
+      console.log(data);
+
+      if (data.Exito)
+
+      {
+        this.divisionesBase = data.Divisiones;
+
+        for (var i = 0; i < this.divisionesBase.length; i++) {
+          this.divisionesBase[i].materia = new Materia(data.Divisiones[i].idMateria, data.Divisiones[i].nombreMateria, data.Divisiones[i].img);
+          this.divisionesBase[i].ciclo = new Ciclo(data.Divisiones[i].idCiclo, data.Divisiones[i].anio, data.Divisiones[i].cuatrimestre)
+        }
+
+        this.InicializarListadoDivisionesConActividades();
+      }
+
+    })
+    .catch((error) => {
+
+      this.cargando.dismiss();
+      this.ReintentarCargarDivisionesDia();
+      console.log(error);
+
+    });
+  }
+
+  ReintentarCargarDivisionesDia()
+  {
+    let confirm = this.alertCtrl.create({
+      title: 'Error en el servidor',
+      message: 'Desea reintentar la carga de divisiones?',
+      buttons: [
+        {
+          text: 'Cancelar',
+          handler: () => {
+            this.navCtrl.setRoot(HomeAdministrativoPage);
+          }
+        },
+        {
+          text: 'Aceptar',
+          handler: () => {
+            this.CargarDivisionesConActividades();
+          }
+        }
+      ]
+    });
+    confirm.present();
   }
 
   // /**
