@@ -35,10 +35,36 @@ import { ListadoDivisionesProfesorPage } from '../pages/listado-divisiones-profe
 import { DatosDivisionProfesorPage } from '../pages/datos-division-profesor/datos-division-profesor';
 import { NotificacionesProfesorPage } from '../pages/notificaciones-profesor/notificaciones-profesor';
 
+//JWT
+import { JwtModule } from './jwt/jwt.module';
+import { AuthHttp, AuthConfig, AUTH_PROVIDERS, provideAuth } from 'angular2-jwt';
+import { Ws } from '../providers/ws';
+import { Auth } from '../providers/auth';
+import { VerificarJwt } from '../providers/verificar-jwt';
+
+//FIREBASE
+import { AngularFireModule } from 'angularfire2';
+import { AngularFireAuth } from 'angularfire2/auth';
+import { AngularFireDatabase } from 'angularfire2/database';
+
+
+//OTROS
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { IonicStorageModule } from '@ionic/storage';
 
+var configFirebase  = {
+  production: false,
+  firebase: {
+    apiKey: "AIzaSyAHaZ6UCqpBi9HPJv_d5VA-V8p7npCIybE",
+    authDomain: "asistencia-324ef.firebaseapp.com",
+    databaseURL: "https://asistencia-324ef.firebaseio.com",
+    projectId: "asistencia-324ef",
+    storageBucket: "asistencia-324ef.appspot.com",
+    messagingSenderId: "539446481174"
+  
+  }
+};
 
 
 @NgModule({
@@ -73,6 +99,7 @@ import { IonicStorageModule } from '@ionic/storage';
     BrowserModule,
     HttpModule,
     IonicModule.forRoot(MyApp),
+    AngularFireModule.initializeApp(configFirebase.firebase),
     IonicStorageModule.forRoot()
   ],
   bootstrap: [IonicApp],
@@ -103,6 +130,17 @@ import { IonicStorageModule } from '@ionic/storage';
     AsistenciaAlumnoPage
   ],
   providers: [
+    Auth,VerificarJwt,AuthHttp,AuthHttp,
+        provideAuth({
+            headerName: 'Authorization',
+            headerPrefix: 'bearer',
+            tokenName: 'token',
+            tokenGetter: (() => localStorage.getItem('token')),
+            globalHeaders: [{ 'Content-Type': 'application/json' }],
+            noJwtError: true
+        }),
+    AngularFireAuth,
+    AngularFireDatabase,
     StatusBar,
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler}

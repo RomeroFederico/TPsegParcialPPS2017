@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { NavController,NavParams,AlertController } from 'ionic-angular';
+import { Auth } from '../../providers/auth';
 
 import { LoginPage } from '../login/login';
 import { HomeAlumnoPage } from '../home-alumno/home-alumno';
@@ -14,6 +15,7 @@ import { ListadoMateriasProfesorPage } from '../listado-materias-profesor/listad
 import { NotificacionesProfesorPage } from '../notificaciones-profesor/notificaciones-profesor';
 
 @Component({
+  providers:[Auth],
   selector: 'page-menu',
   templateUrl: 'menu.html'
 })
@@ -23,7 +25,7 @@ export class MenuPage {
   rootPage: any; //Pagina Principal
   tipo:string = "";
 
-  constructor(public navCtrl: NavController,public alertCtrl: AlertController, public navParams: NavParams) 
+  constructor(public navCtrl: NavController,public alertCtrl: AlertController, public navParams: NavParams,private auth : Auth) 
   {
     this.tipo = this.navParams.get("Tipo");
 
@@ -70,6 +72,8 @@ export class MenuPage {
         {
           text: 'Aceptar',
           handler: () => {
+            this.auth.logOut();
+            localStorage.setItem('usuario', null);
             this.navCtrl.setRoot(LoginPage);
             console.log("Cerrando sesion!");
           }
