@@ -83,7 +83,7 @@
     </ion-item>
     <ion-searchbar (ionInput)="getItems($event)" placeholder = '...'></ion-searchbar>
 
-    <ion-list>
+    <ion-list *ngIf = "divisiones != null">
       <ion-item *ngFor="let division of divisiones" text-wrap (click) = "TomarLista(division)">
             <ion-thumbnail item-left>
               <img [src] = "'assets/images/materias/' + division.materia.img">
@@ -117,6 +117,8 @@
             </ion-grid>
       </ion-item>
     </ion-list>
+
+    <ion-label *ngIf = "divisiones == null"><ion-icon name="information-circle" color = "danger"></ion-icon> No hay divisiones para mostrar.</ion-label>
 
   </div>
 
