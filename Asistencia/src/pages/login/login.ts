@@ -103,8 +103,12 @@ export class LoginPage {
             console.log("Datos correctos!...Iniciando sesion!");
             localStorage.setItem('token', data.token);
             console.log(this.auth.getToken());
-            this.ws.GetJwt().then(data => {console.log(data.rta.usuario);localStorage.setItem("usuario",JSON.stringify(data.rta.usuario));});
-            this.AlertCorrecto();
+            this.ws.GetJwt().then(data => 
+            {
+              console.log(data.rta.usuario);
+              localStorage.setItem("usuario",JSON.stringify(data.rta.usuario));
+              this.AlertCorrecto(data.rta.usuario.nombre);
+            });
             this.navCtrl.setRoot(MenuPage,{Tipo:this.tipo});
         }
         else
@@ -115,10 +119,10 @@ export class LoginPage {
     });
     
   }
-  AlertCorrecto()
+  AlertCorrecto(nombre)
   {
     let alert = this.alert.create({
-      title: 'Bienvenido!',
+      title: 'Bienvenido! '+nombre,
       buttons: ['OK']
     });
     alert.present();

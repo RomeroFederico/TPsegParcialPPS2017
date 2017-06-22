@@ -18,8 +18,8 @@ export class DatosProfesorPage {
   constructor(public navCtrl: NavController, public navParams: NavParams,private storage: Storage) 
   {
     
-    console.log(this.storage.get("Profesor"));
-    this.storage.get("Profesor").then(data => {this.profesor=data});
+    this.profesor=JSON.parse(localStorage.getItem("usuario"));
+    console.log(this.profesor);
     console.log(this.fecha.toDateString());
   }
   
