@@ -24,8 +24,9 @@ export class LoginPage {
 
   mail:string;
   pass:string;
+  loading;
 
-  constructor(public navCtrl: NavController,private storage: Storage,public ws:Ws,private auth :Auth, public alert: AlertController) 
+  constructor(public navCtrl: NavController,private storage: Storage,public ws:Ws,private auth :Auth, public alert: AlertController,public loading2:LoadingController) 
   {
     this.ws.TraerUsuarios().then(data => {console.log(data);});
   }
@@ -95,11 +96,15 @@ export class LoginPage {
         break;
     }
     var obj = {email:this.mail,password:this.pass};
+    this.MostrarLoading();
     this.ws.Login(obj).then(data => 
     {
-      console.log(data);//EN EL DATA DEVUELVE TRUE SI EL MAIL Y EL PASS COINCIDEN EN LA BASE DE DATOS
+      //console.log(data);//EN EL DATA DEVUELVE TRUE SI EL MAIL Y EL PASS COINCIDEN EN LA BASE DE DATOS
+      
+      console.log(data);
         if (data.exito==true) 
         {
+            this.loading.dismiss();
             console.log("Datos correctos!...Iniciando sesion!");
             localStorage.setItem('token', data.token);
             console.log(this.auth.getToken());
@@ -113,11 +118,24 @@ export class LoginPage {
         }
         else
         {
+          this.loading.dismiss();
           this.AlertIncorrecto();
             console.log("Datos Incorrectos... Reingrese!");
         }     
     });
     
+  }
+    MostrarLoading() 
+  {
+    let loading = this.loading2.create({
+      spinner: 'bubbles',
+      content: `Cargando, 
+      Por Favor Espere un Momento...`,
+    });
+
+    this.loading = loading;
+
+    this.loading.present();
   }
   AlertCorrecto(nombre)
   {
