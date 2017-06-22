@@ -18,22 +18,70 @@ export class Ws
   {
     console.log('Hello Ws Provider');
   }
+
+  TraerUsuarios()
+  {
+    return this.http.get('http://asistencianull.hol.es/index.php/usuarios')
+    .toPromise()
+    .then(this.extractData)
+    .catch(this.handleError);
+  }
+  AgregarUsuario(obj)
+  {
+    return this.http.get("http://asistencianull.hol.es/index.php/agregar/usuario/"+JSON.stringify(obj))
+    .toPromise()
+    .then( this.extractData )
+    .catch( this.handleError );
+  }
+  ModificarUsuario(obj)
+  {
+    return this.http.get("http://asistencianull.hol.es/index.php/modificar/usuario/"+JSON.stringify(obj))
+    .toPromise()
+    .then( this.extractData )
+    .catch( this.handleError );
+  }
+  EliminarUsuario(id)
+  {
+    return this.http.get("http://asistencianull.hol.es/index.php/eliminar/usuario/"+id)
+    .toPromise()
+    .then( this.extractData )
+    .catch( this.handleError );
+  }
+  TraerMaterias()
+  {
+    return this.http.get('http://asistencianull.hol.es/index.php/materias')
+    .toPromise()
+    .then(this.extractData)
+    .catch(this.handleError);
+  }
+  TraerAulas()
+  {
+    return this.http.get('http://asistencianull.hol.es/index.php/aulas')
+    .toPromise()
+    .then(this.extractData)
+    .catch(this.handleError);
+  }
+  TraerDivisiones()
+  {
+    return this.http.get('http://asistencianull.hol.es/index.php/divisiones')
+    .toPromise()
+    .then(this.extractData)
+    .catch(this.handleError);
+  }
+  AgregarDivision(obj)
+  {
+    return this.http.get("http://asistencianull.hol.es/index.php/agregar/division/"+JSON.stringify(obj))
+    .toPromise()
+    .then( this.extractData )
+    .catch( this.handleError );
+  
+  }
   private extractData(res: Response) 
   {
     let body = res.json();    
     
     return body || { };
   }
-
-  TraerDatos() {
-    return this.http.get('https://restcountries.eu/rest/v1/all')
-    .toPromise()
-    .then(this.extractData)
-    .catch(this.handleError);
-   /** return this.http.get('http://www.osmar.hol.es/index.php/usuarios')
-      .map(response => response.json());*/
-  }
-
   private handleError (error: Response | any) 
   {
     // In a real world app, you might use a remote logging infrastructure

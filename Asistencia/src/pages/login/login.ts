@@ -27,8 +27,7 @@ export class LoginPage {
 
   constructor(public navCtrl: NavController,private storage: Storage,public ws:Ws) 
   {
-    this.ws.TraerDatos().then(data => {console.log(data);});
-
+    this.ws.TraerUsuarios().then(data => {console.log(data);});
   }
   Aceptar(tipo)
   {
