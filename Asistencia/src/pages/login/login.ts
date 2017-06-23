@@ -8,7 +8,7 @@ import { Administrativo } from '../../components/clases/administrativo';
 import { Usuario } from '../../components/clases/usuario';
 import { Auth } from '../../providers/auth';
 import { Ws } from '../../providers/ws';
-
+import { AngularFireDatabase, FirebaseListObservable } from 'angularfire2/database';
 @Component({
   providers:[Ws,Auth],
   selector: 'page-login',
@@ -24,10 +24,18 @@ export class LoginPage {
 
   mail:string;
   pass:string;
+  listado : FirebaseListObservable<any[]>;
   loading;
 
-  constructor(public navCtrl: NavController,private storage: Storage,public ws:Ws,private auth :Auth, public alert: AlertController,public loading2:LoadingController) 
+  constructor(public navCtrl: NavController,
+              private storage: Storage,
+              public ws:Ws,private auth :Auth, 
+              public alert: AlertController,
+              public loading2:LoadingController,
+              private firebase: AngularFireDatabase ) 
   {
+    this.listado=firebase.list('/Lista');//CARGO LA LISTA.
+    this.listado.subscribe(data => {console.log("Datos de firebase: ");console.log(data);});//MUESTRO LAS DATOS DE LAS LISTAS.
     this.ws.TraerUsuarios().then(data => {console.log(data);});
   }
   Aceptar(tipo)
