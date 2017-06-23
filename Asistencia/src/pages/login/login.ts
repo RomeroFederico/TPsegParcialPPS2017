@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { AlertController, NavController, NavParams, LoadingController } from 'ionic-angular';
+import { AlertController, NavController, NavParams, LoadingController,ToastController } from 'ionic-angular';
 import { Storage } from '@ionic/storage';
 import { MenuPage } from '../menu/menu';
 import { Profesor } from '../../components/clases/profesor';
@@ -9,8 +9,12 @@ import { Usuario } from '../../components/clases/usuario';
 import { Auth } from '../../providers/auth';
 import { Ws } from '../../providers/ws';
 import { AngularFireDatabase, FirebaseListObservable } from 'angularfire2/database';
+
+import { NativeAudio } from '@ionic-native/native-audio';
+import { Vibration } from '@ionic-native/vibration';
+
 @Component({
-  providers:[Ws,Auth],
+  providers:[Ws,Auth,NativeAudio,Vibration],
   selector: 'page-login',
   templateUrl: 'login.html'
 })
@@ -31,17 +35,31 @@ export class LoginPage {
               private storage: Storage,
               public ws:Ws,private auth :Auth, 
               public alert: AlertController,
-              public loading2:LoadingController,
+              public loading2:LoadingController,private nativeAudio: NativeAudio,private vibration:Vibration,private toast : ToastController,
               private firebase: AngularFireDatabase ) 
   {
+    this.nativeAudio.preloadSimple("p1","assets/sonidos/sonido1.mp3");
+    this.nativeAudio.preloadSimple("p2","assets/sonidos/sonido2.mp3");
     this.listado=firebase.list('/Lista');//CARGO LA LISTA.
     this.listado.subscribe(data => {console.log("Datos de firebase: ");console.log(data);});//MUESTRO LAS DATOS DE LAS LISTAS.
     this.ws.TraerUsuarios().then(data => {console.log(data);});
   }
+  Vibrar()
+  {
+    this.vibration.vibrate(1000);
+  }
+  MensajeToast(mensaje)
+  {
+      let toast = this.toast.create({
+      message: mensaje,
+      duration: 3000
+    });
+    toast.present();
+  }
   Aceptar(tipo)
   {
     console.log("Login - Es de tipo: "+tipo);
-    
+    this.nativeAudio.play("p2");
     switch (tipo) 
     {
       case 'Alumno':
@@ -49,23 +67,27 @@ export class LoginPage {
         this.tipo=tipo;
         this.mail=this.alumno.email;
         this.pass=this.alumno.password;
+        this.MensajeToast("Alumno");
         break;
 
       case 'Profesor':
         this.tipo=tipo;
         this.mail=this.profesor.email;
         this.pass=this.profesor.password;
+        this.MensajeToast("Profesor");
         break;
 
       case 'Administrativo':
         this.tipo=tipo;
         this.mail=this.administrativo.email;
         this.pass=this.administrativo.password;
+        this.MensajeToast("Secretario");
         break;
       case 'Administrador':
         this.tipo=tipo;
         this.mail=this.administrador.email;
         this.pass=this.administrador.password;
+        this.MensajeToast("Administrador");
         break;
     }
 
@@ -121,6 +143,8 @@ export class LoginPage {
               console.log(data.rta.usuario);
               localStorage.setItem("usuario",JSON.stringify(data.rta.usuario));
               this.AlertCorrecto(data.rta.usuario.nombre);
+              this.Vibrar();
+              this.nativeAudio.play("p1");
             });
             this.navCtrl.setRoot(MenuPage,{Tipo:this.tipo});
         }
