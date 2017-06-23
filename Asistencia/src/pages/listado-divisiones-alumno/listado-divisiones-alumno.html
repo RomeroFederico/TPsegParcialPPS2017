@@ -12,60 +12,41 @@
 </ion-header>
 
 <ion-content padding>
+  <div *ngIf="cargando" style="text-align: center;">
+      <label style="color:blue;">CARGANDO DATOS. ESPERE UN MOMENTO</label>
+  </div>
+  <div *ngIf="!cargando">
     <ion-list>
-
     <ion-list-header>Hoy</ion-list-header>
-
-    <ion-item>
-      <ion-avatar item-start>
-        <img src="assets/images/materias/default.png">
-      </ion-avatar>
-      Ingles II
-      <br>
-      Lunes 08:30-10:00
-    </ion-item>
-
-    <ion-item>
-      <ion-avatar item-start>
-        <img src="assets/images/materias/default.png">
-      </ion-avatar>
-      Legislacion
-      <br>
-      Lunes 10:30-12:30
-    </ion-item>
-
+        <div *ngFor="let materia of listaArmada;">
+          <div *ngIf="materia[2] == 'Sabado' || materia[3] == 'Sabado' || materia[4] == 'Sabado'">
+                  <ion-item>
+                    <ion-avatar item-start>
+                      <img [src]="materia[0]">
+                    </ion-avatar>
+                    {{materia[1]}}
+                    <br>
+                    {{materia[2]}} {{materia[3]}} {{materia[4]}} - {{materia[5]}}
+                  </ion-item>
+            </div>
+        </div>
   </ion-list>
-
   <div>
     <ion-list>
-        <ion-item>
-          <ion-avatar item-start>
-            <img src="assets/images/materias/default.png">
-          </ion-avatar>
-          Laboratorio IV
-          <br>
-          Martes 08:30-12:30
-        </ion-item>
-
-        <ion-item>
-          <ion-avatar item-start>
-            <img src="assets/images/materias/default.png">
-          </ion-avatar>
-          Base de datos
-          <br>
-          Miercoles 08:30-12:30
-        </ion-item>
-
-        <ion-item>
-          <ion-avatar item-start>
-            <img src="assets/images/materias/default.png">
-          </ion-avatar>
-          Practica supervisada
-          <br>
-          Sabado 08:30-12:30
-        </ion-item>
-
+      <ion-list-header>Otros dias</ion-list-header>
+        <div *ngFor="let materia of listaArmada;">
+          <div *ngIf="materia[2] != 'Sabado' && materia[3] != 'Sabado' && materia[4] != 'Sabado'">
+                  <ion-item>
+                    <ion-avatar item-start>
+                      <img [src]="materia[0]">
+                    </ion-avatar>
+                    {{materia[1]}}
+                    <br>
+                    {{materia[2]}} {{materia[3]}} {{materia[4]}} - {{materia[5]}}
+                  </ion-item>
+            </div>
+        </div>
     </ion-list>
   </div>
-
+</div>
 </ion-content>

@@ -12,13 +12,13 @@ export class DatosAlumnoPage {
   alumno:Alumno = new Alumno();
   fecha:Date = new Date();
   hoy:String = this.fecha.toDateString();
-
+  fotoAlumno = "assets/images/alumno/alumno.png";
   constructor(public navCtrl: NavController,
               public navParams: NavParams)
   {
         console.log(this.navParams.get("Alumno"));
         this.alumno = this.navParams.get("Alumno");
-        console.log(this.fecha.toDateString());
+        this.fotoAlumno = "assets/images/alumno/"+this.alumno.img;
   }
 
   ionViewDidLoad() {
@@ -28,9 +28,6 @@ export class DatosAlumnoPage {
   {
     this.navCtrl.pop();
   }
-
-
-
 
 
 }
