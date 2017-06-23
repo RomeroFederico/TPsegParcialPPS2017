@@ -14,7 +14,7 @@ import { AsistenciaAlumnoPage } from '../asistencia-alumno/asistencia-alumno';
 export class HomeAlumnoPage {
 
   loading : any;
-  alumno:Alumno = new Alumno(1,"Osmar","Flores","99333222","100200","ramzito@gmail.com","123",20,"alumno.png");
+  alumno:Alumno = new Alumno();
 
   constructor(private platform: Platform,
               public alertCtrl: AlertController,
@@ -23,6 +23,7 @@ export class HomeAlumnoPage {
               public loadingController : LoadingController){
 
        this.platform = platform;
+       this.alumno = JSON.parse(localStorage.getItem("usuario"));
   }
 
   ionViewDidLoad() {
@@ -31,6 +32,7 @@ export class HomeAlumnoPage {
 
   Aceptar(opcion)
   {
+    this.alumno = JSON.parse(localStorage.getItem("usuario"));
     var page;
     switch (opcion) {
       case '0':
