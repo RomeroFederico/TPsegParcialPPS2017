@@ -18,7 +18,7 @@ export class LoginPage {
 
   tipo:string = "Alumno";
   profesor:Profesor = new Profesor(1,"Octavio","Villegas","99333222","999888","octavio@gmail.com","123",30,"profesor.png","Masculino");
-  alumno:Alumno = new Alumno(1,"Osmar","Flores","99333222","100200","osmar@gmail.com","123",30,"profesor.png","Masculino");
+  alumno:Alumno = new Alumno(1,"Daniel","Gueler","99333222","100200","daniel@gmail.com","123",30,"profesor.png","Masculino");
   administrativo:Administrativo = new Administrativo(1,"Daniel","Gueler","99333222","100200","juan@gmail.com","123",30,"profesor.png","Masculino");
   administrador:Usuario = new Usuario(1,"Federico","Romero","99333222","100200","admin@gmail.com","123",30,"profesor.png","Masculino");
 
