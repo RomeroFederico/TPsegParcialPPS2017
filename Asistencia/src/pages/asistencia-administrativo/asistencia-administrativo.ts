@@ -217,16 +217,22 @@ export class AsistenciaAdministrativoPage {
 
   GuardarAsistencia(alumnos : Array<{idAlumno : number, idDivision : number, estado : string, faltas : number}>)
   {
-    var subir : {division : Division, clase : number, fecha : string,alumnos : Array<{alumno : Alumno, asistio : boolean, estado : string, faltas : number}>} = {division : null, clase : null, fecha : null,alumnos : Array<{alumno : Alumno, asistio : boolean, estado : string, faltas : number}>()} ;
-    subir.division = this.divisionModificar;
-    subir.clase = Number(this.division.claseActual);
+    // var subir : {division : Division, clase : number, fecha : string,alumnos : Array<{alumno : Alumno, asistio : boolean, estado : string, faltas : number}>} = {division : null, clase : null, fecha : null,alumnos : Array<{alumno : Alumno, asistio : boolean, estado : string, faltas : number}>()} ;
+    // subir.division = this.divisionModificar;
+    // subir.clase = Number(this.division.claseActual);
 
     var hoy = new Date();
     hoy.setDate(hoy.getDate());
-    subir.fecha = hoy.getFullYear() + "-" + (hoy.getMonth() + 1) + "-" + hoy.getDate();
+    var fecha = hoy.getFullYear() + "-" + (hoy.getMonth() + 1) + "-" + hoy.getDate();
     
+    // for (var index = 0; index < this.alumnos.length; index++) {
+    //   subir.alumnos.push({alumno : this.alumnos[index].alumno, asistio : this.alumnos[index].asistio, estado : alumnos[index].estado, faltas : alumnos[index].faltas});
+    // }
+
+    var subir : Array<{idDivision : number, idAlumno : number, nombreDivision : string, materia : string , nombreAlumno : string, apellidoAlumno : string, asistio : boolean, clase : number, fecha : string}> = Array<{idDivision : number, idAlumno : number, nombreDivision : string, materia : string , nombreAlumno : string, apellidoAlumno : string, asistio : boolean, clase : number, fecha : string}>();
+
     for (var index = 0; index < this.alumnos.length; index++) {
-      subir.alumnos.push({alumno : this.alumnos[index].alumno, asistio : this.alumnos[index].asistio, estado : alumnos[index].estado, faltas : alumnos[index].faltas});
+      subir.push({idDivision : this.divisionModificar.idDivision, idAlumno : this.alumnos[index].alumno.idUsuario, nombreDivision : this.divisionModificar.nombre, materia : this.divisionModificar.materia.nombre, nombreAlumno : this.alumnos[index].alumno.nombre, apellidoAlumno : this.alumnos[index].alumno.apellido, asistio : this.alumnos[index].asistio, clase :  Number(this.division.claseActual), fecha : fecha });
     }
 
     console.log(subir);
