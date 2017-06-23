@@ -57,12 +57,12 @@ export class ListadoDivisionesAlumnoPage {
         this.ws.TraerDivisiones()
         .then(datos => {
               datos.forEach(div => {
-                  this.listaDivisiones[Number(div.idMateria)][0] = this.listaMaterias[Number(div.idMateria)][0];
-                  this.listaDivisiones[Number(div.idMateria)][1] = div.hora;
-                  this.listaDivisiones[Number(div.idMateria)][2] = div.dia1;
-                  this.listaDivisiones[Number(div.idMateria)][3] = div.dia2;
-                  this.listaDivisiones[Number(div.idMateria)][4] = div.dia3;
-                  this.listaDivisiones[Number(div.idMateria)][5] = this.listaMaterias[Number(div.idMateria)][1];
+                  this.listaDivisiones[Number(div.idDivision)][0] = this.listaMaterias[Number(div.idMateria)][0];
+                  this.listaDivisiones[Number(div.idDivision)][1] = div.hora;
+                  this.listaDivisiones[Number(div.idDivision)][2] = div.dia1;
+                  this.listaDivisiones[Number(div.idDivision)][3] = div.dia2;
+                  this.listaDivisiones[Number(div.idDivision)][4] = div.dia3;
+                  this.listaDivisiones[Number(div.idDivision)][5] = this.listaMaterias[Number(div.idMateria)][1];
               });
               this.ListaDivisionesAlumno();
         })
