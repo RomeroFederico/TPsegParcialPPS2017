@@ -88,16 +88,16 @@ export class Ws
     .then(this.extractData)
     .catch(this.handleError);
   }
-  TraerDivisionesDelDia()
+  TraerDivisionesId(a)
   {
-    return this.http.get('http://asistencianull.hol.es/index.php/divisiones/dia')
+    return this.http.get('http://asistencianull.hol.es/index.php/buscar/alumnodivisiones/'+a)
     .toPromise()
     .then(this.extractData)
     .catch(this.handleError);
   }
-  TraerAlumnosDivision(idDivision)
+  TraerDivisionesDelDia()
   {
-    return this.http.get('http://asistencianull.hol.es/index.php/alumnos/division/' + idDivision)
+    return this.http.get('http://asistencianull.hol.es/index.php/divisiones/dia')
     .toPromise()
     .then(this.extractData)
     .catch(this.handleError);
@@ -109,13 +109,6 @@ export class Ws
     .then( this.extractData )
     .catch( this.handleError );
   
-  }
-  ModificarDivision(obj)
-  {
-    return this.http.get("http://asistencianull.hol.es/index.php/modificar/division/"+JSON.stringify(obj))
-    .toPromise()
-    .then( this.extractData )
-    .catch( this.handleError );
   }
   private extractData(res: Response) 
   {
