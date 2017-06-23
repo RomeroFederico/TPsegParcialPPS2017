@@ -103,7 +103,7 @@ export class AsistenciaAdministrativoPage {
 
     this.ws.TraerAlumnosDivision(this.division.idDivision).then((data) => {
 
-      this.cargando.dismiss()
+      this.cargando.dismiss();
       console.log(data);
 
       if (data.Exito)
@@ -132,6 +132,8 @@ export class AsistenciaAdministrativoPage {
 
   ModificarDivision()
   { 
+    this.MostrarLoading("modificacion de la division");
+
     if (this.division.claseActual != this.division.cantClases)
     {
       var hoy = new Date();
@@ -139,19 +141,88 @@ export class AsistenciaAdministrativoPage {
       this.division.fechaProxClase = hoy;
     }
     else
+    {
       this.division.estado = "Terminada";
+      this.division.fechaProxClase = null;
+    }
 
     this.divisionModificar = this.division;
-    this.divisionModificar.fechaProxClase = this.division.fechaProxClase.getFullYear() + "-" + (this.division.fechaProxClase.getMonth() + 1) + "-" + this.division.fechaProxClase.getDate();
+    if (this.division.fechaProxClase != null)
+      this.divisionModificar.fechaProxClase = this.division.fechaProxClase.getFullYear() + "-" + (this.division.fechaProxClase.getMonth() + 1) + "-" + this.division.fechaProxClase.getDate();
 
     console.log(this.divisionModificar);
 
     this.ws.ModificarDivision(this.divisionModificar).then((data) => {
+
+      this.cargando.dismiss();
+      console.log(data);
       
       //Modificar alumnos division y firebase....
+      if (data.Exito)
+      {
+        console.log("Exito");
+        this.ModificarAlumnosDivision();
+      }
+      else
+      {
+        this.ReintentarModificarDivision();
+      }
 
     })
-    .catch((error) => { console.log(error); });
+    .catch((error) => { this.cargando.dismiss(); this.ReintentarModificarDivision(); console.log(error); });
+  }
+
+  ModificarAlumnosDivision()
+  {
+    let alumnos = new Array<{idAlumno : number, idDivision : number, estado : string, faltas : number}>();
+
+    for (var index = 0; index < this.alumnos.length; index++) {
+      var faltas = Number(this.alumnos[index].faltas); 
+      if (this.alumnos[index].asistio != true && this.alumnos[index].estado == "Cursando")
+        faltas++;
+      alumnos.push({idAlumno : this.alumnos[index].alumno.idUsuario, idDivision : this.division.idDivision, estado : this.alumnos[index].estado, faltas : faltas});
+    }
+
+    console.log(alumnos);
+
+    this.MostrarLoading("modificacion de los alumnos de la division");
+
+    this.ws.ModificarAlumnosDivision(alumnos).then((data) => {
+
+      this.cargando.dismiss();
+      console.log(data);
+
+      if (data.Exito)
+      {
+        // GUARDAR EN FIREBASE...
+        console.log("Exito al modificar alumnos de la division.");
+        this.GuardarAsistencia(alumnos);
+      }
+      else
+      {
+        this.ReintentarModificarAlumnosDivision();
+      }
+    })
+    .catch((error) => { this.cargando.dismiss(); this.ReintentarModificarAlumnosDivision(); console.log(error); })
+  }
+
+  GuardarAsistencia(alumnos : Array<{idAlumno : number, idDivision : number, estado : string, faltas : number}>)
+  {
+    var subir : {division : Division, clase : number, fecha : string,alumnos : Array<{alumno : Alumno, asistio : boolean, estado : string, faltas : number}>} = {division : null, clase : null, fecha : null,alumnos : Array<{alumno : Alumno, asistio : boolean, estado : string, faltas : number}>()} ;
+    subir.division = this.divisionModificar;
+    subir.clase = Number(this.division.claseActual);
+
+    var hoy = new Date();
+    hoy.setDate(hoy.getDate());
+    subir.fecha = hoy.getFullYear() + "-" + (hoy.getMonth() + 1) + "-" + hoy.getDate();
+    
+    for (var index = 0; index < this.alumnos.length; index++) {
+      subir.alumnos.push({alumno : this.alumnos[index].alumno, asistio : this.alumnos[index].asistio, estado : alumnos[index].estado, faltas : alumnos[index].faltas});
+    }
+
+    console.log(subir);
+
+    //ACA SE SUBE EN FIREBASE EL OBJETO SUBIR...AL TERMINAR EL PROCESO IR AL MENU PRINCIPAL -> HOME CON SET ROOT, MOSTRAR UN MENSAJE SI SE GUARDO.
   }
 
   MostrarLoading(mensaje : string) 
@@ -181,6 +252,52 @@ export class AsistenciaAdministrativoPage {
           text: 'Aceptar',
           handler: () => {
             this.CargarAlumnos();
+          }
+        }
+      ]
+    });
+    confirm.present();
+  }
+
+  ReintentarModificarDivision()
+  {
+    let confirm = this.alertCtrl.create({
+      title: 'Error en el servidor',
+      message: 'Desea reintentar la modificacion de la division?',
+      buttons: [
+        {
+          text: 'Cancelar',
+          handler: () => {
+            this.navCtrl.pop();
+          }
+        },
+        {
+          text: 'Aceptar',
+          handler: () => {
+            this.ModificarDivision();
+          }
+        }
+      ]
+    });
+    confirm.present();
+  }
+
+  ReintentarModificarAlumnosDivision()
+  {
+    let confirm = this.alertCtrl.create({
+      title: 'Error en el servidor',
+      message: 'Desea reintentar la modificacion de los alumnos de la division?',
+      buttons: [
+        {
+          text: 'Cancelar',
+          handler: () => {
+            this.navCtrl.pop();
+          }
+        },
+        {
+          text: 'Aceptar',
+          handler: () => {
+            this.ModificarAlumnosDivision();
           }
         }
       ]

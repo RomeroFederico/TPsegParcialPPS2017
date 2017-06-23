@@ -117,6 +117,13 @@ export class Ws
     .then( this.extractData )
     .catch( this.handleError );
   }
+  ModificarAlumnosDivision(obj)
+  {
+    return this.http.get("http://asistencianull.hol.es/index.php/modificar/alumnosdivision/"+JSON.stringify(obj))
+    .toPromise()
+    .then( this.extractData )
+    .catch( this.handleError );
+  }
   private extractData(res: Response) 
   {
     let body = res.json();    
