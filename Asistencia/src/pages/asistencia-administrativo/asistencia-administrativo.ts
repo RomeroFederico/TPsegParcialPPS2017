@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams, LoadingController, AlertController, ToastController } from 'ionic-angular';
+import { NavController, NavParams, LoadingController, AlertController } from 'ionic-angular';
 
 import { Ws } from '../../providers/ws';
 
@@ -7,8 +7,6 @@ import { Profesor } from '../../components/clases/profesor';
 import { Alumno } from '../../components/clases/alumno';
 
 import { Division } from '../../components/clases/division';
-
-import { HomeAdministrativoPage } from '../home-administrativo/home-administrativo';
 
 import { AngularFireDatabase, FirebaseListObservable } from 'angularfire2/database';//FIREBASE!
 
@@ -28,8 +26,7 @@ export class AsistenciaAdministrativoPage {
   listado : FirebaseListObservable<any[]>;//FIREBASE!
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public ws : Ws, 
-              public loadingController : LoadingController, public alertCtrl: AlertController,private firebase: AngularFireDatabase,
-              public toast : ToastController)
+              public loadingController : LoadingController, public alertCtrl: AlertController,private firebase: AngularFireDatabase)
   {
     this.listado=firebase.list('/Lista');//CARGO LA LISTA.
     this.listado.subscribe(data => {console.log("Datos de firebase: ");console.log(data);});//MUESTRO LAS DATOS DE LAS LISTAS.
@@ -240,33 +237,13 @@ export class AsistenciaAdministrativoPage {
 
     console.log(subir);
 
-    this.MostrarLoading("listado de asistencia del dia");
-
-    this.listado.update("nunca",subir).then(() => {
-
-      this.cargando.dismiss();
-
-      this.MostrarToast("Lista tomada exitosamente!!!");
-      this.navCtrl.setRoot(HomeAdministrativoPage);
-
-    })
-    .catch((error) => { this.cargando.dismiss(); this.MostrarToast("La lista de asistencias no se guardo."); this.navCtrl.setRoot(HomeAdministrativoPage); console.log("Error"); });// CON ESA FUNCION SUBO EL JSON A FIREBASE
+    this.listado.push(subir);// CON ESA FUNCION SUBO EL JSON A FIREBASE
     //ACA SE SUBE EN FIREBASE EL OBJETO SUBIR...AL TERMINAR EL PROCESO IR AL MENU PRINCIPAL -> HOME CON SET ROOT, MOSTRAR UN MENSAJE SI SE GUARDO.
   }
   GenerateArray(obj)//PARA FIREBASE!
   {
     return Object.keys(obj).map((key)=>{ return obj[key]});
   }
-
-  MostrarToast(mensaje)
-  {
-    let toast = this.toast.create({
-        message: mensaje,
-        duration: 2000
-    });
-    toast.present();
-  }
-
   MostrarLoading(mensaje : string) 
   {
     this.cargando = this.loadingController.create({

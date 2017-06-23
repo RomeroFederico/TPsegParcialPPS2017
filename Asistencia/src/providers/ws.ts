@@ -88,6 +88,13 @@ export class Ws
     .then(this.extractData)
     .catch(this.handleError);
   }
+  TraerDivisionesId(a)
+  {
+    return this.http.get('http://asistencianull.hol.es/index.php/buscar/alumnodivisiones/'+a)
+    .toPromise()
+    .then(this.extractData)
+    .catch(this.handleError);
+  }
   TraerDivisionesDelDia()
   {
     return this.http.get('http://asistencianull.hol.es/index.php/divisiones/dia')
@@ -95,22 +102,7 @@ export class Ws
     .then(this.extractData)
     .catch(this.handleError);
   }
-  TraerAlumnosDivision(idDivision)
-  {
-    return this.http.get('http://asistencianull.hol.es/index.php/alumnos/division/' + idDivision)
-    .toPromise()
-    .then(this.extractData)
-    .catch(this.handleError);
-  }
-  AgregarDivision(obj)
-  {
-    return this.http.get("http://asistencianull.hol.es/index.php/agregar/division/"+JSON.stringify(obj))
-    .toPromise()
-    .then( this.extractData )
-    .catch( this.handleError );
-  
-  }
-  ModificarDivision(obj)
+    ModificarDivision(obj)
   {
     return this.http.get("http://asistencianull.hol.es/index.php/modificar/division/"+JSON.stringify(obj))
     .toPromise()
@@ -123,6 +115,21 @@ export class Ws
     .toPromise()
     .then( this.extractData )
     .catch( this.handleError );
+  }
+  AgregarDivision(obj)
+  {
+    return this.http.get("http://asistencianull.hol.es/index.php/agregar/division/"+JSON.stringify(obj))
+    .toPromise()
+    .then( this.extractData )
+    .catch( this.handleError );
+  
+  }
+    TraerAlumnosDivision(idDivision)
+  {
+    return this.http.get('http://asistencianull.hol.es/index.php/alumnos/division/' + idDivision)
+    .toPromise()
+    .then(this.extractData)
+    .catch(this.handleError);
   }
   private extractData(res: Response) 
   {
