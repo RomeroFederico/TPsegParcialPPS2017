@@ -9,6 +9,7 @@ import { HomeAdministradorPage } from '../home-administrador/home-administrador'
 import { HomeAdministrativoPage } from '../home-administrativo/home-administrativo';
 
 import { DatosProfesorPage } from '../datos-profesor/datos-profesor';
+import { Mapa } from '../mapa/mapa';
 import { ListadoClasesProfesorPage } from '../listado-clases-profesor/listado-clases-profesor';
 import { ListadoDivisionesProfesorPage } from '../listado-divisiones-profesor/listado-divisiones-profesor';
 import { ListadoMateriasProfesorPage } from '../listado-materias-profesor/listado-materias-profesor';
@@ -59,7 +60,7 @@ export class MenuPage {
   Salir()
   {
     let alert = this.alertCtrl.create({
-      title: 'Log Out',
+      title: 'Salir',
       message: 'Desea cerrar sesion?',
       buttons: [
         {
@@ -101,6 +102,10 @@ export class MenuPage {
   MateriasProfesor()
   {
     this.navCtrl.push(ListadoMateriasProfesorPage);
+  }
+  Mapa()
+  {
+    this.navCtrl.push(Mapa);
   }
   
 

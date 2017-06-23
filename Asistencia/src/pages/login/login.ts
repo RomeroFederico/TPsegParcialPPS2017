@@ -138,7 +138,7 @@ export class LoginPage {
     let loading = this.loading2.create({
       spinner: 'bubbles',
       content: `Cargando, 
-      Por Favor Espere un Momento...`,
+      Espere un Momento...`,
     });
 
     this.loading = loading;

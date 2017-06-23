@@ -1,7 +1,7 @@
 <ion-menu [content]="content">
   <ion-header>
     <ion-toolbar color="dark">
-      <ion-title>Menu</ion-title>
+      <ion-title><ion-icon name="menu" style="color: white"></ion-icon> MENU</ion-title>
     </ion-toolbar>
   </ion-header>
 
@@ -12,15 +12,17 @@
       <button menuClose ion-item ><ion-icon name="md-document"></ion-icon> Materias </button>
       <button menuClose ion-item ><ion-icon name="md-copy"></ion-icon> Asistencia </button>
       <button menuClose ion-item ><ion-icon name="md-notifications"></ion-icon> Notificaciones </button>
-      <button menuClose ion-item (click)="Salir()"><ion-icon name="md-close-circle"></ion-icon> Salir</button>
+      <button menuClose ion-item (click)="Mapa()" ><ion-icon name="md-globe" style="color: green"></ion-icon> Mapa </button>
+      <button menuClose ion-item (click)="Salir()"><ion-icon name="md-close-circle" style="color: red"></ion-icon> Salir</button>
       </div>
       <div *ngIf="tipo =='Profesor'">
-      <button menuClose ion-item (click)="DatosProfesor()" ><ion-icon name="md-person"></ion-icon> Datos Profesor </button>
-      <button menuClose ion-item (click)="ClasesHoyProfesor()" ><ion-icon name="md-document"></ion-icon> Clases de Hoy </button>
-      <button menuClose ion-item (click)="DivisionesProfesor()" ><ion-icon name="md-copy"></ion-icon> Divisiones </button>
-      <button menuClose ion-item (click)="MateriasProfesor()" ><ion-icon name="md-attach"></ion-icon> Mis Materias </button>
-      <button menuClose ion-item (click)="NotificacionesProfesor()" ><ion-icon name="md-notifications"></ion-icon> Notificaciones </button>
-      <button menuClose ion-item (click)="Salir()"><ion-icon name="md-close-circle"></ion-icon> Salir</button>
+      <button menuClose ion-item (click)="DatosProfesor()" ><ion-icon name="md-person" style="color: sandybrown"></ion-icon> Datos Profesor </button>
+      <button menuClose ion-item (click)="ClasesHoyProfesor()" ><ion-icon name="md-document" style="color: grey"></ion-icon> Clases de Hoy </button>
+      <button menuClose ion-item (click)="DivisionesProfesor()" ><ion-icon name="md-copy" style="color: skyblue"></ion-icon> Divisiones </button>
+      <button menuClose ion-item (click)="MateriasProfesor()" ><ion-icon name="md-attach" style="color: blue"></ion-icon> Mis Materias </button>
+      <button menuClose ion-item (click)="NotificacionesProfesor()" ><ion-icon name="md-notifications" style="color: gold" ></ion-icon> Notificaciones </button>
+      <button menuClose ion-item (click)="Mapa()" ><ion-icon name="md-globe" style="color: green"></ion-icon> Mapa </button>
+      <button menuClose ion-item (click)="Salir()"><ion-icon name="md-close-circle" style="color: red"></ion-icon> Salir</button>
       </div>
       <div *ngIf="tipo =='Administrativo'">
       <button menuClose ion-item ><ion-icon name="md-person"></ion-icon> Datos Administrativo </button>
@@ -29,7 +31,8 @@
       <button menuClose ion-item ><ion-icon name="md-contacts"></ion-icon> Alumnos </button>
       <button menuClose ion-item ><ion-icon name="md-filing"></ion-icon> Profesores </button>
       <button menuClose ion-item ><ion-icon name="md-notifications"></ion-icon> Notificaciones </button>
-      <button menuClose ion-item (click)="Salir()"><ion-icon name="md-close-circle"></ion-icon> Salir</button>
+      <button menuClose ion-item (click)="Mapa()" ><ion-icon name="md-globe" style="color: green"></ion-icon> Mapa </button>
+      <button menuClose ion-item (click)="Salir()"><ion-icon name="md-close-circle" style="color: red"></ion-icon> Salir</button>
       </div>
       <div *ngIf="tipo =='Administrador'">
       <button menuClose ion-item ><ion-icon name="md-person"></ion-icon> Datos Administrador </button>
@@ -37,7 +40,8 @@
       <button menuClose ion-item ><ion-icon name="md-filing"></ion-icon> Profesores </button>
       <button menuClose ion-item ><ion-icon name="md-attach"></ion-icon> Divisiones </button>
       <button menuClose ion-item ><ion-icon name="md-notifications"></ion-icon> Notificaciones </button>
-      <button menuClose ion-item (click)="Salir()"><ion-icon name="md-close-circle"></ion-icon> Salir</button>
+      <button menuClose ion-item (click)="Mapa()" ><ion-icon name="md-globe" style="color: green"></ion-icon> Mapa </button>
+      <button menuClose ion-item (click)="Salir()"><ion-icon name="md-close-circle" style="color: red"></ion-icon> Salir</button>
       </div>
     </ion-list>
   </ion-content>

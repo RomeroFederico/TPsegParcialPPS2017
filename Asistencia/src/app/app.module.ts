@@ -34,7 +34,7 @@ import { ListadoMateriasProfesorPage } from '../pages/listado-materias-profesor/
 import { ListadoDivisionesProfesorPage } from '../pages/listado-divisiones-profesor/listado-divisiones-profesor';
 import { DatosDivisionProfesorPage } from '../pages/datos-division-profesor/datos-division-profesor';
 import { NotificacionesProfesorPage } from '../pages/notificaciones-profesor/notificaciones-profesor';
-
+import { Mapa } from '../pages/mapa/mapa';
 //JWT
 import { JwtModule } from './jwt/jwt.module';
 import { AuthHttp, AuthConfig, AUTH_PROVIDERS, provideAuth } from 'angular2-jwt';
@@ -71,6 +71,7 @@ var configFirebase  = {
   declarations: [
     MyApp,
     LoginPage,
+    Mapa,
     MenuPage,
     HomeProfesorPage,
     HomeAdministrativoPage,
@@ -108,6 +109,7 @@ var configFirebase  = {
     LoginPage,
     MenuPage,
     HomeAlumnoPage,
+    Mapa,
     HomeProfesorPage,
     HomeAdministrativoPage,
     AsistenciaAdministrativoPage,
