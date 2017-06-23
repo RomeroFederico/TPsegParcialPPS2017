@@ -8,6 +8,8 @@ import { Alumno } from '../../components/clases/alumno';
 
 import { Division } from '../../components/clases/division';
 
+import { AngularFireDatabase, FirebaseListObservable } from 'angularfire2/database';//FIREBASE!
+
 @Component({
   selector: 'page-asistencia-administrativo',
   templateUrl: 'asistencia-administrativo.html',
@@ -20,10 +22,15 @@ export class AsistenciaAdministrativoPage {
   alumnos : Array<{alumno : Alumno, faltas : number, estado : string, asistio : boolean}> = null;
 
   cargando : any = null;
+  //miLista:any;
+  listado : FirebaseListObservable<any[]>;//FIREBASE!
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public ws : Ws, 
-              public loadingController : LoadingController, public alertCtrl: AlertController)
+              public loadingController : LoadingController, public alertCtrl: AlertController,private firebase: AngularFireDatabase)
   {
+    this.listado=firebase.list('/Lista');//CARGO LA LISTA.
+    this.listado.subscribe(data => {console.log("Datos de firebase: ");console.log(data);});//MUESTRO LAS DATOS DE LAS LISTAS.
+
     this.division = this.navParams.get("division");
 
     this.division.claseActual = Number(this.division.claseActual) + 1;
@@ -31,6 +38,8 @@ export class AsistenciaAdministrativoPage {
     //this.alumnos = new Array<{alumno : Alumno, faltas : number, estado : string, asistio : boolean}>();
 
     this.CargarAlumnos();
+    
+    //this.lista.subscribe(data => {console.log(data);this.miLista=data;});//ver
   }
 
   ionViewDidLoad() {
@@ -222,6 +231,7 @@ export class AsistenciaAdministrativoPage {
 
     console.log(subir);
 
+    //this.listado.push(subir);// CON ESA FUNCION SUBO EL JSON A FIREBASE
     //ACA SE SUBE EN FIREBASE EL OBJETO SUBIR...AL TERMINAR EL PROCESO IR AL MENU PRINCIPAL -> HOME CON SET ROOT, MOSTRAR UN MENSAJE SI SE GUARDO.
   }
 
