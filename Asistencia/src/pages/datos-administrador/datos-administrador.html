@@ -25,10 +25,12 @@
 
         <ion-col width-33 style = "padding: 10px 10px 0px 10px">
 
-            <img class = 'imagenPerfil' src="https://avatars3.githubusercontent.com/u/17879446?v=3&s=460">
+            <img class = 'imagenPerfil' [src] = "'assets/images/administrador/alumno/' + usuario.img" *ngIf = "DevolverTipo(usuario) == 'Alumno'">
+            <img class = 'imagenPerfil' [src] = "'assets/images/administrador/profesor/' + usuario.img" *ngIf = "DevolverTipo(usuario) == 'Profesor'">
+            <img class = 'imagenPerfil' [src] = "'assets/images/administrador/administrativo/' + usuario.img" *ngIf = "DevolverTipo(usuario) == 'Administrativo'">
 
-            <button ion-button small block color = 'light'>
-              CAMBIAR
+            <button ion-button small block color = 'light' (click) = "NoImplementado()">
+              MODIFICAR
             </button>
 
         </ion-col>

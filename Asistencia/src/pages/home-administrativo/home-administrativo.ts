@@ -46,6 +46,22 @@ export class HomeAdministrativoPage {
     }
   }
 
+  NoImplementado()
+  {
+    let confirm = this.alertCtrl.create({
+      title: 'Informacion',
+      message: 'No implementado aun...',
+      buttons: [
+        {
+          text: 'Aceptar',
+          handler: () => {
+          }
+        }
+      ]
+    });
+    confirm.present();
+  }
+
   /**
   * A partir de la opcion seleccionada de 'Seleccion', se obtiene la pagina a mostrar y lo que se quiere mostrar (Materia, Usuario, Division, Aula).
   * @param opcion numero que representa la opcion seleccionada.
@@ -76,15 +92,15 @@ export class HomeAdministrativoPage {
 
       case 3:
 
-        objOpcion.mensaje = "Agregar division";
-        objOpcion.ruta = "agregar-administrador";
-        objOpcion.tipo = "Division";
+        objOpcion.mensaje = "Listado de alumnos";
+        //objOpcion.ruta = "agregar-administrador";
+        objOpcion.tipo = "Alumno";
         break;
 
       case 4:
 
-        objOpcion.mensaje = "Listado de materias";
-        objOpcion.tipo = "Materia";
+        objOpcion.mensaje = "Listado de profesores";
+        objOpcion.tipo = "Profesor";
         break;
 
       case 5:

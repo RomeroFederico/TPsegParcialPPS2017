@@ -38,7 +38,9 @@
     <ion-list>
       <ion-item *ngFor="let usuario of usuarios" (click) = 'MostrarDatosUsuario(usuario)'>
             <ion-thumbnail item-left>
-              <img src="https://avatars3.githubusercontent.com/u/17879446?v=3&s=460">
+              <img class = 'imagenPerfil' [src] = "'assets/images/administrador/alumno/' + usuario.img" *ngIf = "DevolverTipo(usuario) == 'Alumno'">
+              <img class = 'imagenPerfil' [src] = "'assets/images/administrador/profesor/' + usuario.img" *ngIf = "DevolverTipo(usuario) == 'Profesor'">
+              <img class = 'imagenPerfil' [src] = "'assets/images/administrador/administrativo/' + usuario.img" *ngIf = "DevolverTipo(usuario) == 'Administrativo'">
             </ion-thumbnail>
             <h2 class = "nombreUsuario">{{usuario.apellido}}, {{usuario.nombre}}</h2>
             <ion-grid no-padding>
