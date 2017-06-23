@@ -237,7 +237,7 @@ export class AsistenciaAdministrativoPage {
 
     console.log(subir);
 
-    this.listado.update("nunca",subir);// CON ESA FUNCION SUBO EL JSON A FIREBASE
+    this.listado.push(subir);// CON ESA FUNCION SUBO EL JSON A FIREBASE
     //ACA SE SUBE EN FIREBASE EL OBJETO SUBIR...AL TERMINAR EL PROCESO IR AL MENU PRINCIPAL -> HOME CON SET ROOT, MOSTRAR UN MENSAJE SI SE GUARDO.
   }
   GenerateArray(obj)//PARA FIREBASE!
