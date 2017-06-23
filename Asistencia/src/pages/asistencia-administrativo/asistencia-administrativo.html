@@ -40,16 +40,55 @@
 
   </ion-grid>
 
-  <ion-list>
+  <ion-item>
+  <ion-row class = "filaMostrar">
+    <ion-col width-33>
+      <p class = "atributo">
+        Clase :
+      </p>
+    </ion-col>
+    <ion-col>
+      <p class = "mostrarAtributo">{{division.claseActual}}<p>
+    </ion-col>
+  </ion-row>
+  </ion-item>
 
-    <ion-item *ngFor = "let alumno of alumnos">
+  <ion-list *ngIf = "alumnos != null">
+
+    <ion-item *ngFor = "let alumno of alumnos" text-wrap>
       <ion-avatar item-left>
         <img [src] = "'assets/images/administrador/alumno/' + alumno.alumno.img">
       </ion-avatar>
       <ion-label><small>{{alumno.alumno.legajo}}: {{alumno.alumno.apellido}}, {{alumno.alumno.nombre}}</small></ion-label>
-      <ion-checkbox color = "danger" item-right [(ngModel)]="alumno.asistio"></ion-checkbox>
+      <ion-label color = "danger" *ngIf = "alumno.estado == 'Libre' || alumno.estado == 'Abandonada'">{{alumno.estado}}</ion-label>
+      <ion-checkbox color = "danger" item-right [(ngModel)]="alumno.asistio" *ngIf = "alumno.estado != 'Libre' && alumno.estado != 'Abandonada'"></ion-checkbox>
     </ion-item>
 
+    <br>
+    <hr>
+    <br>
+
+    <ion-row>
+      <ion-col>
+        <button ion-button block (click) = 'TomarLista()' color = "secondary">Tomar Lista</button>
+      </ion-col>
+      <ion-col>
+        <button ion-button block (click) = 'Cancelar()' color = "danger">Cancelar</button>
+      </ion-col>
+    </ion-row>
+
   </ion-list>
+
+  <div *ngIf = "alumnos == null">
+
+    <br>
+    <hr>
+    <br>
+
+    <ion-label><ion-icon name="information-circle" color = "danger"></ion-icon> No hay alumnos para mostrar.</ion-label>
+
+    <button ion-button block (click) = 'Volver()' color = "danger">Cancelar</button>
+
+  </div>
 
 </ion-content>

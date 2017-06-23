@@ -92,7 +92,6 @@ export class ListadoAdministrativoPage {
    */
   TomarLista(division : Division)
   {
-    // Le paso por ahora la division completa, luego se pasara la id solamente para trabajar con la base de datos.
     this.navCtrl.push(AsistenciaAdministrativoPage, {division : division});
   }
 
