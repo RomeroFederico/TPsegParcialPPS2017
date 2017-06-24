@@ -11,26 +11,42 @@
 
 </ion-header>
 
-
 <ion-content padding>
-  <ion-icon name="trash" style="font-size: 40px;" (click)="EliminarNotificaciones()"></ion-icon>
+  <ion-icon name="trash" style="font-size: 40px;" (click)="EliminarNotificacion()" *ngIf="eliminar"></ion-icon>
 
-  <div *ngFor="let item of notificaciones">
-
-  <ion-card >
+  <ion-card *ngIf="notificacion1">
     <ion-card-content>
       <ion-card-title style="text-align: right;">
-        {{item.fecha}}
+        03/04/17
       </ion-card-title>
-      <label style="font-size: 1.3em;">{{item.tipo}}</label>
+      <label style="font-size: 1.3em;">Feriado</label>
       <p>
-        {{item.descripcion}}
+        El dia Martes 7 de Abril no hay clases. Dia de Avellaneda.
       </p>
     </ion-card-content>
 
-
+    <ion-item>
+      <ion-label>Eliminar</ion-label>
+      <ion-checkbox [checked]="isChecked1" (ionChange)="Eliminar(1)" id="c1"></ion-checkbox>
+    </ion-item>
   </ion-card>
 
-  </div>
+  <ion-card *ngIf="notificacion2">
+    <ion-card-content>
+      <ion-card-title style="text-align: right;">
+        01/04/17
+      </ion-card-title>
+      <label style="font-size: 1.3em;">Ausente</label>
+      <p>
+        No asististe a clases el dia Sabado 1 de Abril.
+      </p>
+    </ion-card-content>
+
+    <ion-item>
+      <ion-label>Eliminar</ion-label>
+      <ion-checkbox [checked]="isChecked2" (ionChange)="Eliminar(2)"></ion-checkbox>
+    </ion-item>
+  </ion-card>
+
 
 </ion-content>

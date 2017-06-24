@@ -7,16 +7,15 @@ import { NavController, NavParams, AlertController } from 'ionic-angular';
 })
 export class NotificacionesProfesorPage {
 
-  notificaciones : Array<any> = new Array<any>();
+  eliminar = false;
+  notificacion1 = true;
+  notificacion2 = true;
+  isChecked1 = false;
+  isChecked2 = false;
 
   constructor(public navCtrl: NavController, public navParams: NavParams,public alert: AlertController) 
   {
-    this.notificaciones.push({fecha:"03/05/2017",descripcion:"No asististe a clases!",tipo:"Ausencia"});
-    this.notificaciones.push({fecha:"02/07/2017",descripcion:"Feriado Nacional!",tipo:"Feriado"});
-    this.notificaciones.push({fecha:"04/04/2017",descripcion:"No asististe a clases!",tipo:"Ausencia"});
-    this.notificaciones.push({fecha:"2/04/2017",descripcion:"Feraido nacional!",tipo:"Feriado"});
-    this.notificaciones.push({fecha:"01/05/2017",descripcion:"No asististe a clases!",tipo:"Ausencia"});
-    console.log(this.notificaciones);
+    
   }
 
   ionViewDidLoad() {
@@ -26,30 +25,38 @@ export class NotificacionesProfesorPage {
   {
     this.navCtrl.pop();
   }
-  EliminarNotificaciones()
+  Eliminar(num)
   {
-    
-    let alert = this.alert.create({
-      title: 'Eliminar Notificaciones',
-      message: 'Desea eliminar las notificaciones recibidas?',
-      buttons: [
-        {
-          text: 'Cancelar',
-          role: 'cancel',
-          handler: () => {
-           console.log('Cancel la eliminacion de notificaiones!');
-          }
-        },
-        {
-          text: 'Aceptar',
-          handler: () => {
-            this.notificaciones = new Array<any>();
-            console.log("Se eliminaron notificaciones!");
-          }
-       }
-      ]
-    });
-    alert.present();
+    switch(num)
+    {
+        case 1:
+          this.isChecked1 = !this.isChecked1;
+          break;
+        case 2:
+          this.isChecked2 = !this.isChecked2;
+          break;
+    }
+    if(this.isChecked1 || this.isChecked2)
+    {
+        this.eliminar = true;
+    }
+    else
+    {
+        this.eliminar = false;
+    }
+  }
+
+  EliminarNotificacion()
+  {
+    if(this.isChecked1)
+    {
+        this.notificacion1 = false;
+    }
+    if(this.isChecked2)
+    {
+        this.notificacion2 = false;
+    }
+    this.eliminar = false;
   }
 
 }
