@@ -96,7 +96,7 @@ export class AsistenciaAlumnoPage {
                           let unaVariable = [list.fecha, list.asistio]
                           unArray.push(unaVariable);
                       }
-                      console.log(list.idAlumno, list.materia, list.asistio);
+                      //console.log(list.idAlumno, list.materia, list.asistio);
                   });
             });
             let variable = [this.listaDivisiones[div][0], unArray];
