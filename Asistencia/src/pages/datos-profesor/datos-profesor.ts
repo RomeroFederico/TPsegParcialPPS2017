@@ -10,19 +10,17 @@ import { Profesor } from '../../components/clases/profesor';
 })
 export class DatosProfesorPage {
 
-  //profesor:Profesor = new Profesor(1,"Octavio","Villegas","99333222","100200","octavio@gmail.com","123",30,"profesor.png","Masculino");
   profesor:Profesor = new Profesor();
   fecha:Date = new Date();
-  hoy:String = this.fecha.toDateString(); 
-  
-  constructor(public navCtrl: NavController, public navParams: NavParams,private storage: Storage) 
+  hoy:String = this.fecha.toDateString();
+  fotoProfesor = "assets/images/profesor/profesor.png";
+  constructor(public navCtrl: NavController, public navParams: NavParams,private storage: Storage)
   {
-    
-    this.profesor=JSON.parse(localStorage.getItem("usuario"));
+    this.profesor = this.navParams.get("Profesor");
+    this.fotoProfesor = "assets/images/profesor/" + this.profesor.img;
     console.log(this.profesor);
-    console.log(this.fecha.toDateString());
   }
-  
+
   ionViewDidLoad() {
     console.log('ionViewDidLoad DatosProfesor');
   }

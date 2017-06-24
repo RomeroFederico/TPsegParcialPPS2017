@@ -12,23 +12,27 @@ import { Profesor } from '../../components/clases/profesor';
   selector: 'page-home-profesor',
   templateUrl: 'home-profesor.html'
 })
-export class HomeProfesorPage 
+export class HomeProfesorPage
 {
   loading : any;
-  profesor:Profesor = new Profesor(1,"Octavio","Villegas","99333222","100200","octavio@gmail.com","123",30,"profesor.png","Masculino");
+  profesor:Profesor = new Profesor();
+  notificacion = "assets/images/alumno/notificacion2.png";
+  catNotificacion = 2;
 
-  constructor(public navCtrl: NavController, 
+  constructor(public navCtrl: NavController,
               public platform: Platform,
               public navParams: NavParams,
-              public alertCtrl: AlertController, 
-              public loadingController : LoadingController) 
+              public alertCtrl: AlertController,
+              public loadingController : LoadingController)
   {
 
+        this.profesor = JSON.parse(localStorage.getItem("usuario"));
   }
 
-  Aceptar(opcion) 
+  Aceptar(opcion)
   {
     var page;
+    this.profesor = JSON.parse(localStorage.getItem("usuario"));
     switch (opcion) {
       case '0':
 
@@ -45,14 +49,19 @@ export class HomeProfesorPage
         page = ListadoDivisionesProfesorPage;
         break;
       case '3':
-
+        setTimeout(() =>
+        {
+            this.notificacion = "assets/images/alumno/notificacion.png";
+            this.catNotificacion = 0;
+        },
+        2000);
         page = NotificacionesProfesorPage;
         break;
       case '4':
 
         page = ListadoMateriasProfesorPage;
         break;
-    
+
     }
     let loading = this.loadingController.create({
       spinner: 'bubbles',
@@ -61,34 +70,45 @@ export class HomeProfesorPage
     });
 
     loading.onDidDismiss(() => {
-      
-      this.navCtrl.push(page);
+
+      this.navCtrl.push(page,{Profesor:this.profesor});
     });
 
     this.loading = loading;
     this.loading.present();
   }
+
   Salir()
   {
-    let alert = this.alertCtrl.create({
-      title: 'Log Out',
-      message: 'Desea cerrar sesion?',
-      buttons: [
+    let alert = this.alertCtrl.create();
+    alert.setTitle('¿Que desea hacer?');
+
+    alert.addInput({
+      type: 'radio',
+      label: 'Cerrar sesion, ir a Login',
+      value: 'cerrarSesion',
+      checked: true
+    });
+
+    alert.addInput({
+      type: 'radio',
+      label: 'Salir de la aplicacion',
+      value: 'salir'
+    });
+
+    alert.addButton('Cancelar');
+    alert.addButton({
+      text: 'Aceptar',
+      handler: data => {
+        if(data == "cerrarSesion")
         {
-          text: 'Cancelar',
-          role: 'cancel',
-          handler: () => {
-           console.log('Salir cancelado!');
-          }
-        },
-        {
-          text: 'Aceptar',
-          handler: () => {
             this.navCtrl.setRoot(LoginPage);
-            console.log("Cerrando sesion!");
-          }
-       }
-      ]
+        }
+        else
+        {
+            this.platform.exitApp();
+        }
+      }
     });
     alert.present();
   }
