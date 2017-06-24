@@ -8,10 +8,10 @@
   <ion-content padding>
     <ion-list>
       <div *ngIf="tipo =='Alumno'">
-      <button menuClose ion-item ><ion-icon name="md-person"></ion-icon> Datos Alumno </button>
-      <button menuClose ion-item ><ion-icon name="md-document"></ion-icon> Materias </button>
-      <button menuClose ion-item ><ion-icon name="md-copy"></ion-icon> Asistencia </button>
-      <button menuClose ion-item ><ion-icon name="md-notifications"></ion-icon> Notificaciones </button>
+      <button menuClose ion-item (click)="DatosAlumno()"><ion-icon name="md-person" style="color: sandybrown"></ion-icon> Datos Alumno </button>
+      <button menuClose ion-item (click)="ListadoDivisionesAlumno()"><ion-icon name="md-document" style="color: grey"></ion-icon> Materias </button>
+      <button menuClose ion-item (click)="AsistenciaAlumno()"><ion-icon name="md-copy" style="color: skyblue"></ion-icon> Asistencia </button>
+      <button menuClose ion-item (click)="NotificacionesAlumno()"><ion-icon name="md-notifications" style="color: gold"></ion-icon> Notificaciones </button>
       <button menuClose ion-item (click)="Mapa()" ><ion-icon name="md-globe" style="color: green"></ion-icon> Mapa </button>
       <button menuClose ion-item (click)="Salir()"><ion-icon name="md-close-circle" style="color: red"></ion-icon> Salir</button>
       </div>

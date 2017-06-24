@@ -66,13 +66,13 @@
        <div (click) = "Aceptar('3')">
           <ion-row class = "imgOpcion">
             <ion-col class = "columnaCentrada">
-              <img src= "assets/images/alumno/notificacion2.png"/>
+              <img [src]= "notificacion"/>
             </ion-col>
           </ion-row>
           <ion-row class = "opcion">
             <ion-col class = "columnaCentrada">
               <ion-col>
-                <label>Notificaciones<ion-badge item-end>2</ion-badge></label>
+                <label>Notificaciones<ion-badge item-end>{{catNotificacion}}</ion-badge></label>
               </ion-col>
             </ion-col>
           </ion-row>

@@ -40,9 +40,9 @@ export class LoginPage {
   {
     this.nativeAudio.preloadSimple("p1","assets/sonidos/sonido1.mp3");
     this.nativeAudio.preloadSimple("p2","assets/sonidos/sonido2.mp3");
-    this.listado=firebase.list('/Lista');//CARGO LA LISTA.
+    /*this.listado=firebase.list('/Lista');//CARGO LA LISTA.
     this.listado.subscribe(data => {console.log("Datos de firebase: ");console.log(data);});//MUESTRO LAS DATOS DE LAS LISTAS.
-    this.ws.TraerUsuarios().then(data => {console.log(data);});
+    this.ws.TraerUsuarios().then(data => {console.log(data);});*/
   }
   Vibrar()
   {
@@ -127,26 +127,31 @@ export class LoginPage {
     }
     var obj = {email:this.mail,password:this.pass};
     this.MostrarLoading();
-    this.ws.Login(obj).then(data => 
+    
+    this.ws.Login(obj)
+    .then(data => 
     {
-      //console.log(data);//EN EL DATA DEVUELVE TRUE SI EL MAIL Y EL PASS COINCIDEN EN LA BASE DE DATOS
-      
       console.log(data);
         if (data.exito==true) 
         {
             this.loading.dismiss();
             console.log("Datos correctos!...Iniciando sesion!");
             localStorage.setItem('token', data.token);
-            console.log(this.auth.getToken());
-            this.ws.GetJwt().then(data => 
+            this.ws.GetJwt()
+            .then(data => 
             {
               console.log(data.rta.usuario);
               localStorage.setItem("usuario",JSON.stringify(data.rta.usuario));
               this.AlertCorrecto(data.rta.usuario.nombre);
               this.Vibrar();
               this.nativeAudio.play("p1");
+              this.navCtrl.setRoot(MenuPage,{Tipo:this.tipo});
+            })
+            .catch(error => 
+            {
+              this.AlertErrorBaseDatos();
+              console.log(error);
             });
-            this.navCtrl.setRoot(MenuPage,{Tipo:this.tipo});
         }
         else
         {
@@ -154,6 +159,11 @@ export class LoginPage {
           this.AlertIncorrecto();
             console.log("Datos Incorrectos... Reingrese!");
         }     
+    })
+    .catch(error => 
+    {
+      this.AlertErrorBaseDatos();
+      console.log(error);
     });
     
   }
@@ -173,6 +183,15 @@ export class LoginPage {
   {
     let alert = this.alert.create({
       title: 'Bienvenido! '+nombre,
+      buttons: ['OK']
+    });
+    alert.present();
+  }
+  AlertErrorBaseDatos()
+  {
+    let alert = this.alert.create({
+      title: 'Error en el servicio!',
+      subTitle: 'Vuelva a intentar mas tarde...',
       buttons: ['OK']
     });
     alert.present();

@@ -15,6 +15,8 @@ export class HomeAlumnoPage {
 
   loading : any;
   alumno:Alumno = new Alumno();
+  notificacion = "assets/images/alumno/notificacion2.png";
+  catNotificacion = 2;
 
   constructor(private platform: Platform,
               public alertCtrl: AlertController,
@@ -50,7 +52,12 @@ export class HomeAlumnoPage {
         page = AsistenciaAlumnoPage;
         break;
      case '3':
-
+        setTimeout(() =>
+        {
+            this.notificacion = "assets/images/alumno/notificacion.png";
+            this.catNotificacion = 0;
+        },
+        2000);
         page = NotificacionesAlumnoPage;
         break;
     }
