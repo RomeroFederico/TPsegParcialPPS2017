@@ -2,11 +2,6 @@
 Segundo parcial de PPS 2017 IONIC 2
 
 Equipo : Null
-
-Integrantes :
-    - Flores Osmar
-    - Romero Federico
-    - Gueler Daniel
     
 <h1>Aplicacion movil de toma de asistencia</h1>
 
@@ -51,3 +46,16 @@ Integrantes :
 <h5> - Native Audio</h5>
 <h5> - Toast</h5>
 <h5> - Google Maps</h5>
+
+<h3>COMPOENENTE DE IONIC UTILIZADOS</h3>
+
+<h5>-Action Sheets
+    - Alerts
+    - Loading
+    - Searchbar
+    - Refresher
+    - Gesture
+    - Menu
+    - Modal
+    - etc.</h5>
+
