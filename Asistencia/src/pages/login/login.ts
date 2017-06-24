@@ -127,6 +127,7 @@ export class LoginPage {
     }
     var obj = {email:this.mail,password:this.pass};
     this.MostrarLoading();
+    
     this.ws.Login(obj)
     .then(data => 
     {
