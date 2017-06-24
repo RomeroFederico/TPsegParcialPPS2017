@@ -29,12 +29,22 @@ Integrantes :
 <h5>Este cuenta con opciones similares como el Salir y Mapa.
     El Salir pregunta si esta seguro de salir con la opcion de aceptar o cancelar en caso de arrepentirse. En la opcion de ver el           mapa este cargar la ubicaion de la UTN FRA marcado</h5>
 <h3>OPERATORIA ALUMNO</h3>
-
+<h5>Cuando se logea puede ver sus datos. Tiene la posibilidad de ver sus notificaciones puede borrarlas en caso de que sea
+    necesario. Puede ver sus asistencias al igual que ver sus materias.</h5>
 <h3>OPERATORIA PROFESOR</h3>
-
+<h5>Cuando se logea puede ver sus datos. La funcionalidad es muy similar a la de alumnbo . Este tiene la posibilidad de navegar 
+    por un menu en caso de que lo desee.Tiene la posibilidad de ver sus materias divisiones y alumnos.</h5>
 <h3>OPERATORIA ADMINISTRATIVO</h3>
-
+<h5>El administrativo puede tomar asistencia de las divisiones que tienen como fecha de proxima clase la fecha actual.
+    Al tomar la lista, modifica la division para que ya no se pueda tomar lista ese dia. 
+    Tambien puede ver los listados de las divisiones, de los alumnos y de los profesores, aplicando filtros de seleccion, puede
+    buscar por nombre, u otro parametro.
+    Puede ver sus detalles, ademas de los datos listado. 
+    Ademas, puede poner dias de licencia general sino hay clases tales diasm, atraves de un calendario. 
+    Por ultimo puede mandar o resibir notificaciones. </h5>
 <h3>OPERATORIA ADMINISTRADOR</h3>
+<h5>Cuando se logea puede ver sus datos , ver los listados generales de los datos del sistema(usuarios,divisiones,materias,aulas), 
+    y puede agregar cada uno de estos</h5>
 
 <h3>PLUGINS UTILIZADOS</h3>
 <h5> - Vibracion</h5>
