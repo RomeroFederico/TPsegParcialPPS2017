@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { NavController, NavParams, LoadingController, ActionSheetController, Platform, AlertController } from 'ionic-angular';
 
 import { ListadoAdministrativoPage } from '../listado-administrativo/listado-administrativo';
+import { DatosAdministrativoPage } from '../datos-administrativo/datos-administrativo';
 import { LoginPage } from '../login/login';
 
 @Component({
@@ -191,9 +192,28 @@ export class HomeAdministrativoPage {
 
     loading.onDidDismiss(() => {
       this.animacionSeleccion[this.seleccionAnimar] = "";
-      this.navCtrl.setRoot(ListadoAdministrativoPage,
+      this.navCtrl.push(ListadoAdministrativoPage,
                            {opciones : seleccion},
                            {animate: true, direction: 'forward'});
+    });
+
+    this.loading = loading;
+
+    this.loading.present();
+  }
+
+  MostrarDatos()
+  {
+    let loading = this.loadingController.create({
+      spinner: 'bubbles',
+      content: `Cargando datos del administrativo, 
+      Por Favor Espere un Momento...`,
+      duration: 1000
+    });
+
+    loading.onDidDismiss(() => {
+      this.animacionSeleccion[1] = "";
+      this.navCtrl.push(DatosAdministrativoPage);
     });
 
     this.loading = loading;

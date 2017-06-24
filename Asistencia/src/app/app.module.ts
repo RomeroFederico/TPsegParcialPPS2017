@@ -18,6 +18,7 @@ import { AsistenciaAlumnoPage } from '../pages/asistencia-alumno/asistencia-alum
 import { HomeAdministrativoPage } from '../pages/home-administrativo/home-administrativo';
 import { ListadoAdministrativoPage } from '../pages/listado-administrativo/listado-administrativo';
 import { AsistenciaAdministrativoPage } from '../pages/asistencia-administrativo/asistencia-administrativo';
+import { DatosAdministrativoPage } from '../pages/datos-administrativo/datos-administrativo';
 
 //Administrador
 import { HomeAdministradorPage } from '../pages/home-administrador/home-administrador';
@@ -77,6 +78,7 @@ var configFirebase  = {
     HomeAdministrativoPage,
     ListadoAdministrativoPage,
     AsistenciaAdministrativoPage,
+    DatosAdministrativoPage,
     HomeAdministradorPage,
     ListadoAdministradorPage,
     AgregarAdministradorPage,
@@ -114,6 +116,7 @@ var configFirebase  = {
     HomeAdministrativoPage,
     AsistenciaAdministrativoPage,
     ListadoAdministrativoPage,
+    DatosAdministrativoPage,
     HomeAdministradorPage,
     ListadoAdministradorPage,
     AgregarAdministradorPage,

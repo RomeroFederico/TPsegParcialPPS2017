@@ -1,0 +1,107 @@
+<ion-header>
+
+  <ion-navbar hideBackButton color = "danger">
+    <ion-buttons left>
+      <button ion-button (click)="Volver()">
+        <ion-icon class="customIcon" name="arrow-back"></ion-icon>
+      </button>
+    </ion-buttons>
+    <ion-label class = "titulo">Datos de {{usuario.nombre}}</ion-label>
+  </ion-navbar>
+
+</ion-header>
+
+<ion-content padding>
+
+    <!-- PORTADA -->
+    <ion-grid no-padding class = 'miHeader administrativo'>
+
+      <ion-row>
+
+        <ion-col width-33 style = "padding: 10px 10px 0px 10px">
+
+            <img class = 'imagenPerfil' [src] = "'assets/images/administrador/administrativo/' + usuario.img">
+
+            <button ion-button small block color = 'light' (click) = "NoImplementado()">
+              MODIFICAR
+            </button>
+
+        </ion-col>
+
+        <ion-col class = 'columnaCentrada'>
+
+          <div>
+          <h3 class = "tituloUsuario">{{usuario.apellido}}, {{usuario.nombre}}</h3>
+          </div>
+
+        </ion-col>
+
+      </ion-row>
+
+      <p class = "tipoUsuario">{{DevolverTipo(usuario)}}</p>
+
+    </ion-grid>
+
+    <!-- DATOS -->
+    <ion-item style = "padding: 0px 0px 0px 0px">
+      <ion-grid no-padding>
+            <ion-row>
+              <ion-col width-33>
+                <p class = 'atributoAdministrativo'>
+                Id :
+                </p>
+              </ion-col>
+              <ion-col><p class = "mostrarAtributo">{{usuario.idUsuario}}<p></ion-col>
+            </ion-row>
+            <ion-row>
+              <ion-col width-33>
+                <p class = 'atributoAdministrativo'>
+                Apellido :
+                </p>
+              </ion-col>
+              <ion-col><p class = "mostrarAtributo">{{usuario.apellido}}<p></ion-col>
+            </ion-row>
+            <ion-row>
+              <ion-col width-33>
+                <p class = 'atributoAdministrativo'>
+                Nombre :
+                </p>
+              </ion-col>
+              <ion-col><p class = "mostrarAtributo">{{usuario.nombre}}<p></ion-col>
+            </ion-row>
+            <ion-row>
+              <ion-col width-33>
+                <p class = 'atributoAdministrativo'>
+                Edad :
+                </p>
+              </ion-col>
+              <ion-col><p class = "mostrarAtributo">{{usuario.edad}}<p></ion-col>
+            </ion-row>
+            <ion-row>
+              <ion-col width-33>
+                <p class = 'atributoAdministrativo'>
+                Legajo :
+                </p>
+              </ion-col>
+              <ion-col><p class = "mostrarAtributo">{{usuario.legajo}}<p></ion-col>
+            </ion-row>
+            <ion-row>
+              <ion-col width-33>
+                <p class = 'atributoAdministrativo'>
+                DNI :
+                </p>
+              </ion-col>
+              <ion-col><p class = "mostrarAtributo">{{usuario.dni}}<p></ion-col>
+            </ion-row>
+            <ion-row>
+              <ion-col width-33>
+                <p class = 'atributoAdministrativo'>
+                Email :
+                </p>
+              </ion-col>
+              <ion-col><p class = "mostrarAtributo">{{usuario.email}}<p></ion-col>
+            </ion-row>
+      </ion-grid>
+    </ion-item>
+
+</ion-content>

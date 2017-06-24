@@ -25,21 +25,21 @@
       <button menuClose ion-item (click)="Salir()"><ion-icon name="md-close-circle" style="color: red"></ion-icon> Salir</button>
       </div>
       <div *ngIf="tipo =='Administrativo'">
-      <button menuClose ion-item ><ion-icon name="md-person"></ion-icon> Datos Administrativo </button>
-      <button menuClose ion-item ><ion-icon name="md-clipboard"></ion-icon> Tomar Asistencia </button>
-      <button menuClose ion-item ><ion-icon name="md-attach"></ion-icon> Divisiones </button>
-      <button menuClose ion-item ><ion-icon name="md-contacts"></ion-icon> Alumnos </button>
-      <button menuClose ion-item ><ion-icon name="md-filing"></ion-icon> Profesores </button>
-      <button menuClose ion-item ><ion-icon name="md-notifications"></ion-icon> Notificaciones </button>
+      <button menuClose ion-item (click) = "DatosAdministrativo()"><ion-icon name="md-person"></ion-icon> Datos Administrativo </button>
+      <button menuClose ion-item (click) = "TomarAsistencia()"><ion-icon name="md-clipboard"></ion-icon> Tomar Asistencia </button>
+      <button menuClose ion-item (click) = "ListadoDivisionesAdministrativo()"><ion-icon name="md-attach"></ion-icon> Divisiones </button>
+      <button menuClose ion-item (click) = "ListadoAlumnosAdministrativo()"><ion-icon name="md-contacts"></ion-icon> Alumnos </button>
+      <button menuClose ion-item (click) = "ListadoProfesoresAdministrativo()"><ion-icon name="md-filing"></ion-icon> Profesores </button>
+      <button menuClose ion-item (click) = "NoImplementado()"><ion-icon name="md-notifications"></ion-icon> Notificaciones </button>
       <button menuClose ion-item (click)="Mapa()" ><ion-icon name="md-globe" style="color: green"></ion-icon> Mapa </button>
       <button menuClose ion-item (click)="Salir()"><ion-icon name="md-close-circle" style="color: red"></ion-icon> Salir</button>
       </div>
       <div *ngIf="tipo =='Administrador'">
-      <button menuClose ion-item ><ion-icon name="md-person"></ion-icon> Datos Administrador </button>
-      <button menuClose ion-item ><ion-icon name="md-contacts"></ion-icon> Alumnos </button>
-      <button menuClose ion-item ><ion-icon name="md-filing"></ion-icon> Profesores </button>
-      <button menuClose ion-item ><ion-icon name="md-attach"></ion-icon> Divisiones </button>
-      <button menuClose ion-item ><ion-icon name="md-notifications"></ion-icon> Notificaciones </button>
+      <!--<button menuClose ion-item ><ion-icon name="md-person"></ion-icon> Datos Administrador </button>-->
+      <button menuClose ion-item (click) = "ListadoUsuariosAdministrador()"><ion-icon name="md-contacts"></ion-icon> Usuarios </button>
+      <button menuClose ion-item (click) = "ListadoDivisionesAdministrador()"><ion-icon name="md-filing"></ion-icon> Divisiones </button>
+      <button menuClose ion-item (click) = "ListadoMateriasAdministrador()"><ion-icon name="md-attach"></ion-icon> Materias </button>
+      <button menuClose ion-item (click) = "ListadoAulasAdministrador()"><ion-icon name="md-notifications"></ion-icon> Aulas </button>
       <button menuClose ion-item (click)="Mapa()" ><ion-icon name="md-globe" style="color: green"></ion-icon> Mapa </button>
       <button menuClose ion-item (click)="Salir()"><ion-icon name="md-close-circle" style="color: red"></ion-icon> Salir</button>
       </div>

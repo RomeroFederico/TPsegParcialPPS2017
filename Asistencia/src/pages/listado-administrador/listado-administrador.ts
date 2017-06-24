@@ -77,7 +77,7 @@ export class ListadoAdministradorPage {
   * Volver a la pagina principal.
   */
   Volver() {
-    this.navCtrl.setRoot(HomeAdministradorPage, {}, { animate: true, direction: 'forward' });
+    this.navCtrl.pop();
   }
 
   /**
