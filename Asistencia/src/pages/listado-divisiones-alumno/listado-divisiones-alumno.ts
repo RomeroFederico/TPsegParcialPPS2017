@@ -23,7 +23,8 @@ export class ListadoDivisionesAlumnoPage {
               public ws:Ws)
   {
       this.cargando = true;
-      this.alumno = this.navParams.get("Alumno");
+      this.alumno = JSON.parse(localStorage.getItem("usuario"));
+      //this.alumno = this.navParams.get("Alumno");
       this.ListarMaterias();
   }
 
