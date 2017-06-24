@@ -108,7 +108,7 @@ export class AgregarAdministradorPage {
   */
   Volver()
   {
-    this.navCtrl.setRoot(HomeAdministradorPage, {}, {animate: true, direction: 'forward'});
+    this.navCtrl.pop();
   }
 
   CambiarTipoDeUsuario()

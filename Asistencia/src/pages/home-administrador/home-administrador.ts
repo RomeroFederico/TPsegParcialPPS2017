@@ -175,7 +175,7 @@ export class HomeAdministradorPage {
 
     loading.onDidDismiss(() => {
       this.animacionSeleccion[this.seleccionAnimar] = "";
-      this.navCtrl.setRoot(seleccion.ruta == "agregar-administrador"? AgregarAdministradorPage : ListadoAdministradorPage,
+      this.navCtrl.push(seleccion.ruta == "agregar-administrador"? AgregarAdministradorPage : ListadoAdministradorPage,
                            {opciones : seleccion},
                            {animate: true, direction: 'forward'});
     });

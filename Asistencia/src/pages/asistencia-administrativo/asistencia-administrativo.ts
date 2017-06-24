@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams, LoadingController, AlertController } from 'ionic-angular';
+import { NavController, NavParams, LoadingController, AlertController, ToastController } from 'ionic-angular';
 
 import { Ws } from '../../providers/ws';
 
@@ -8,12 +8,17 @@ import { Alumno } from '../../components/clases/alumno';
 
 import { Division } from '../../components/clases/division';
 
+import { HomeAdministrativoPage } from '../home-administrativo/home-administrativo';
+
 import { AngularFireDatabase, FirebaseListObservable } from 'angularfire2/database';//FIREBASE!
+
+import { Vibration } from '@ionic-native/vibration';
+import { NativeAudio } from '@ionic-native/native-audio';
 
 @Component({
   selector: 'page-asistencia-administrativo',
   templateUrl: 'asistencia-administrativo.html',
-  providers: [Ws]
+  providers: [Ws,NativeAudio,Vibration]
 })
 export class AsistenciaAdministrativoPage {
 
@@ -26,8 +31,10 @@ export class AsistenciaAdministrativoPage {
   listado : FirebaseListObservable<any[]>;//FIREBASE!
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public ws : Ws, 
-              public loadingController : LoadingController, public alertCtrl: AlertController,private firebase: AngularFireDatabase)
+              public loadingController : LoadingController, public alertCtrl: AlertController,private firebase: AngularFireDatabase, 
+              public toast : ToastController, public nativeAudio: NativeAudio, public vibration:Vibration)
   {
+    this.nativeAudio.preloadSimple("p1","assets/sonidos/Correcto.mp3");
     this.listado=firebase.list('/Lista');//CARGO LA LISTA.
     this.listado.subscribe(data => {console.log("Datos de firebase: ");console.log(data);});//MUESTRO LAS DATOS DE LAS LISTAS.
 
@@ -52,6 +59,18 @@ export class AsistenciaAdministrativoPage {
   Volver()
   {
     this.navCtrl.pop();
+  }
+
+  Vibrar()
+  {
+    console.log("Vibrar");
+    this.vibration.vibrate(500);
+  }
+
+  Sonar()
+  {
+    console.log("Sonar");
+    this.nativeAudio.play("p1");
   }
 
   Cancelar()
@@ -237,6 +256,18 @@ export class AsistenciaAdministrativoPage {
 
     console.log(subir);
 
+    this.MostrarLoading("listado de asistencia del dia");
+
+    this.listado.push(subir).then(() => {
+
+      this.cargando.dismiss();
+      this.Sonar();
+      this.MostrarToast("Lista tomada exitosamente!!!");
+      this.navCtrl.setRoot(HomeAdministrativoPage);
+
+    })
+    .catch((error) => { this.cargando.dismiss(); this.MostrarToast("La lista de asistencias no se guardo."); this.navCtrl.setRoot(HomeAdministrativoPage); console.log("Error"); });// CON ESA FUNCION SUBO EL JSON A FIREBASE
+
     this.listado.push(subir);// CON ESA FUNCION SUBO EL JSON A FIREBASE
     //ACA SE SUBE EN FIREBASE EL OBJETO SUBIR...AL TERMINAR EL PROCESO IR AL MENU PRINCIPAL -> HOME CON SET ROOT, MOSTRAR UN MENSAJE SI SE GUARDO.
   }
@@ -253,6 +284,16 @@ export class AsistenciaAdministrativoPage {
     });
 
     this.cargando.present();
+  }
+
+  MostrarToast(mensaje)
+  {
+    let toast = this.toast.create({
+      message: mensaje,
+      duration: 2000
+    });
+
+    toast.present();
   }
 
   ReintentarCargarAlumnos()

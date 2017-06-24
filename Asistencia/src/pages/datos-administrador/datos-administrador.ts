@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams } from 'ionic-angular';
+import { NavController, NavParams, AlertController } from 'ionic-angular';
 
 import { Usuario } from '../../components/clases/usuario';
 //import { Administrador } from '../../components/clases/administrador';
@@ -37,7 +37,7 @@ export class DatosAdministradorPage {
   // Array con cada una de los estados de la lista desplegable.
   shownGroup = [null, null, null, null, null];
 
-  constructor(public navCtrl: NavController, public navParams: NavParams)
+  constructor(public navCtrl: NavController, public navParams: NavParams, public alertCtrl: AlertController)
   {
     this.tipo = this.navParams.get("tipo");
 
@@ -81,6 +81,22 @@ export class DatosAdministradorPage {
   Volver()
   {
     this.navCtrl.pop();
+  }
+
+  NoImplementado()
+  {
+    let confirm = this.alertCtrl.create({
+      title: 'Informacion',
+      message: 'No implementado aun...',
+      buttons: [
+        {
+          text: 'Aceptar',
+          handler: () => {
+          }
+        }
+      ]
+    });
+    confirm.present();
   }
 
   /**

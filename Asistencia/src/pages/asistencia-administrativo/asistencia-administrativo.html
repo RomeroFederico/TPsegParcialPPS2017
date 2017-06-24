@@ -55,7 +55,7 @@
 
   <ion-list *ngIf = "alumnos != null">
 
-    <ion-item *ngFor = "let alumno of alumnos" text-wrap>
+    <ion-item *ngFor = "let alumno of alumnos" text-wrap (tap) = "Vibrar()">
       <ion-avatar item-left>
         <img [src] = "'assets/images/administrador/alumno/' + alumno.alumno.img">
       </ion-avatar>

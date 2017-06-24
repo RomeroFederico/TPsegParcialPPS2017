@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { NavController, NavParams, LoadingController, ActionSheetController, Platform, AlertController } from 'ionic-angular';
 
 import { ListadoAdministrativoPage } from '../listado-administrativo/listado-administrativo';
+import { DatosAdministrativoPage } from '../datos-administrativo/datos-administrativo';
 import { LoginPage } from '../login/login';
 
 @Component({
@@ -46,6 +47,22 @@ export class HomeAdministrativoPage {
     }
   }
 
+  NoImplementado()
+  {
+    let confirm = this.alertCtrl.create({
+      title: 'Informacion',
+      message: 'No implementado aun...',
+      buttons: [
+        {
+          text: 'Aceptar',
+          handler: () => {
+          }
+        }
+      ]
+    });
+    confirm.present();
+  }
+
   /**
   * A partir de la opcion seleccionada de 'Seleccion', se obtiene la pagina a mostrar y lo que se quiere mostrar (Materia, Usuario, Division, Aula).
   * @param opcion numero que representa la opcion seleccionada.
@@ -76,15 +93,15 @@ export class HomeAdministrativoPage {
 
       case 3:
 
-        objOpcion.mensaje = "Agregar division";
-        objOpcion.ruta = "agregar-administrador";
-        objOpcion.tipo = "Division";
+        objOpcion.mensaje = "Listado de alumnos";
+        //objOpcion.ruta = "agregar-administrador";
+        objOpcion.tipo = "Alumno";
         break;
 
       case 4:
 
-        objOpcion.mensaje = "Listado de materias";
-        objOpcion.tipo = "Materia";
+        objOpcion.mensaje = "Listado de profesores";
+        objOpcion.tipo = "Profesor";
         break;
 
       case 5:
@@ -175,9 +192,28 @@ export class HomeAdministrativoPage {
 
     loading.onDidDismiss(() => {
       this.animacionSeleccion[this.seleccionAnimar] = "";
-      this.navCtrl.setRoot(ListadoAdministrativoPage,
+      this.navCtrl.push(ListadoAdministrativoPage,
                            {opciones : seleccion},
                            {animate: true, direction: 'forward'});
+    });
+
+    this.loading = loading;
+
+    this.loading.present();
+  }
+
+  MostrarDatos()
+  {
+    let loading = this.loadingController.create({
+      spinner: 'bubbles',
+      content: `Cargando datos del administrativo, 
+      Por Favor Espere un Momento...`,
+      duration: 1000
+    });
+
+    loading.onDidDismiss(() => {
+      this.animacionSeleccion[1] = "";
+      this.navCtrl.push(DatosAdministrativoPage);
     });
 
     this.loading = loading;
