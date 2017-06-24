@@ -15,6 +15,12 @@ import { ListadoDivisionesProfesorPage } from '../listado-divisiones-profesor/li
 import { ListadoMateriasProfesorPage } from '../listado-materias-profesor/listado-materias-profesor';
 import { NotificacionesProfesorPage } from '../notificaciones-profesor/notificaciones-profesor';
 
+
+import { DatosAlumnoPage } from '../datos-alumno/datos-alumno';
+import { NotificacionesAlumnoPage } from '../notificaciones-alumno/notificaciones-alumno';
+import { ListadoDivisionesAlumnoPage } from '../listado-divisiones-alumno/listado-divisiones-alumno';
+import { AsistenciaAlumnoPage } from '../asistencia-alumno/asistencia-alumno';
+
 @Component({
   providers:[Auth],
   selector: 'page-menu',
@@ -83,6 +89,24 @@ export class MenuPage {
     });
     alert.present();
   }
+
+  DatosAlumno()
+  {
+    this.navCtrl.push(DatosAlumnoPage);
+  }
+  NotificacionesAlumno()
+  {
+    this.navCtrl.push(NotificacionesAlumnoPage);
+  }
+  AsistenciaAlumno()
+  {
+    this.navCtrl.push(AsistenciaAlumnoPage);
+  }
+  ListadoDivisionesAlumno()
+  {
+    this.navCtrl.push(ListadoDivisionesAlumnoPage);
+  }
+
   DatosProfesor()
   {
     this.navCtrl.push(DatosProfesorPage);

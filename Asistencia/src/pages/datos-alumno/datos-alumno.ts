@@ -16,8 +16,9 @@ export class DatosAlumnoPage {
   constructor(public navCtrl: NavController,
               public navParams: NavParams)
   {
-        console.log(this.navParams.get("Alumno"));
-        this.alumno = this.navParams.get("Alumno");
+        this.alumno = JSON.parse(localStorage.getItem("usuario"));
+        /*console.log(this.navParams.get("Alumno"));
+        this.alumno = this.navParams.get("Alumno");**/
         this.fotoAlumno = "assets/images/alumno/"+this.alumno.img;
   }
 
