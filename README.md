@@ -5,6 +5,8 @@ Equipo : Null
     
 <h1>Aplicacion movil de toma de asistencia</h1>
 
+<h1> Ionic View : 30493405 </h1>
+
 <h3>Curso: Practica Supervisada 2017</h3>
 <h5>Profesores : Villegas Octavio y Neiner Maximiliano</h5>
 <h5>Cuatrimestre: 1er cuatrimestro 2017</h5>
