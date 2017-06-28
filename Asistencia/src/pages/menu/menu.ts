@@ -10,6 +10,7 @@ import { HomeAdministrativoPage } from '../home-administrativo/home-administrati
 
 import { DatosProfesorPage } from '../datos-profesor/datos-profesor';
 import { Mapa } from '../mapa/mapa';
+import { Graficos } from '../graficos/graficos';
 import { ListadoClasesProfesorPage } from '../listado-clases-profesor/listado-clases-profesor';
 import { ListadoDivisionesProfesorPage } from '../listado-divisiones-profesor/listado-divisiones-profesor';
 import { ListadoMateriasProfesorPage } from '../listado-materias-profesor/listado-materias-profesor';
@@ -136,7 +137,10 @@ export class MenuPage {
   {
     this.navCtrl.push(Mapa);
   }
-
+  Graficos()
+  {
+    this.navCtrl.push(Graficos);
+  }
   DatosAdministrativo()
   {
     this.navCtrl.push(DatosAdministrativoPage);

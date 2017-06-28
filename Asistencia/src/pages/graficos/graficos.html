@@ -1,0 +1,29 @@
+<ion-header>
+<ion-navbar color = "primary" hideBackButton>
+    <ion-buttons left>
+      <button ion-button (click)="Volver()">
+        <ion-icon name="md-arrow-back"></ion-icon>
+      </button>
+    </ion-buttons>
+    <ion-title>Graficos</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+
+    <h1> GRAFICO 2 PIE</h1>
+      <div style="display: block">
+  <canvas baseChart
+          [data]="pieChartData"
+          [labels]="pieChartLabels"
+          [chartType]="pieChartType"
+          (chartHover)="chartHovered($event)"
+          (chartClick)="chartClicked($event)"></canvas>
+          <button ion-button color="secondary" outline (click)="Info()">Ver Informacion</button>
+           <button ion-button color="dark" outline (click)="Noti()">Notificacion</button>
+</div>
+   
+
+</ion-content>

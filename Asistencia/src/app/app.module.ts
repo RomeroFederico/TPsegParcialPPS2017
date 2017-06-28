@@ -36,6 +36,8 @@ import { ListadoDivisionesProfesorPage } from '../pages/listado-divisiones-profe
 import { DatosDivisionProfesorPage } from '../pages/datos-division-profesor/datos-division-profesor';
 import { NotificacionesProfesorPage } from '../pages/notificaciones-profesor/notificaciones-profesor';
 import { Mapa } from '../pages/mapa/mapa';
+import { Graficos } from '../pages/graficos/graficos';
+import { ChartsModule } from 'ng2-charts';//AGREGO CHARTS
 //JWT
 import { JwtModule } from './jwt/jwt.module';
 import { AuthHttp, AuthConfig, AUTH_PROVIDERS, provideAuth } from 'angular2-jwt';
@@ -73,6 +75,7 @@ var configFirebase  = {
     MyApp,
     LoginPage,
     Mapa,
+    Graficos,
     MenuPage,
     HomeProfesorPage,
     HomeAdministrativoPage,
@@ -101,6 +104,7 @@ var configFirebase  = {
   imports: [
     BrowserModule,
     HttpModule,
+    ChartsModule,
     IonicModule.forRoot(MyApp),
     AngularFireModule.initializeApp(configFirebase.firebase),
     IonicStorageModule.forRoot()
@@ -112,6 +116,7 @@ var configFirebase  = {
     MenuPage,
     HomeAlumnoPage,
     Mapa,
+    Graficos,
     HomeProfesorPage,
     HomeAdministrativoPage,
     AsistenciaAdministrativoPage,
