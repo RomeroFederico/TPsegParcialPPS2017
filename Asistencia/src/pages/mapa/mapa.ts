@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { Component, ViewChild, ElementRef } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 
 declare var google;
@@ -43,15 +43,8 @@ m1 = new google.maps.Marker({position: this.latlng, animation: google.maps.Anima
 
     this.map = new google.maps.Map(this.mapElement.nativeElement, mapOptions);
 
-        var directionsService = new google.maps.DirectionsService;
-    var directionsDisplay = new google.maps.DirectionsRenderer({
-      map: this.map
-    })
-
     this.directionsService = new google.maps.DirectionsService;
-    this.directionsDisplay = new google.maps.DirectionsRenderer({
-      map: this.map
-    })
+    this.directionsDisplay = new google.maps.DirectionsRenderer({map: this.map});
   }
 
 }

@@ -40,7 +40,7 @@ export class MenuPage {
 
   constructor(public navCtrl: NavController,public alertCtrl: AlertController, public navParams: NavParams,private auth : Auth) 
   {
-    this.tipo = this.navParams.get("Tipo");
+    this.tipo = this.ObtenerTipo();
 
     switch (this.tipo) {
       case "Alumno":
@@ -69,6 +69,10 @@ export class MenuPage {
     
     console.log("Desde el menu recibo: "+this.tipo);
   }
+  ObtenerTipo()
+  {
+    return localStorage.getItem("tipo");
+  }
   Salir()
   {
     let alert = this.alertCtrl.create({
@@ -95,7 +99,10 @@ export class MenuPage {
     });
     alert.present();
   }
-
+  Ayuda()
+  {
+    
+  }
   DatosAlumno()
   {
     this.navCtrl.push(DatosAlumnoPage);

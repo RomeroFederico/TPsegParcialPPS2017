@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { AlertController, NavController, NavParams, LoadingController,ToastController } from 'ionic-angular';
+import { AlertController, NavController, LoadingController,ToastController } from 'ionic-angular';
 import { Storage } from '@ionic/storage';
 import { MenuPage } from '../menu/menu';
 import { Profesor } from '../../components/clases/profesor';
@@ -9,7 +9,6 @@ import { Usuario } from '../../components/clases/usuario';
 import { Auth } from '../../providers/auth';
 import { Ws } from '../../providers/ws';
 import { AngularFireDatabase, FirebaseListObservable } from 'angularfire2/database';
-
 import { NativeAudio } from '@ionic-native/native-audio';
 import { Vibration } from '@ionic-native/vibration';
 
@@ -92,6 +91,7 @@ export class LoginPage {
     }
 
   }
+
   Login()
   {
     var tipo = this.tipo;
@@ -142,13 +142,15 @@ export class LoginPage {
             {
               console.log(data.rta.usuario);
               localStorage.setItem("usuario",JSON.stringify(data.rta.usuario));
+              localStorage.setItem("tipo",this.tipo);
               this.AlertCorrecto(data.rta.usuario.nombre);
               this.Vibrar();
               this.nativeAudio.play("p1");
-              this.navCtrl.setRoot(MenuPage,{Tipo:this.tipo});
+              this.navCtrl.setRoot(MenuPage);
             })
             .catch(error => 
             {
+              this.loading.dismiss();
               this.AlertErrorBaseDatos();
               console.log(error);
             });
@@ -162,6 +164,7 @@ export class LoginPage {
     })
     .catch(error => 
     {
+      this.loading.dismiss();
       this.AlertErrorBaseDatos();
       console.log(error);
     });

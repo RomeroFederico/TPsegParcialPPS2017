@@ -40,8 +40,7 @@ import { Graficos } from '../pages/graficos/graficos';
 import { ChartsModule } from 'ng2-charts';//AGREGO CHARTS
 //JWT
 import { JwtModule } from './jwt/jwt.module';
-import { AuthHttp, AuthConfig, AUTH_PROVIDERS, provideAuth } from 'angular2-jwt';
-import { Ws } from '../providers/ws';
+import { AuthHttp, provideAuth } from 'angular2-jwt';
 import { Auth } from '../providers/auth';
 import { VerificarJwt } from '../providers/verificar-jwt';
 
@@ -103,6 +102,7 @@ var configFirebase  = {
   ],
   imports: [
     BrowserModule,
+    JwtModule,
     HttpModule,
     ChartsModule,
     IonicModule.forRoot(MyApp),

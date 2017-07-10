@@ -101,6 +101,7 @@ export class HomeAlumnoPage {
         if(data == "cerrarSesion")
         {
             this.navCtrl.setRoot(LoginPage);
+            localStorage.setItem('usuario', null);
         }
         else
         {
