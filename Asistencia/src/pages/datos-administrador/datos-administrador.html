@@ -145,7 +145,7 @@
       <div *ngIf="isGroupShown(0) && DevolverTipo(usuario) == 'Profesor'">
         
         <ion-list>
-          <ion-item *ngFor = "let d of filtrarDivisionesProfesor('En curso')" text-wrap no-padding>
+          <ion-item *ngFor = "let d of filtrarDivisionesProfesor('Cursando')" text-wrap no-padding>
             <ion-thumbnail item-left>
               <img [src] = "'assets/images/materias/' + d.materia.img">
             </ion-thumbnail>
@@ -155,7 +155,7 @@
             <p>Final: {{ObtenerFecha(d.fechaFin)}}</p>
           </ion-item>
 
-          <ion-item *ngIf = "filtrarDivisionesProfesor('En curso').length == 0" text-wrap no-padding>
+          <ion-item *ngIf = "filtrarDivisionesProfesor('Cursando').length == 0" text-wrap no-padding>
             <ion-icon item-left large name = "warning" class = "iconoProfesor"></ion-icon>
             <h3>No hay divisiones para mostrar</h3>
           </ion-item>
@@ -466,7 +466,7 @@
                 Prox. Clase :
                 </p>
               </ion-col>
-              <ion-col><p class = "mostrarAtributo">{{ObtenerFecha(division.fechaProxClase)}}<p></ion-col>
+              <ion-col><p class = "mostrarAtributo">{{division.fechaProxClase != null? ObtenerFecha(division.fechaProxClase) : '---'}}<p></ion-col>
             </ion-row>
       </ion-grid>
     </ion-item>
@@ -508,7 +508,7 @@
     </div>
 
     <!-- DATOS DE LOS ALUMNOS -->
-    <ion-item text-wrap (click)="toggleGroup(0)" no-padding *ngIf = "alumnosDivision.length > 0">
+    <ion-item text-wrap (click)="toggleGroup(0)" no-padding *ngIf = "alumnosDivision != null && alumnosDivision.length > 0">
 
       <p class = "atributoAdministrador">
         Alumnos
@@ -556,7 +556,7 @@
       </div>
 
     </ion-item>
-    <div *ngIf = "alumnosDivision.length == 0">
+    <div *ngIf = "alumnosDivision == null || alumnosDivision.length == 0">
       <p class = "atributoAdministrador">
         No hay alumnos asignados.
       </p>

@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams, AlertController } from 'ionic-angular';
+import { NavController, NavParams, LoadingController, AlertController } from 'ionic-angular';
 
 import { Usuario } from '../../components/clases/usuario';
 //import { Administrador } from '../../components/clases/administrador';
@@ -12,9 +12,12 @@ import { Aula } from '../../components/clases/aula';
 import { Materia } from '../../components/clases/materia';
 import { Ciclo } from '../../components/clases/ciclo';
 
+import { Ws } from '../../providers/ws';
+
 @Component({
   selector: 'page-datos-administrador',
-  templateUrl: 'datos-administrador.html'
+  templateUrl: 'datos-administrador.html',
+  providers: [Ws],
 })
 export class DatosAdministradorPage {
 
@@ -22,7 +25,7 @@ export class DatosAdministradorPage {
 
   usuario : Usuario;
   divisiones : Array<Division>;
-  divisionesUsuario : any;
+  divisionesUsuario : Array<any>;
 
   division : Division;
   alumnos : Array<Alumno>;
@@ -34,10 +37,13 @@ export class DatosAdministradorPage {
   aula : Aula;
   divisionesAula : Array<Division>;
 
+  cargando : any = null;
+
   // Array con cada una de los estados de la lista desplegable.
   shownGroup = [null, null, null, null, null];
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public alertCtrl: AlertController)
+  constructor(public navCtrl : NavController, public navParams : NavParams, public ws : Ws,
+              public loadingController : LoadingController, public alertCtrl: AlertController)
   {
     this.tipo = this.navParams.get("tipo");
 
@@ -45,7 +51,7 @@ export class DatosAdministradorPage {
     { 
       this.usuario = this.navParams.get("usuario");
 
-      this.ObtenerDivisiones();
+      //this.ObtenerDivisiones();
 
       if (this.DevolverTipo(this.usuario) == "Alumno")
         this.ObtenerDivisionesAlumno();
@@ -57,7 +63,7 @@ export class DatosAdministradorPage {
       this.division = this.navParams.get("division");
       console.log(this.division);
 
-      this.ObtenerAlumnos();
+      //this.ObtenerAlumnos();
       this.ObtenerAlumnosDivision();
     }
     else if (this.tipo == "Materia")
@@ -82,6 +88,17 @@ export class DatosAdministradorPage {
   {
     this.navCtrl.pop();
   }
+
+  MostrarLoading(mensaje : string) 
+  {
+    this.cargando = this.loadingController.create({
+      spinner: 'bubbles',
+      content: `Cargando ` + mensaje + `, 
+      Por Favor Espere un Momento...`,
+    });
+
+    this.cargando.present();
+  }  
 
   NoImplementado()
   {
@@ -170,65 +187,316 @@ export class DatosAdministradorPage {
   */
   ObtenerDivisionesAlumno()
   {
+    console.log("Cargo divisiones del alumno");
+    // this.divisionesUsuario = new Array();
+
+    // this.divisionesUsuario.push({division : this.divisiones[0], estado: "Cursando", faltas: 2});
+
+    // this.divisionesUsuario.push({division : this.divisiones[1], estado: "Cursando", faltas: 0});
+
+    // this.divisionesUsuario.push({division : this.divisiones[2], estado: "Terminada", faltas: 5});
+
     this.divisionesUsuario = new Array();
 
-    this.divisionesUsuario.push({division : this.divisiones[0], estado: "Cursando", faltas: 2});
+    this.MostrarLoading("divisiones del alumno");
 
-    this.divisionesUsuario.push({division : this.divisiones[1], estado: "Cursando", faltas: 0});
+    this.ws.TraerDivisionesDelAlumno(this.usuario.idUsuario).then(
+      (data) => {
+        console.log(data);
+        
+        if (data.Exito)
+        {
+          data.Divisiones.forEach(division => {
 
-    this.divisionesUsuario.push({division : this.divisiones[2], estado: "Terminada", faltas: 5});
+            this.divisionesUsuario.push({division : division, estado: division.estadoAlumno, faltas: division.faltas});
+            this.divisionesUsuario[this.divisionesUsuario.length - 1].division.materia = new Materia(division.idMateria, division.nombreMateria, division.img);
+            this.divisionesUsuario[this.divisionesUsuario.length - 1].division.ciclo = new Ciclo(division.idCiclo, division.anio, division.cuatrimestre);
+            this.divisionesUsuario[this.divisionesUsuario.length - 1].division.dias = [division.dia1, division.dia2, division.dia3];
+            let fechaInicio = division.fechaInicio.split('-');
+            this.divisionesUsuario[this.divisionesUsuario.length - 1].division.fechaInicio = new Date(fechaInicio[0], fechaInicio[1] - 1, fechaInicio[2]);
+            let fechaFin = division.fechaFin.split('-');
+            this.divisionesUsuario[this.divisionesUsuario.length - 1].division.fechaFin = new Date(fechaFin[0], fechaFin[1] - 1, fechaFin[2]);
+            if (division.fechaProxClase != null)
+            {
+              let fechaProxClase = division.fechaProxClase.split('-');
+              this.divisionesUsuario[this.divisionesUsuario.length - 1].division.fechaProxClase = new Date(fechaProxClase[0], fechaProxClase[1] - 1, fechaProxClase[2]);
+            }
+            else
+              this.divisionesUsuario[this.divisionesUsuario.length - 1].division.fechaProxClase = null;
+          });
+        }
+
+        this.cargando.dismiss();
+      }
+    )
+    .catch((error) => { this.cargando.dismiss(); this.ReintentarCargarDivisionesAlumno(); console.log(error)});
   }
 
-  /**
-  * Carga las divisiones del usuario profesor. Luego se hara con la base de datos.
-  */
+  ReintentarCargarDivisionesAlumno()
+  {
+    let confirm = this.alertCtrl.create({
+      title: 'Error en el servidor',
+      message: 'Desea reintentar la carga de divisiones del alumno?',
+      buttons: [
+        {
+          text: 'Cancelar',
+          handler: () => {
+            this.navCtrl.pop();
+          }
+        },
+        {
+          text: 'Aceptar',
+          handler: () => {
+            this.ObtenerDivisionesAlumno();
+          }
+        }
+      ]
+    });
+    confirm.present();
+  }
+
   ObtenerDivisionesProfesor()
   {
+    console.log("Cargo divisiones del profesor");
+    // this.divisionesUsuario = new Array();
+
+    // this.divisionesUsuario.push({division : this.divisiones[0], estado: "Cursando", faltas: 2});
+
+    // this.divisionesUsuario.push({division : this.divisiones[1], estado: "Cursando", faltas: 0});
+
+    // this.divisionesUsuario.push({division : this.divisiones[2], estado: "Terminada", faltas: 5});
+
     this.divisionesUsuario = new Array();
 
-    this.divisionesUsuario = this.divisiones.filter((item) => { return item.profesor.idUsuario == this.usuario.idUsuario; });
+    this.MostrarLoading("divisiones del profesor");
+
+    this.ws.TraerDivisionesDelProfesor(this.usuario.idUsuario).then(
+      (data) => {
+        console.log(data);
+        
+        if (data.Exito)
+        {
+          data.Divisiones.forEach(division => {
+
+            this.divisionesUsuario.push(division);
+            this.divisionesUsuario[this.divisionesUsuario.length - 1].materia = new Materia(division.idMateria, division.nombreMateria, division.img);
+            this.divisionesUsuario[this.divisionesUsuario.length - 1].ciclo = new Ciclo(division.idCiclo, division.anio, division.cuatrimestre);
+            this.divisionesUsuario[this.divisionesUsuario.length - 1].dias = [division.dia1, division.dia2, division.dia3];
+            let fechaInicio = division.fechaInicio.split('-');
+            this.divisionesUsuario[this.divisionesUsuario.length - 1].fechaInicio = new Date(fechaInicio[0], fechaInicio[1] - 1, fechaInicio[2]);
+            let fechaFin = division.fechaFin.split('-');
+            this.divisionesUsuario[this.divisionesUsuario.length - 1].fechaFin = new Date(fechaFin[0], fechaFin[1] - 1, fechaFin[2]);
+            if (division.fechaProxClase != null)
+            {
+              let fechaProxClase = division.fechaProxClase.split('-');
+              this.divisionesUsuario[this.divisionesUsuario.length - 1].fechaProxClase = new Date(fechaProxClase[0], fechaProxClase[1] - 1, fechaProxClase[2]);
+            }
+            else
+              this.divisionesUsuario[this.divisionesUsuario.length - 1].fechaProxClase = null;
+          });
+        }
+
+        this.cargando.dismiss();
+      }
+    )
+    .catch((error) => { this.cargando.dismiss(); this.ReintentarCargarDivisionesProfesor(); console.log(error)});
   }
+
+  ReintentarCargarDivisionesProfesor()
+  {
+    let confirm = this.alertCtrl.create({
+      title: 'Error en el servidor',
+      message: 'Desea reintentar la carga de divisiones del profesor?',
+      buttons: [
+        {
+          text: 'Cancelar',
+          handler: () => {
+            this.navCtrl.pop();
+          }
+        },
+        {
+          text: 'Aceptar',
+          handler: () => {
+            this.ObtenerDivisionesProfesor();
+          }
+        }
+      ]
+    });
+    confirm.present();
+  }
+
+  // /**
+  // * Carga las divisiones del usuario profesor. Luego se hara con la base de datos.
+  // */
+  // ObtenerDivisionesProfesor()
+  // {
+  //   this.divisionesUsuario = new Array();
+
+  //   this.divisionesUsuario = this.divisiones.filter((item) => { return item.profesor.idUsuario == this.usuario.idUsuario; });
+  // }
 
   /**
   * Carga las divisiones de la materia. Luego se hara con la base de datos.
   */
   ObtenerDivisionesMateria()
   {
+    // this.divisionesMateria = new Array<Division>();
+
+    // this.divisionesMateria.push(new Division(1, new Aula(1, "103", 1), this.materia,
+    //                                   new Profesor(2, "dos", "DOS", "456", "1002", "b@b.com", "789999", 35, "default.png"),
+    //                                   "4-A", new Ciclo(1, 2017, 1), "Mañana", new Date(2017, 3, 25), new Date(2017, 7, 5), "08:00", 
+    //                                   ["Martes"], "En curso", 20, 10, 15, 5, new Date(2017, 5, 25)));
+    // this.divisionesMateria.push(new Division(2, new Aula(1, "103", 1), this.materia,
+    //                                   new Profesor(4, "cuatro", "CUATRO", "789", "1004", "d@d.com", "aw9999", 40, "default.png"),
+    //                                   "5-A", new Ciclo(1, 2017, 1), "Mañana",new Date(2017, 3, 25), new Date(2017, 7, 5), "08:00", 
+    //                                   ["Miercoles", "Viernes"], "En curso", 18, 9, 15, 4, new Date(2017, 5, 28)));
+    // this.divisionesMateria.push(new Division(2, new Aula(1, "104", 1), this.materia,
+    //                                   new Profesor(4, "cuatro", "CUATRO", "789", "1004", "d@d.com", "aw9999", 40, "default.png"),
+    //                                   "4-A", new Ciclo(1, 2016, 2), "Mañana",new Date(2016, 9, 25), new Date(2016, 12, 5), "08:00", 
+    //                                   ["Lunes"], "Terminada", 18, 9, 15, 15, null));
+
     this.divisionesMateria = new Array<Division>();
 
-    this.divisionesMateria.push(new Division(1, new Aula(1, "103", 1), this.materia,
-                                      new Profesor(2, "dos", "DOS", "456", "1002", "b@b.com", "789999", 35, "default.png"),
-                                      "4-A", new Ciclo(1, 2017, 1), "Mañana", new Date(2017, 3, 25), new Date(2017, 7, 5), "08:00", 
-                                      ["Martes"], "En curso", 20, 10, 15, 5, new Date(2017, 5, 25)));
-    this.divisionesMateria.push(new Division(2, new Aula(1, "103", 1), this.materia,
-                                      new Profesor(4, "cuatro", "CUATRO", "789", "1004", "d@d.com", "aw9999", 40, "default.png"),
-                                      "5-A", new Ciclo(1, 2017, 1), "Mañana",new Date(2017, 3, 25), new Date(2017, 7, 5), "08:00", 
-                                      ["Miercoles", "Viernes"], "En curso", 18, 9, 15, 4, new Date(2017, 5, 28)));
-    this.divisionesMateria.push(new Division(2, new Aula(1, "104", 1), this.materia,
-                                      new Profesor(4, "cuatro", "CUATRO", "789", "1004", "d@d.com", "aw9999", 40, "default.png"),
-                                      "4-A", new Ciclo(1, 2016, 2), "Mañana",new Date(2016, 9, 25), new Date(2016, 12, 5), "08:00", 
-                                      ["Lunes"], "Terminada", 18, 9, 15, 15, null));
+    this.MostrarLoading("divisiones de la materia");
+
+    this.ws.TraerDivisionesDeLaMateria(this.materia.idMateria).then(
+      (data) => {
+        console.log(data);
+        
+        if (data.Exito)
+        {
+          data.Divisiones.forEach(division => {
+
+            this.divisionesMateria.push(division);
+            this.divisionesMateria[this.divisionesMateria.length - 1].materia = this.materia;
+            this.divisionesMateria[this.divisionesMateria.length - 1].aula = new Aula(division.idAula, division.nombreAula, division.piso);
+            this.divisionesMateria[this.divisionesMateria.length - 1].ciclo = new Ciclo(division.idCiclo, division.anio, division.cuatrimestre);
+            this.divisionesMateria[this.divisionesMateria.length - 1].dias = [division.dia1, division.dia2, division.dia3];
+            let fechaInicio = division.fechaInicio.split('-');
+            this.divisionesMateria[this.divisionesMateria.length - 1].fechaInicio = new Date(fechaInicio[0], fechaInicio[1] - 1, fechaInicio[2]);
+            let fechaFin = division.fechaFin.split('-');
+            this.divisionesMateria[this.divisionesMateria.length - 1].fechaFin = new Date(fechaFin[0], fechaFin[1] - 1, fechaFin[2]);
+            if (division.fechaProxClase != null)
+            {
+              let fechaProxClase = division.fechaProxClase.split('-');
+              this.divisionesMateria[this.divisionesMateria.length - 1].fechaProxClase = new Date(fechaProxClase[0], fechaProxClase[1] - 1, fechaProxClase[2]);
+            }
+            else
+              this.divisionesMateria[this.divisionesMateria.length - 1].fechaProxClase = null;
+          });
+        }
+
+        console.log(this.divisionesMateria);
+
+        this.cargando.dismiss();
+      }
+    )
+    .catch((error) => { this.cargando.dismiss(); this.ReintentarCargarDivisionesMateria(); console.log(error)});
   }
 
+  ReintentarCargarDivisionesMateria()
+  {
+    let confirm = this.alertCtrl.create({
+      title: 'Error en el servidor',
+      message: 'Desea reintentar la carga de divisiones de la materia?',
+      buttons: [
+        {
+          text: 'Cancelar',
+          handler: () => {
+            this.navCtrl.pop();
+          }
+        },
+        {
+          text: 'Aceptar',
+          handler: () => {
+            this.ObtenerDivisionesMateria();
+          }
+        }
+      ]
+    });
+    confirm.present();
+  }
+  
   /**
   * Carga las divisiones del aula. Luego se hara con la base de datos.
   */
   ObtenerDivisionesAula()
   {
+    // this.divisionesAula = new Array<Division>();
+
+    // this.divisionesAula.push(new Division(1, new Aula(1, "103", 1), new Materia(1, "Arquitectura y Diseño de Bases de Datos", "database.png"),
+    //                                   new Profesor(2, "dos", "DOS", "456", "1002", "b@b.com", "789999", 35, "default.png"),
+    //                                   "4-A", new Ciclo(1, 2017, 1), "Mañana", new Date(2017, 3, 25), new Date(2017, 7, 5), "08:00", 
+    //                                   ["Martes"], "En curso", 20, 10, 15, 5, new Date(2017, 5, 25)));
+    // this.divisionesAula.push(new Division(2, new Aula(1, "103", 1), new Materia(2, "Matematica III", "matematica.png"),
+    //                                   new Profesor(4, "cuatro", "CUATRO", "789", "1004", "d@d.com", "aw9999", 40, "default.png"),
+    //                                   "5-A", new Ciclo(1, 2017, 1), "Mañana",new Date(2017, 3, 25), new Date(2017, 7, 5), "08:00", 
+    //                                   ["Miercoles", "Viernes"], "En curso", 18, 9, 15, 4, new Date(2017, 5, 28)));
+    // this.divisionesAula.push(new Division(2, new Aula(1, "104", 1), new Materia(3, "Programacion II", "html.png"),
+    //                                   new Profesor(4, "cuatro", "CUATRO", "789", "1004", "d@d.com", "aw9999", 40, "default.png"),
+    //                                   "4-A", new Ciclo(1, 2016, 2), "Mañana",new Date(2016, 9, 25), new Date(2016, 12, 5), "08:00", 
+    //                                   ["Lunes"], "Terminada", 18, 9, 15, 15, null));
+  
     this.divisionesAula = new Array<Division>();
 
-    this.divisionesAula.push(new Division(1, new Aula(1, "103", 1), new Materia(1, "Arquitectura y Diseño de Bases de Datos", "database.png"),
-                                      new Profesor(2, "dos", "DOS", "456", "1002", "b@b.com", "789999", 35, "default.png"),
-                                      "4-A", new Ciclo(1, 2017, 1), "Mañana", new Date(2017, 3, 25), new Date(2017, 7, 5), "08:00", 
-                                      ["Martes"], "En curso", 20, 10, 15, 5, new Date(2017, 5, 25)));
-    this.divisionesAula.push(new Division(2, new Aula(1, "103", 1), new Materia(2, "Matematica III", "matematica.png"),
-                                      new Profesor(4, "cuatro", "CUATRO", "789", "1004", "d@d.com", "aw9999", 40, "default.png"),
-                                      "5-A", new Ciclo(1, 2017, 1), "Mañana",new Date(2017, 3, 25), new Date(2017, 7, 5), "08:00", 
-                                      ["Miercoles", "Viernes"], "En curso", 18, 9, 15, 4, new Date(2017, 5, 28)));
-    this.divisionesAula.push(new Division(2, new Aula(1, "104", 1), new Materia(3, "Programacion II", "html.png"),
-                                      new Profesor(4, "cuatro", "CUATRO", "789", "1004", "d@d.com", "aw9999", 40, "default.png"),
-                                      "4-A", new Ciclo(1, 2016, 2), "Mañana",new Date(2016, 9, 25), new Date(2016, 12, 5), "08:00", 
-                                      ["Lunes"], "Terminada", 18, 9, 15, 15, null));
+    this.MostrarLoading("divisiones del aula");
+
+    this.ws.TraerDivisionesDelAula(this.aula.idAula).then(
+      (data) => {
+        console.log(data);
+        
+        if (data.Exito)
+        {
+          data.Divisiones.forEach(division => {
+
+            this.divisionesAula.push(division);
+            this.divisionesAula[this.divisionesAula.length - 1].materia = new Materia(division.idMateria, division.nombreMateria, division.img);
+            this.divisionesAula[this.divisionesAula.length - 1].aula = this.aula;
+            this.divisionesAula[this.divisionesAula.length - 1].ciclo = new Ciclo(division.idCiclo, division.anio, division.cuatrimestre);
+            this.divisionesAula[this.divisionesAula.length - 1].dias = [division.dia1, division.dia2, division.dia3];
+            let fechaInicio = division.fechaInicio.split('-');
+            this.divisionesAula[this.divisionesAula.length - 1].fechaInicio = new Date(fechaInicio[0], fechaInicio[1] - 1, fechaInicio[2]);
+            let fechaFin = division.fechaFin.split('-');
+            this.divisionesAula[this.divisionesAula.length - 1].fechaFin = new Date(fechaFin[0], fechaFin[1] - 1, fechaFin[2]);
+            if (division.fechaProxClase != null)
+            {
+              let fechaProxClase = division.fechaProxClase.split('-');
+              this.divisionesAula[this.divisionesAula.length - 1].fechaProxClase = new Date(fechaProxClase[0], fechaProxClase[1] - 1, fechaProxClase[2]);
+            }
+            else
+              this.divisionesAula[this.divisionesAula.length - 1].fechaProxClase = null;
+          });
+        }
+
+        console.log(this.divisionesAula);
+
+        this.cargando.dismiss();
+      }
+    )
+    .catch((error) => { this.cargando.dismiss(); this.ReintentarCargarDivisionesAula(); console.log(error)});
+  }
+
+  ReintentarCargarDivisionesAula()
+  {
+    let confirm = this.alertCtrl.create({
+      title: 'Error en el servidor',
+      message: 'Desea reintentar la carga de divisiones del aula?',
+      buttons: [
+        {
+          text: 'Cancelar',
+          handler: () => {
+            this.navCtrl.pop();
+          }
+        },
+        {
+          text: 'Aceptar',
+          handler: () => {
+            this.ObtenerDivisionesAula();
+          }
+        }
+      ]
+    });
+    confirm.present();
   }
 
   /**
@@ -236,11 +504,60 @@ export class DatosAdministradorPage {
   */
   ObtenerAlumnosDivision()
   {
-    this.alumnosDivision = new Array();
+    // this.alumnosDivision = new Array();
 
-    this.alumnosDivision.push({alumno : this.alumnos[0], estado: "Cursando", faltas: 2});
-    this.alumnosDivision.push({alumno : this.alumnos[1], estado: "Libre", faltas: 10});
-    this.alumnosDivision.push({alumno : this.alumnos[2], estado: "Abandono", faltas: 1});
+    // this.alumnosDivision.push({alumno : this.alumnos[0], estado: "Cursando", faltas: 2});
+    // this.alumnosDivision.push({alumno : this.alumnos[1], estado: "Libre", faltas: 10});
+    // this.alumnosDivision.push({alumno : this.alumnos[2], estado: "Abandono", faltas: 1});
+
+    this.MostrarLoading("alumnos de la division")
+
+    this.ws.TraerAlumnosDivision(this.division.idDivision).then((data) => {
+
+      this.cargando.dismiss();
+      console.log(data);
+
+      if (data.Exito)
+      {
+        this.alumnosDivision = new Array<{alumno : any, faltas : any, estado : any}>();
+
+        for (var i = 0; i < data.Alumnos.length; i++) {
+          this.alumnosDivision.push({ alumno : data.Alumnos[i], faltas : data.Alumnos[i].faltas, estado : data.Alumnos[i].estado });
+        }
+
+        console.log(this.alumnosDivision);
+      }
+    })
+    .catch((error) => {
+
+      this.cargando.dismiss();
+      this.ReintentarObtenerAlumnosDivision();
+      console.log(error);
+
+    });
+  }
+
+  ReintentarObtenerAlumnosDivision()
+  {
+    let confirm = this.alertCtrl.create({
+      title: 'Error en el servidor',
+      message: 'Desea reintentar la carga de alumnos de la division?',
+      buttons: [
+        {
+          text: 'Cancelar',
+          handler: () => {
+            this.navCtrl.pop();
+          }
+        },
+        {
+          text: 'Aceptar',
+          handler: () => {
+            this.ObtenerAlumnosDivision();
+          }
+        }
+      ]
+    });
+    confirm.present();
   }
 
   /**
@@ -289,12 +606,7 @@ export class DatosAdministradorPage {
   */
   filtrarDivisionesProfesor(criterio : string)
   {
-    if (criterio == "En curso")
-      return this.divisionesUsuario.filter((item) => { return item.estado == 'En curso'; });
-    else if (criterio == "Terminada")
-      return this.divisionesUsuario.filter((item) => { return item.estado == 'Terminada'; });
-    else
-      return this.divisionesUsuario.filter((item) => { return item.estado == 'No empezada'; });
+      return this.divisionesUsuario.filter((item) => { return item.estado == criterio; });
   }
 
   /**
@@ -303,7 +615,7 @@ export class DatosAdministradorPage {
   */
   ObtenerFecha(date : Date)
   {
-    return date.getDay() + "/" + date.getMonth() + "/" + date.getFullYear();
+    return date.getDate() + "/" + (date.getMonth() + 1) + "/" + date.getFullYear();
   }
 
 }

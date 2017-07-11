@@ -69,7 +69,7 @@
 
   <div *ngIf = "opciones.tipo == 'Division'">
 
-    <ion-item>
+    <ion-item *ngIf = "ciclos != null">
         <ion-label>Filtrar por ciclo</ion-label>
         <ion-select [(ngModel)]="filtro" (ionChange)="onChangeFiltro()">
           <ion-option value = "Todos">Todos</ion-option>
