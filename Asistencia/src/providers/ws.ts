@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Http, Response } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 import { AuthHttp } from 'angular2-jwt';
+import { Auth } from '../providers/auth';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/toPromise';
@@ -101,6 +102,41 @@ export class Ws
     .then(this.extractData)
     .catch(this.handleError);
   }
+  TraerDivisionesDelAlumno(idAlumno)
+  {
+    return this.http.get('http://asistencianull.hol.es/index.php/divisiones/alumno/' + idAlumno)
+    .toPromise()
+    .then(this.extractData)
+    .catch(this.handleError);
+  }
+  TraerDivisionesDelProfesor(idProfesor)
+  {
+    return this.http.get('http://asistencianull.hol.es/index.php/divisiones/profesor/' + idProfesor)
+    .toPromise()
+    .then(this.extractData)
+    .catch(this.handleError);
+  }
+  TraerDivisionesDeLaMateria(idMateria)
+  {
+    return this.http.get('http://asistencianull.hol.es/index.php/divisiones/materia/' + idMateria)
+    .toPromise()
+    .then(this.extractData)
+    .catch(this.handleError);
+  }
+  TraerDivisionesDelAula(idAula)
+  {
+    return this.http.get('http://asistencianull.hol.es/index.php/divisiones/aula/' + idAula)
+    .toPromise()
+    .then(this.extractData)
+    .catch(this.handleError);
+  }
+  TraerDivisionesCompletas()
+  {
+    return this.http.get('http://asistencianull.hol.es/index.php/divisiones/completas')
+    .toPromise()
+    .then(this.extractData)
+    .catch(this.handleError);
+  }
     ModificarDivision(obj)
   {
     return this.http.get("http://asistencianull.hol.es/index.php/modificar/division/"+JSON.stringify(obj))
@@ -126,6 +162,13 @@ export class Ws
     TraerAlumnosDivision(idDivision)
   {
     return this.http.get('http://asistencianull.hol.es/index.php/alumnos/division/' + idDivision)
+    .toPromise()
+    .then(this.extractData)
+    .catch(this.handleError);
+  }
+  TraerCiclos()
+  {
+    return this.http.get('http://asistencianull.hol.es/index.php/ciclos')
     .toPromise()
     .then(this.extractData)
     .catch(this.handleError);
