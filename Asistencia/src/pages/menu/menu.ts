@@ -99,6 +99,10 @@ export class MenuPage {
     });
     alert.present();
   }
+  Encuesta()
+  {
+    
+  }
   Ayuda()
   {
     
