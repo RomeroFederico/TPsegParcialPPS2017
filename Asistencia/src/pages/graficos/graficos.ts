@@ -51,13 +51,22 @@ export class Graficos {
   }
   Noti()
   {
-this.localNotifications.schedule({
+  this.localNotifications.schedule({
    text: 'Metal Knight!',
    at: new Date(new Date().getTime() + 3600),
    led: 'FF0000',
    sound: null
 });
   }
+  LeerArchivo()
+  {
+    this.Mostrar("Pronto!");
+  }
+  GuardarArchivo()
+  {
+    this.Mostrar("Pronto!");
+  }
+
 
   public chartClicked(e:any):void {console.log(e);} //SOLO MUESTRA EVENTO!
  

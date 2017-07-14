@@ -36,6 +36,8 @@ import { ListadoDivisionesProfesorPage } from '../pages/listado-divisiones-profe
 import { DatosDivisionProfesorPage } from '../pages/datos-division-profesor/datos-division-profesor';
 import { NotificacionesProfesorPage } from '../pages/notificaciones-profesor/notificaciones-profesor';
 import { Mapa } from '../pages/mapa/mapa';
+import { Ayuda } from '../pages/ayuda/ayuda';
+import { Encuesta } from '../pages/encuesta/encuesta';
 import { Graficos } from '../pages/graficos/graficos';
 import { ChartsModule } from 'ng2-charts';//AGREGO CHARTS
 //JWT
@@ -74,6 +76,8 @@ var configFirebase  = {
     MyApp,
     LoginPage,
     Mapa,
+    Ayuda,
+    Encuesta,
     Graficos,
     MenuPage,
     HomeProfesorPage,
@@ -116,6 +120,8 @@ var configFirebase  = {
     MenuPage,
     HomeAlumnoPage,
     Mapa,
+    Ayuda,
+    Encuesta,
     Graficos,
     HomeProfesorPage,
     HomeAdministrativoPage,

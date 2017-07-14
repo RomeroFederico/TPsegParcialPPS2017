@@ -26,7 +26,7 @@ export class AsistenciaAlumnoPage {
               public ws:Ws)
   {
         this.cargando = true;
-        this.alumno = this.navParams.get("Alumno");
+        this.alumno = JSON.parse(localStorage.getItem("usuario"));
         this.listado=firebase.list('/Lista');
         this.listado.subscribe(data => {
           this.listas = data;

@@ -6,10 +6,12 @@ import { ListadoDivisionesAlumnoPage } from '../listado-divisiones-alumno/listad
 import { Alumno } from '../../components/clases/alumno';
 import { LoginPage } from '../login/login';
 import { AsistenciaAlumnoPage } from '../asistencia-alumno/asistencia-alumno';
+import { LocalNotifications } from '@ionic-native/local-notifications';
 
 @Component({
   selector: 'page-home-alumno',
-  templateUrl: 'home-alumno.html'
+  templateUrl: 'home-alumno.html',
+  providers:[LocalNotifications]
 })
 export class HomeAlumnoPage {
 
@@ -21,17 +23,27 @@ export class HomeAlumnoPage {
   constructor(private platform: Platform,
               public alertCtrl: AlertController,
               public navCtrl: NavController,
-              public navParams: NavParams,
+              public navParams: NavParams,private localNotifications: LocalNotifications,
               public loadingController : LoadingController){
 
        this.platform = platform;
+       
        this.alumno = JSON.parse(localStorage.getItem("usuario"));
+       this.Noti("Bienvenido: "+this.alumno.nombre+" "+this.alumno.apellido);
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad HomeAlumnoPage');
   }
-
+    Noti(mensaje)
+  {
+  this.localNotifications.schedule({
+   text: mensaje,
+   at: new Date(new Date().getTime() + 1000),
+   led: 'FF0000',
+   sound: null
+});
+  }
   Aceptar(opcion)
   {
     this.alumno = JSON.parse(localStorage.getItem("usuario"));

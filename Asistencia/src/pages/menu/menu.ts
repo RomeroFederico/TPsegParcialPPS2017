@@ -10,6 +10,8 @@ import { HomeAdministrativoPage } from '../home-administrativo/home-administrati
 
 import { DatosProfesorPage } from '../datos-profesor/datos-profesor';
 import { Mapa } from '../mapa/mapa';
+import { Ayuda } from '../ayuda/ayuda';
+import { Encuesta } from '../encuesta/encuesta';
 import { Graficos } from '../graficos/graficos';
 import { ListadoClasesProfesorPage } from '../listado-clases-profesor/listado-clases-profesor';
 import { ListadoDivisionesProfesorPage } from '../listado-divisiones-profesor/listado-divisiones-profesor';
@@ -101,11 +103,12 @@ export class MenuPage {
   }
   Encuesta()
   {
-    
+    this.navCtrl.push(Encuesta);
   }
-  Ayuda()
+  Ayuda(num)
   {
-    
+    localStorage.setItem("ayuda",num);
+    this.navCtrl.push(Ayuda);
   }
   DatosAlumno()
   {

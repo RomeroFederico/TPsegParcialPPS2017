@@ -1,0 +1,74 @@
+page-ayuda {
+  .slide-image {
+    background-position: center;background-repeat: no-repeat;background-size: cover;
+  }
+    .slide-image2 {
+        background-position: center;background-repeat: no-repeat;background-size: cover;
+    max-height: 100%;
+    max-width: 100%;
+              display: flex;
+          justify-content: center;
+          align-items: center;
+          text-align: center;
+  }
+        .parent
+      {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          text-align: center;
+      }
+    .slide-title {
+    margin-top: 2.8rem;
+  }
+    b {
+    font-weight: 500;
+  }
+
+  p {
+    padding: 0 40px;
+    font-size: 14px;
+    line-height: 1.5;
+    color: #60646B;
+
+    b {
+      color: #000000;
+    }}
+    .tutorial-page {
+
+  .toolbar-background {
+    background: #fff;
+    border-color: transparent;
+  }
+
+  .slide-zoom {
+    height: 100%;
+  }
+
+  .slide-title {
+    margin-top: 2.8rem;
+  }
+
+  .slide-image {
+    max-height: 50%;
+    max-width: 60%;
+    margin: 18px 0;
+  }
+
+  b {
+    font-weight: 500;
+  }
+
+  p {
+    padding: 0 40px;
+    font-size: 14px;
+    line-height: 1.5;
+    color: #60646B;
+
+    b {
+      color: #000000;
+    }
+  }
+
+}
+}

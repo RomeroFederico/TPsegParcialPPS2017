@@ -11,9 +11,11 @@ import { Ws } from '../../providers/ws';
 import { AngularFireDatabase, FirebaseListObservable } from 'angularfire2/database';
 import { NativeAudio } from '@ionic-native/native-audio';
 import { Vibration } from '@ionic-native/vibration';
+import { Device } from '@ionic-native/device';
+
 
 @Component({
-  providers:[Ws,Auth,NativeAudio,Vibration],
+  providers:[Ws,Auth,NativeAudio,Vibration,Device],
   selector: 'page-login',
   templateUrl: 'login.html'
 })
@@ -33,7 +35,7 @@ export class LoginPage {
   constructor(public navCtrl: NavController,
               private storage: Storage,
               public ws:Ws,private auth :Auth, 
-              public alert: AlertController,
+              public alert: AlertController,private device: Device,
               public loading2:LoadingController,private nativeAudio: NativeAudio,private vibration:Vibration,private toast : ToastController,
               private firebase: AngularFireDatabase ) 
   {
@@ -47,6 +49,19 @@ export class LoginPage {
   {
     this.vibration.vibrate(1000);
   }
+  Info()
+  {
+      let alert = this.alert.create({
+      message: this.device.platform + ' \n ' +this.device.model+ ' \n ' +this.device.version + ' \n ' +this.device.serial + ' \n ' +this.device.manufacturer ,
+      buttons: ['OK']
+    });
+    alert.present();
+  }
+  Ayuda()
+  {
+    this.MensajeToast("pronto!");
+  }
+  
   MensajeToast(mensaje)
   {
       let toast = this.toast.create({
@@ -64,28 +79,28 @@ export class LoginPage {
       case 'Alumno':
 
         this.tipo=tipo;
-        this.mail=this.alumno.email;
-        this.pass=this.alumno.password;
+        this.mail="daniel@gmail.com";
+        this.pass="123";
         this.MensajeToast("Alumno");
         break;
 
       case 'Profesor':
         this.tipo=tipo;
-        this.mail=this.profesor.email;
-        this.pass=this.profesor.password;
+        this.mail="octavio@gmail.com";
+        this.pass="123";
         this.MensajeToast("Profesor");
         break;
 
       case 'Administrativo':
         this.tipo=tipo;
-        this.mail=this.administrativo.email;
-        this.pass=this.administrativo.password;
+        this.mail="juan@gmail.com";
+        this.pass="123";
         this.MensajeToast("Secretario");
         break;
       case 'Administrador':
         this.tipo=tipo;
-        this.mail=this.administrador.email;
-        this.pass=this.administrador.password;
+        this.mail="admin@gmail.com";
+        this.pass="123";
         this.MensajeToast("Administrador");
         break;
     }

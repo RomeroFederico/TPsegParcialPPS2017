@@ -1,0 +1,145 @@
+<ion-header>
+<ion-navbar color = "primary" hideBackButton>
+    <ion-buttons left>
+      <button ion-button (click)="Volver()">
+        <ion-icon name="md-arrow-back"></ion-icon>
+      </button>
+    </ion-buttons>
+    <ion-title>Encuesta</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+  <div *ngIf="ObtenerTipo()!='Administrador'"><h1 align="center">Califique nuestra app! </h1>
+<br>
+<br>
+<h2 >Intuitividad de uso: </h2>
+<ion-icon ios="ios-star" md="md-star" [ngStyle]="listaEstrellas[1][0]" (click)="Estrellas(1, 0)"></ion-icon>
+<ion-icon ios="ios-star" md="md-star" [ngStyle]="listaEstrellas[1][1]" (click)="Estrellas(1, 1)"></ion-icon>
+<ion-icon ios="ios-star" md="md-star" [ngStyle]="listaEstrellas[1][2]" (click)="Estrellas(1, 2)"></ion-icon>
+<ion-icon ios="ios-star" md="md-star" [ngStyle]="listaEstrellas[1][3]" (click)="Estrellas(1, 3)"></ion-icon>
+<ion-icon ios="ios-star" md="md-star" [ngStyle]="listaEstrellas[1][4]" (click)="Estrellas(1, 4)"></ion-icon>
+
+<br>
+
+<h2 >Facilidad de uso: </h2>
+<ion-icon ios="ios-star" md="md-star" [ngStyle]="listaEstrellas[2][0]" (click)="Estrellas(2, 0)"></ion-icon>
+<ion-icon ios="ios-star" md="md-star" [ngStyle]="listaEstrellas[2][1]" (click)="Estrellas(2, 1)"></ion-icon>
+<ion-icon ios="ios-star" md="md-star" [ngStyle]="listaEstrellas[2][2]" (click)="Estrellas(2, 2)"></ion-icon>
+<ion-icon ios="ios-star" md="md-star" [ngStyle]="listaEstrellas[2][3]" (click)="Estrellas(2, 3)"></ion-icon>
+<ion-icon ios="ios-star" md="md-star" [ngStyle]="listaEstrellas[2][4]" (click)="Estrellas(2, 4)"></ion-icon>
+
+<br>
+<br>
+
+<h2 >Sugerencias (optativo):</h2>
+<br>
+<textarea oninput="this.value=this.value.replace(/[^a-z, A-Z]/g,'');" maxlength="90" rows="2" cols="40" style="color: #7F7E7E;" [(ngModel)]="textArea">
+</textarea>
+
+<div *ngIf="!encuestaCompleta">
+  <br>
+</div>
+<div *ngIf="encuestaCompleta">
+  <label style="color: red; font-size: 1.3em;">Completar encuesta</label>
+</div>
+
+<button type="button" ion-button block color="secondary" (click)="EnviarEncuesta()">Enviar opinion</button></div>
+
+
+<div *ngIf="ObtenerTipo()=='Administrador'">
+
+<div *ngFor="let item of listado2">
+  <ion-card>
+    <ion-card-header><h1>Usuario: {{item.usuario}}</h1></ion-card-header>
+    <ion-card-content>
+    <div *ngIf="item.intuitivo == 0">
+        <label style="color: #54A480; margin-right: 30px; font-size: 1.3em;">Intuitivo</label>
+        <ion-icon ios="ios-star" md="md-star" style="color: #F6AD06; font-size: 30px;"></ion-icon>
+        <ion-icon ios="ios-star" md="md-star" style="color: #BDBBBA; font-size: 30px;"></ion-icon>
+        <ion-icon ios="ios-star" md="md-star" style="color: #BDBBBA; font-size: 30px;"></ion-icon>
+        <ion-icon ios="ios-star" md="md-star" style="color: #BDBBBA; font-size: 30px;"></ion-icon>
+        <ion-icon ios="ios-star" md="md-star" style="color: #BDBBBA; font-size: 30px;"></ion-icon>
+    </div>
+    <div *ngIf="item.intuitivo == 1">
+        <label style="color: #54A480; margin-right: 30px; font-size: 1.3em;">Intuitivo</label>
+        <ion-icon ios="ios-star" md="md-star" style="color: #F6AD06; font-size: 30px;"></ion-icon>
+        <ion-icon ios="ios-star" md="md-star" style="color: #F6AD06; font-size: 30px;"></ion-icon>
+        <ion-icon ios="ios-star" md="md-star" style="color: #BDBBBA; font-size: 30px;"></ion-icon>
+        <ion-icon ios="ios-star" md="md-star" style="color: #BDBBBA; font-size: 30px;"></ion-icon>
+        <ion-icon ios="ios-star" md="md-star" style="color: #BDBBBA; font-size: 30px;"></ion-icon>
+    </div>
+    <div *ngIf="item.intuitivo == 2">
+        <label style="color: #54A480; margin-right: 30px; font-size: 1.3em;">Intuitivo</label>
+        <ion-icon ios="ios-star" md="md-star" style="color: #F6AD06; font-size: 30px;"></ion-icon>
+        <ion-icon ios="ios-star" md="md-star" style="color: #F6AD06; font-size: 30px;"></ion-icon>
+        <ion-icon ios="ios-star" md="md-star" style="color: #F6AD06; font-size: 30px;"></ion-icon>
+        <ion-icon ios="ios-star" md="md-star" style="color: #BDBBBA; font-size: 30px;"></ion-icon>
+        <ion-icon ios="ios-star" md="md-star" style="color: #BDBBBA; font-size: 30px;"></ion-icon>
+    </div>
+    <div *ngIf="item.intuitivo == 3">
+        <label style="color: #54A480; margin-right: 30px; font-size: 1.3em;">Intuitivo</label>
+        <ion-icon ios="ios-star" md="md-star" style="color: #F6AD06; font-size: 30px;"></ion-icon>
+        <ion-icon ios="ios-star" md="md-star" style="color: #F6AD06; font-size: 30px;"></ion-icon>
+        <ion-icon ios="ios-star" md="md-star" style="color: #F6AD06; font-size: 30px;"></ion-icon>
+        <ion-icon ios="ios-star" md="md-star" style="color: #F6AD06; font-size: 30px;"></ion-icon>
+        <ion-icon ios="ios-star" md="md-star" style="color: #BDBBBA; font-size: 30px;"></ion-icon>
+    </div>
+    <div *ngIf="item.intuitivo == 4">
+        <label style="color: #54A480; margin-right: 30px; font-size: 1.3em;">Intuitivo</label>
+        <ion-icon ios="ios-star" md="md-star" style="color: #F6AD06; font-size: 30px;"></ion-icon>
+        <ion-icon ios="ios-star" md="md-star" style="color: #F6AD06; font-size: 30px;"></ion-icon>
+        <ion-icon ios="ios-star" md="md-star" style="color: #F6AD06; font-size: 30px;"></ion-icon>
+        <ion-icon ios="ios-star" md="md-star" style="color: #F6AD06; font-size: 30px;"></ion-icon>
+        <ion-icon ios="ios-star" md="md-star" style="color: #F6AD06; font-size: 30px;"></ion-icon>
+    </div>
+    <div *ngIf="item.facilidad == 0">
+        <label style="color: #54A480; margin-right: 23px; font-size: 1.3em;">Facilidad</label>
+        <ion-icon ios="ios-star" md="md-star" style="color: #F6AD06; font-size: 30px;"></ion-icon>
+        <ion-icon ios="ios-star" md="md-star" style="color: #BDBBBA; font-size: 30px;"></ion-icon>
+        <ion-icon ios="ios-star" md="md-star" style="color: #BDBBBA; font-size: 30px;"></ion-icon>
+        <ion-icon ios="ios-star" md="md-star" style="color: #BDBBBA; font-size: 30px;"></ion-icon>
+        <ion-icon ios="ios-star" md="md-star" style="color: #BDBBBA; font-size: 30px;"></ion-icon>
+    </div>
+    <div *ngIf="item.facilidad == 1">
+        <label style="color: #54A480; margin-right: 23px; font-size: 1.3em;">Facilidad</label>
+        <ion-icon ios="ios-star" md="md-star" style="color: #F6AD06; font-size: 30px;"></ion-icon>
+        <ion-icon ios="ios-star" md="md-star" style="color: #F6AD06; font-size: 30px;"></ion-icon>
+        <ion-icon ios="ios-star" md="md-star" style="color: #BDBBBA; font-size: 30px;"></ion-icon>
+        <ion-icon ios="ios-star" md="md-star" style="color: #BDBBBA; font-size: 30px;"></ion-icon>
+        <ion-icon ios="ios-star" md="md-star" style="color: #BDBBBA; font-size: 30px;"></ion-icon>
+    </div>
+    <div *ngIf="item.facilidad == 2">
+        <label style="color: #54A480; margin-right: 23px; font-size: 1.3em;">Facilidad</label>
+        <ion-icon ios="ios-star" md="md-star" style="color: #F6AD06; font-size: 30px;"></ion-icon>
+        <ion-icon ios="ios-star" md="md-star" style="color: #F6AD06; font-size: 30px;"></ion-icon>
+        <ion-icon ios="ios-star" md="md-star" style="color: #F6AD06; font-size: 30px;"></ion-icon>
+        <ion-icon ios="ios-star" md="md-star" style="color: #BDBBBA; font-size: 30px;"></ion-icon>
+        <ion-icon ios="ios-star" md="md-star" style="color: #BDBBBA; font-size: 30px;"></ion-icon>
+    </div>
+    <div *ngIf="item.facilidad == 3">
+        <label style="color: #54A480; margin-right: 23px; font-size: 1.3em;">Facilidad</label>
+        <ion-icon ios="ios-star" md="md-star" style="color: #F6AD06; font-size: 30px;"></ion-icon>
+        <ion-icon ios="ios-star" md="md-star" style="color: #F6AD06; font-size: 30px;"></ion-icon>
+        <ion-icon ios="ios-star" md="md-star" style="color: #F6AD06; font-size: 30px;"></ion-icon>
+        <ion-icon ios="ios-star" md="md-star" style="color: #F6AD06; font-size: 30px;"></ion-icon>
+        <ion-icon ios="ios-star" md="md-star" style="color: #BDBBBA; font-size: 30px;"></ion-icon>
+    </div>
+    <div *ngIf="item.facilidad == 4">
+        <label style="color: #54A480; margin-right: 23px; font-size: 1.3em;">Facilidad</label>
+        <ion-icon ios="ios-star" md="md-star" style="color: #F6AD06; font-size: 30px;"></ion-icon>
+        <ion-icon ios="ios-star" md="md-star" style="color: #F6AD06; font-size: 30px;"></ion-icon>
+        <ion-icon ios="ios-star" md="md-star" style="color: #F6AD06; font-size: 30px;"></ion-icon>
+        <ion-icon ios="ios-star" md="md-star" style="color: #F6AD06; font-size: 30px;"></ion-icon>
+        <ion-icon ios="ios-star" md="md-star" style="color: #F6AD06; font-size: 30px;"></ion-icon>
+    </div>
+    <label style="color: #54A480; font-size: 1.3em;">Sugerencias y comentarios:</label>
+    <br>
+    <label style="color: black; font-size: 1.3em;">{{item.comentario}}</label>
+</ion-card-content>
+    </ion-card>
+</div>
+</div>
+</ion-content>

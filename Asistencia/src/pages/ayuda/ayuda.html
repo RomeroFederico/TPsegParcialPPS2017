@@ -1,0 +1,53 @@
+<ion-header>
+
+<ion-navbar color = "primary" hideBackButton>
+    <ion-buttons left>
+      <button ion-button (click)="Volver()">
+        <ion-icon name="md-arrow-back"></ion-icon>
+      </button>
+    </ion-buttons>
+    <ion-title>Guia de usuario</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding class="tutorial-page">
+<div *ngIf="ObtenerTipo()=='1'">
+  <ion-slides pager>
+    <ion-slide *ngFor="let slide of alumnos">
+      <img [src]="slide.image" class="slide-image2"/>
+      <h2 class="slide-title" [innerHTML]="slide.title"></h2>
+      <p [innerHTML]="slide.description" ></p>
+    </ion-slide>
+  </ion-slides>
+</div>
+<div *ngIf="ObtenerTipo()=='2'">
+  <ion-slides pager>
+    <ion-slide *ngFor="let slide of profesores">
+            <img [src]="slide.image" class="slide-image2"/>
+      <h2 class="slide-title" [innerHTML]="slide.title"></h2>
+      <p [innerHTML]="slide.description" ></p>
+    </ion-slide>
+  </ion-slides>
+</div>
+<div *ngIf="ObtenerTipo()=='3'">
+  <ion-slides pager>
+    <ion-slide *ngFor="let slide of secretarios">
+            <img [src]="slide.image" class="slide-image2"/>
+      <h2 class="slide-title" [innerHTML]="slide.title"></h2>
+      <p [innerHTML]="slide.description" ></p>
+    </ion-slide>
+  </ion-slides>
+</div>
+<div *ngIf="ObtenerTipo()=='4'">
+  <ion-slides pager>
+    <ion-slide *ngFor="let slide of administradores">
+            <img [src]="slide.image" class="slide-image2"/>
+      <h2 class="slide-title" [innerHTML]="slide.title"></h2>
+      <p [innerHTML]="slide.description" ></p>
+    </ion-slide>
+  </ion-slides>
+</div>
+
+</ion-content>

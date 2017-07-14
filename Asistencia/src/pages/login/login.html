@@ -75,7 +75,13 @@
 </ion-list>
 
 <div padding>
-  <button ion-button block (click)="Login()" >Login</button>
+  <button ion-button block icon-left (click)="Login()"><ion-icon name="md-cloud-done"> Login</ion-icon></button>
+</div>
+<div padding>
+  <button ion-button  color="dark" block icon-left (click)="Ayuda()" ><ion-icon name="md-alert"> Ayuda</ion-icon></button>
+</div>
+<div padding>
+  <button ion-button  color="secondary" block icon-left (click)="Info()" ><ion-icon name="md-analytics"> Informacion del dispositivo</ion-icon></button>
 </div>
 
 </ion-content>
