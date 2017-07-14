@@ -7,10 +7,12 @@ import { ListadoMateriasProfesorPage } from '../listado-materias-profesor/listad
 import { NotificacionesProfesorPage } from '../notificaciones-profesor/notificaciones-profesor';
 import { LoginPage } from '../login/login';
 import { Profesor } from '../../components/clases/profesor';
+import { LocalNotifications } from '@ionic-native/local-notifications';
 
 @Component({
   selector: 'page-home-profesor',
-  templateUrl: 'home-profesor.html'
+  templateUrl: 'home-profesor.html',
+  providers:[LocalNotifications]
 })
 export class HomeProfesorPage
 {
@@ -22,13 +24,22 @@ export class HomeProfesorPage
   constructor(public navCtrl: NavController,
               public platform: Platform,
               public navParams: NavParams,
-              public alertCtrl: AlertController,
+              public alertCtrl: AlertController,private localNotifications: LocalNotifications,
               public loadingController : LoadingController)
   {
 
         this.profesor = JSON.parse(localStorage.getItem("usuario"));
+        this.Noti("Bienvenido: "+this.profesor.nombre+' '+this.profesor.apellido);
   }
-
+Noti(mensaje)
+  {
+  this.localNotifications.schedule({
+   text: mensaje,
+   at: new Date(new Date().getTime() + 1000),
+   led: 'FF0000',
+   sound: null
+});
+  }
   Aceptar(opcion)
   {
     var page;

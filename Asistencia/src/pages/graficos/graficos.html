@@ -13,7 +13,7 @@
 
 <ion-content padding>
 
-    <h1> GRAFICO 2 PIE</h1>
+    <h1 align=center>Usuarios</h1>
       <div style="display: block">
   <canvas baseChart
           [data]="pieChartData"
@@ -21,10 +21,14 @@
           [chartType]="pieChartType"
           (chartHover)="chartHovered($event)"
           (chartClick)="chartClicked($event)"></canvas>
-          <button ion-button color="secondary" outline (click)="Info()">Ver Informacion</button>
-           <button ion-button color="dark" outline (click)="Noti()">Notificacion</button>
-           <button ion-button color="primary" outline (click)="GuardarArchivo()">Guardar Lista de usuarios.</button>
-           <button ion-button color="light" outline (click)="LeerArchivo()">Ver archivo!</button>
+</div>
+<div pandding>
+  <button ion-button color="primary" block outline (click)="Info()" ><ion-icon name="md-build"></ion-icon> Ver informacion del dispositivo</button>
+  <button ion-button color="danger" block outline (click)="GuardarTxt()" ><ion-icon name="md-arrow-round-down"></ion-icon> Guardar Lista de Usuarios</button>
+  <button ion-button color="dark" block outline (click)="GuardarTxtJson()" ><ion-icon name="md-code-download"></ion-icon> Guardar Lista de Usuarios como JSON</button>
+  <button ion-button color="secondary" block outline (click)="GuardarExcel()" ><ion-icon name="md-arrow-round-down"></ion-icon> Guardar Lista de Usuarios como Excel</button>
+  <button ion-button color="primary" block outline (click)="LeerTxt()" ><ion-icon name="md-clipboard"></ion-icon> Leer Lista de Usuarios</button>
+  <button ion-button color="dark" block outline (click)="LeerTxtJson()" ><ion-icon name="md-copy"></ion-icon> Leer Lista de Usuarios como JSON</button>
 </div>
    
 
