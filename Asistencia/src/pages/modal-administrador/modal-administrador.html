@@ -38,6 +38,7 @@
           <ion-label>{{division.nombre}} {{division.ciclo.CicloEnCadena}}. {{division.materia.nombre}}. Turno : {{division.turno}}</ion-label>
         </ion-item>
       </ion-list>
+      <ion-label *ngIf = "divisiones != null && divisiones.length == 0">No hay divisiones libres.</ion-label>
 
     <button ion-button block (click) = 'ModificarListado()' color = "secondary">Asignar</button>
     <button ion-button block (click) = 'Cancelar()' color = "danger">Cancelar</button>
@@ -56,6 +57,7 @@
             <ion-label>{{materia.nombre}}</ion-label>
       </ion-item>
     </ion-list>
+    <ion-label *ngIf = "materias != null && materias.length == 0">No hay materias.</ion-label>
 
     <button ion-button block (click) = 'ModificarListado()' color = "secondary">Asignar</button>
     <button ion-button block (click) = 'Cancelar()' color = "danger">Cancelar</button>
@@ -85,6 +87,7 @@
             <ion-label>Piso: {{aula.piso}}, Aula {{aula.nombre}}</ion-label>
       </ion-item>
     </ion-list>
+    <ion-label *ngIf = "aulas != null && aulas.length == 0">No hay aulas.</ion-label>
 
     <button ion-button block (click) = 'ModificarListado()' color = "secondary">Asignar</button>
     <button ion-button block (click) = 'Cancelar()' color = "danger">Cancelar</button>
@@ -113,6 +116,7 @@
             <ion-label>Legajo: {{profesor.legajo}}</ion-label>
       </ion-item>
     </ion-list>
+    <ion-label *ngIf = "profesores != null && profesores.length == 0">No hay profesores.</ion-label>
 
     <button ion-button block (click) = 'ModificarListado()' color = "secondary">Asignar</button>
     <button ion-button block (click) = 'Cancelar()' color = "danger">Cancelar</button>
@@ -141,6 +145,7 @@
             <ion-label>Legajo: {{alumno.legajo}}</ion-label>
       </ion-item>
     </ion-list>
+    <ion-label *ngIf = "alumnos != null && alumnos.length == 0">No hay alumnos.</ion-label>
 
     <button ion-button block (click) = 'ModificarListado()' color = "secondary">Asignar</button>
     <button ion-button block (click) = 'Cancelar()' color = "danger">Cancelar</button>

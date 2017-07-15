@@ -63,6 +63,7 @@
             <p [ngClass] = "DevolverTipo(usuario) == 'Alumno' ? 'tipoUsuarioAlumno' : (DevolverTipo(usuario) == 'Profesor' ? 'tipoUsuarioProfesor' : 'tipoUsuarioAdministrativo')">{{DevolverTipo(usuario)}}</p>
       </ion-item>
     </ion-list>
+    <ion-label *ngIf = "usuarios != null && usuarios.length == 0">No hay usuarios.</ion-label>
 
   </div>
 
@@ -175,6 +176,7 @@
             </ion-grid>
       </ion-item>
     </ion-list>
+    <ion-label *ngIf = "divisiones != null && divisiones.length == 0">No hay divisiones.</ion-label>
 
   </div>
 

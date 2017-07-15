@@ -46,9 +46,11 @@ export class Ws
     .then(this.extractData)
     .catch(this.handleError);
   }
-  AgregarUsuario(obj)
+  AgregarUsuario(usuario)
   {
-    return this.http.get("http://asistencianull.hol.es/index.php/agregar/usuario/"+JSON.stringify(obj))
+    var body = usuario;
+
+    return this.http.post("http://asistencianull.hol.es/index.php/usuarios/agregar", body)
     .toPromise()
     .then( this.extractData )
     .catch( this.handleError );
@@ -74,9 +76,27 @@ export class Ws
     .then(this.extractData)
     .catch(this.handleError);
   }
+  AgregarMateria(materia)
+  {
+    var body = materia;
+
+    return this.http.post('http://asistencianull.hol.es/index.php/materias/agregar', body)
+    .toPromise()
+    .then(this.extractData)
+    .catch(this.handleError);
+  }
   TraerAulas()
   {
     return this.http.get('http://asistencianull.hol.es/index.php/aulas')
+    .toPromise()
+    .then(this.extractData)
+    .catch(this.handleError);
+  }
+  AgregarAula(aula)
+  {
+    var body = aula;
+
+    return this.http.post('http://asistencianull.hol.es/index.php/aulas/agregar', body)
     .toPromise()
     .then(this.extractData)
     .catch(this.handleError);
@@ -151,15 +171,16 @@ export class Ws
     .then( this.extractData )
     .catch( this.handleError );
   }
-  AgregarDivision(obj)
+  AgregarDivision(division)
   {
-    return this.http.get("http://asistencianull.hol.es/index.php/agregar/division/"+JSON.stringify(obj))
+    var body = division;
+
+    return this.http.post('http://asistencianull.hol.es/index.php/divisiones/agregar', body)
     .toPromise()
-    .then( this.extractData )
-    .catch( this.handleError );
-  
+    .then(this.extractData)
+    .catch(this.handleError);
   }
-    TraerAlumnosDivision(idDivision)
+  TraerAlumnosDivision(idDivision)
   {
     return this.http.get('http://asistencianull.hol.es/index.php/alumnos/division/' + idDivision)
     .toPromise()
@@ -169,6 +190,15 @@ export class Ws
   TraerCiclos()
   {
     return this.http.get('http://asistencianull.hol.es/index.php/ciclos')
+    .toPromise()
+    .then(this.extractData)
+    .catch(this.handleError);
+  }
+  AgregarCiclo(ciclo)
+  {
+    var body = ciclo;
+
+    return this.http.post('http://asistencianull.hol.es/index.php/ciclos/agregar', body)
     .toPromise()
     .then(this.extractData)
     .catch(this.handleError);

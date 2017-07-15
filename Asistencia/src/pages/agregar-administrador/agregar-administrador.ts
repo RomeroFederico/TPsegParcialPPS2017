@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams, ModalController, AlertController } from 'ionic-angular';
+import { NavController, NavParams, LoadingController, ModalController, AlertController } from 'ionic-angular';
 
 import { ModalAdministradorPage } from '../modal-administrador/modal-administrador';
 import { HomeAdministradorPage } from '../home-administrador/home-administrador'; 
@@ -14,11 +14,23 @@ import { Aula } from '../../components/clases/aula';
 import { Materia } from '../../components/clases/materia';
 import { Ciclo } from '../../components/clases/ciclo';
 
+import { Ws } from '../../providers/ws';
+
 @Component({
   selector: 'page-agregar-administrador',
-  templateUrl: 'agregar-administrador.html'
+  templateUrl: 'agregar-administrador.html',
+  providers: [Ws],
 })
 export class AgregarAdministradorPage {
+
+  vacioNombre : boolean = null;
+  vacioApellido : boolean = null;
+  vacioEdad : boolean = null;
+  vacioLegajo : boolean = null;
+  ocupadoLegajo : boolean = null;
+  vacioDni: boolean = null;
+  vacioEmail : boolean = null;
+  errorEmail : boolean = null;
 
   ciclos : Array<Ciclo>;
 
@@ -39,6 +51,21 @@ export class AgregarAdministradorPage {
   division : Division = new Division();
   fechas : {fechaInicio : string, fechaFin : string, fechaProxClase : string};
 
+  vacioNombreDivision : boolean = null;
+  vacioCiclo : boolean = null;
+  vacioMateria : boolean = null;
+  vacioAula : boolean = null;
+  vacioProfesor : boolean = null;
+  vacioEstado: boolean = null;
+  vacioDias : boolean = null;
+  errorFechaInicio : boolean = null;
+  errorFechaFin : boolean = null;
+  errorFechaProx : boolean = null;
+  vacioCupoMaximo : boolean = null;
+  errorCupoActual : boolean = null;
+  vacioCantClases : boolean = null;
+  errorClaseActual : boolean = null;
+
   alumnosActuales : Array<{alumno : Alumno, faltas : number}>;
   alumnosNoEmpezadas : Array<{alumno : Alumno, faltas : number}>;
   alumnosTerminadas : Array<{alumno : Alumno, faltas : number}>;
@@ -46,16 +73,22 @@ export class AgregarAdministradorPage {
   alumnosLibre : Array<{alumno : Alumno, faltas : number}>;
 
   materia : Materia;
+  vacioNombreMateria : boolean = null;
 
   aula : Aula;
   piso : string = "Planta baja";
+  vacioNombreAula : boolean = null;
 
   ciclo : Ciclo;
   year : number = 0;
+  vacioYear : boolean = null;
   cuatrimestre : string = "Primer cuatrimestre";
 
+  cargando : any = null;
+
   constructor(public navCtrl: NavController, public navParams: NavParams,
-              public modal : ModalController, public alertCtrl: AlertController)
+              public modal : ModalController, public alertCtrl: AlertController, 
+              public ws : Ws, public loadingController : LoadingController)
   {
     this.opciones = this.navParams.get("opciones");
 
@@ -103,6 +136,145 @@ export class AgregarAdministradorPage {
     console.log('ionViewDidLoad AgregarAdministradorPage');
   }
 
+  MostrarLoading(mensaje : string) 
+  {
+    this.cargando = this.loadingController.create({
+      spinner: 'bubbles',
+      content: `Cargando ` + mensaje + `, 
+      Por Favor Espere un Momento...`,
+    });
+
+    this.cargando.present();
+  }
+
+  CargarCiclos()
+  {
+    this.MostrarLoading("ciclos");
+
+    console.log("Cargando ciclos...");
+
+    this.ws.TraerCiclos().then((data) => {
+
+      this.cargando.dismiss();
+
+      this.ciclos = new Array<Ciclo>();
+
+      data.forEach(ciclo => {
+        this.ciclos.push(new Ciclo(ciclo.idCiclo, ciclo.anio, ciclo.cuatrimestre));
+      });
+
+      console.log(this.ciclos);
+
+    })
+    .catch((error) => { this.cargando.dismiss(); this.ReintentarCargarCiclos(); console.log(error); })
+  }
+
+  ReintentarCargarCiclos()
+  {
+    let confirm = this.alertCtrl.create({
+      title: 'Error en el servidor',
+      message: 'Desea reintentar la carga de ciclos?',
+      buttons: [
+        {
+          text: 'Cancelar',
+          handler: () => {
+            this.navCtrl.pop();
+          }
+        },
+        {
+          text: 'Aceptar',
+          handler: () => {
+            this.CargarCiclos();
+          }
+        }
+      ]
+    });
+    confirm.present();
+  }
+
+  ValidarEmail(email)
+  {
+    var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    return re.test(email);
+  }
+
+  ValidarSoloLetrasYNumeros(event, atributo)
+  {
+    let newText: string = event.target.value;
+    if (/^[a-zA-Z0-9]+$/.test(newText) || newText == "") {
+      //input is valid, so update the model
+      if (atributo == "Division")
+        this.division.nombre = newText;
+      else if (atributo == "Materia")
+        this.materia.nombre = newText;
+      else
+        this.aula.nombre = newText;
+    }
+    else {
+      //restore the original value
+      if (atributo == "Division")
+        event.target.value = this.division.nombre;
+      else if (atributo == "Materia")
+        event.target.value = this.materia.nombre;
+      else
+        event.target.value = this.aula.nombre;
+    }
+  }
+
+  ValidarSoloLetras(event, atributo)
+  {
+    let newText: string = event.target.value;
+    if (/^[a-zA-Z]+$/.test(newText) || newText == "") {
+      //input is valid, so update the model
+      if (atributo == "Apellido")
+        this.usuario.apellido = newText;
+      else
+        this.usuario.nombre = newText;
+    }
+    else {
+      //restore the original value
+      if (atributo == "Apellido")
+        event.target.value = this.usuario.apellido;
+      else
+        event.target.value = this.usuario.nombre;
+    }
+  }
+
+  ValidarSoloNumeros(event, atributo)
+  {
+    let newText: string = event.target.value;
+    if (/^\d*$/.test(newText) || newText == "") {
+      //input is valid, so update the model
+      if (atributo == "Edad")
+        this.usuario.edad = Number(newText);
+      else if (atributo == "Dni")
+        this.usuario.dni = newText;
+      else if (atributo == "CupoMaximo")
+        this.division.cupoMaximo = Number(newText);
+      else if (atributo == "CupoActual")
+        this.division.cupoActual = Number(newText);
+      else if (atributo == "CantidadClases")
+        this.division.cantClases = Number(newText);
+      else if (atributo == "ClaseActual")
+        this.division.claseActual = Number(newText);
+      else if (atributo == "Year")
+        this.year = Number(newText);
+      else
+        this.usuario.legajo = newText;
+    }
+    else {
+      //restore the original value
+      if (atributo == "Edad")
+        event.target.value = this.usuario.edad;
+      else if (atributo == "Dni")
+        event.target.value = this.usuario.dni;
+      else if (atributo == "Year")
+        event.target.value = this.year;
+      else
+        event.target.value = this.usuario.legajo;
+    }
+  }
+
   /**
   * Volver a la pagina principal.
   */
@@ -113,7 +285,11 @@ export class AgregarAdministradorPage {
 
   CambiarTipoDeUsuario()
   {
-    console.log(this.tipo);
+    this.divisionesActuales = new Array<{division : Division, faltas : number}>();
+    this.divisionesNoEmpezadas = new Array<{division : Division, faltas : number}>();
+    this.divisionesTerminadas = new Array<{division : Division, faltas : number}>();
+    this.divisionesAbandonadas = new Array<{division : Division, faltas : number}>();
+    this.divisionesLibre = new Array<{division : Division, faltas : number}>();
   }
 
   DevolverColor()
@@ -128,16 +304,25 @@ export class AgregarAdministradorPage {
         return 'primary';
   }
 
-  /*
-  * Carga los ciclos lectivos de la facultad. Luego se hara con la base de datos.
-  */
-  CargarCiclos()
+  onChangeEstado()
   {
-    this.ciclos = new Array<Ciclo>();
-    this.ciclos.push(new Ciclo(1, 2017, 1));
-    this.ciclos.push(new Ciclo(2, 2016, 2));
-    this.ciclos.push(new Ciclo(3, 2016, 1));
+    this.alumnosActuales = new Array<{alumno : Alumno, faltas : number}>();
+    this.alumnosNoEmpezadas = new Array<{alumno : Alumno, faltas : number}>();
+    this.alumnosTerminadas = new Array<{alumno : Alumno, faltas : number}>();
+    this.alumnosAbandonadas = new Array<{alumno : Alumno, faltas : number}>();
+    this.alumnosLibre = new Array<{alumno : Alumno, faltas : number}>();
   }
+
+  // /*
+  // * Carga los ciclos lectivos de la facultad. Luego se hara con la base de datos.
+  // */
+  // CargarCiclos()
+  // {
+  //   this.ciclos = new Array<Ciclo>();
+  //   this.ciclos.push(new Ciclo(1, 2017, 1));
+  //   this.ciclos.push(new Ciclo(2, 2016, 2));
+  //   this.ciclos.push(new Ciclo(3, 2016, 1));
+  // }
 
   ObtenerTodosLosIdDivisionesSeleccionadas(noIncluir : string)
   {
@@ -411,28 +596,111 @@ export class AgregarAdministradorPage {
   {
     if (!this.ValidarDatosUsuario())
       this.MostrarMensaje("Error", "No se han ingresado todos los datos.");
-    else if (!this.ValidarUsuario())
-      this.MostrarMensaje("Error", "El legajo, email o dni ya se ha ingresado.");
     else
     {
       //Agregar usuario en la base de datos.
-      this.MostrarMensaje("Exito", this.tipo + " registrado con exito.");
-      this.Volver();
-    }
-  }
+      let divisiones = new Array<any>();
 
-  ValidarUsuario()
-  {
-    //Validar con base de datos que no se repita el email, legajo y dni.
-    return true;
+      this.divisionesActuales.forEach((division) => {
+        divisiones.push({idDivision : division.division.idDivision, faltas : division.faltas, estado : "Cursando"});
+      })
+      this.divisionesNoEmpezadas.forEach((division) => {
+        divisiones.push({idDivision : division.division.idDivision, faltas : division.faltas, estado : "No empezada"});
+      })
+      this.divisionesTerminadas.forEach((division) => {
+        divisiones.push({idDivision : division.division.idDivision, faltas : division.faltas, estado : "Terminada"});
+      })
+      this.divisionesAbandonadas.forEach((division) => {
+        divisiones.push({idDivision : division.division.idDivision, faltas : division.faltas, estado : "Abandonada"});
+      })
+      this.divisionesLibre.forEach((division) => {
+        divisiones.push({idDivision : division.division.idDivision, faltas : division.faltas, estado : "Libre"});
+      })
+
+      var usuarioAgregar = { nombre : this.usuario.nombre,
+                             apellido : this.usuario.apellido,
+                             sexo : this.usuario.sexo,
+                             edad : this.usuario.edad,
+                             dni : this.usuario.dni,
+                             legajo : this.usuario.legajo,
+                             email : this.usuario.email,
+                             password : this.usuario.legajo,
+                             tipo : (this.tipo == "Usuario"? "Alumno" : this.tipo),
+                             img : "default.png",
+                             divisiones : divisiones
+                            }
+                            
+      this.MostrarLoading("subida de la division");
+
+      this.ws.AgregarUsuario(usuarioAgregar).then((data) => {
+
+        this.cargando.dismiss();
+
+        console.log(data);
+
+        if (data.exito)
+        {
+          this.MostrarMensaje("Exito", this.tipo + " registrado con exito.");
+          this.Volver();
+        }
+        else
+        {
+          this.MostrarMensaje("Error", data.mensaje);
+        }
+      })
+      .catch((error) => { this.cargando.dismiss(); this.MostrarMensaje("Error en el servidor", "Vuelva a intentar mas tarde..."); console.log(error); })
+    }
   }
 
   ValidarDatosUsuario()
   {
-    if (this.usuario.nombre == "" || this.usuario.apellido == "" || this.usuario.dni == "" || this.usuario.email == "" ||
-        this.usuario.legajo == "" || this.usuario.edad == 0)
-      return false;
-    return true;
+    var valido = true;
+
+    this.vacioApellido = null;
+    this.vacioNombre = null;
+    this.vacioEdad = null;
+    this.vacioEmail = null;
+    this.vacioLegajo = null;
+    this.vacioDni = null;
+    this.errorEmail = null;
+
+    if (this.usuario.apellido == "")
+    {
+      this.vacioApellido = true;
+      valido = false;
+    }
+    if (this.usuario.nombre == "")
+    {
+      this.vacioNombre = true;
+      valido = false;
+    }
+    if (this.usuario.edad < 18)
+    {
+      this.vacioEdad = true;
+      valido = false;
+    }
+    if (this.usuario.legajo == "")
+    {
+      this.vacioLegajo = true;
+      valido = false;
+    }
+    if (this.usuario.dni == "")
+    {
+      this.vacioDni = true;
+      valido = false;
+    }
+    if (this.usuario.email == "")
+    {
+      this.vacioEmail = true;
+      valido = false;
+    }
+    else if (!this.ValidarEmail(this.usuario.email))
+    {
+      this.errorEmail = true;
+      valido = false;
+    }
+
+    return valido;
   }
 
   AsignarMateria()
@@ -482,112 +750,306 @@ export class AgregarAdministradorPage {
 
   ValidarDatosDivision()
   {
-    if (this.division.nombre == "" || this.division.ciclo.idCiclo == 0 || this.division.materia.idMateria == 0 || 
-        this.division.aula.idAula == 0 || this.division.profesor.idUsuario == 0 || this.division.estado == "" || this.division.dias.length == 0 ||
-        this.division.cupoMaximo == 0)
-      return false;
-    return true;
+    // if (this.division.nombre == "" || this.division.ciclo.idCiclo == 0 || this.division.materia.idMateria == 0 || 
+    //     this.division.aula.idAula == 0 || this.division.profesor.idUsuario == 0 || this.division.estado == "" || this.division.dias.length == 0 ||
+    //     this.division.cupoMaximo == 0)
+    //   return false;
+    // return true;
+
+  //   vacioNombreDivision : boolean = null;
+  // vacioCiclo : boolean = null;
+  // vacioMateria : boolean = null;
+  // vacioAula : boolean = null;
+  // vacioProfesor : boolean = null;
+  // vacioEstado: boolean = null;
+  // vacioDias : boolean = null;
+  // errorFechaInicio : boolean = null;
+  // errorFechaFin : boolean = null;
+  // errorFechaProx : boolean = null;
+  // vacioCupoMaximo : boolean = null;
+  // errorCupoActual : boolean = null;
+  // vacioCantClases : boolean = null;
+  // errorClaseActual : boolean = null;
+
+    var valido = true;
+
+    this.vacioNombreDivision = null;
+    this.vacioCiclo = null;
+    this.vacioMateria = null;
+    this.vacioAula = null;
+    this.vacioProfesor = null;
+    this.vacioEstado = null;
+    this.vacioDias = null;
+    this.errorFechaInicio = null; // NO IMPLEMENTADO
+    this.errorFechaFin = null; // NO IMPLEMENTADO
+    this.errorFechaProx = null; // NO IMPLEMENTADO
+    this.vacioCupoMaximo = null;
+    this.errorCupoActual = null;
+    this.vacioCantClases = null;
+    this.errorClaseActual = null;
+
+    if (this.division.nombre == "")
+    {
+      this.vacioNombreDivision = true;
+      valido = false;
+    }
+    if (this.division.ciclo.idCiclo == 0)
+    {
+      this.vacioCiclo = true;
+      valido = false;
+    }
+    if (this.division.materia.idMateria == 0)
+    {
+      this.vacioMateria = true;
+      valido = false;
+    }
+    if (this.division.aula.idAula == 0)
+    {
+      this.vacioAula = true;
+      valido = false;
+    }
+    if (this.division.profesor.idUsuario == 0)
+    {
+      this.vacioProfesor = true;
+      valido = false;
+    }
+    if (this.division.estado == "")
+    {
+      this.vacioEstado = true;
+      valido = false;
+    }
+    if (this.division.dias.length == 0)
+    {
+      this.vacioDias = true;
+      valido = false;
+    }
+    if (this.division.cupoMaximo == 0)
+    {
+      this.vacioCupoMaximo = true;
+      valido = false;
+    }
+    if (this.division.cantClases == 0)
+    {
+      this.vacioCantClases = true;
+      valido = false;
+    }
+    if (this.division.cupoActual > this.division.cupoMaximo)
+    {
+      this.errorCupoActual = true;
+      valido = false;
+    }
+    if (this.division.claseActual > this.division.cantClases)
+    {
+      this.errorClaseActual = true;
+      valido = false;
+    }
+
+    return valido;
   }
 
   AgregarDivision()
   {
     if (!this.ValidarDatosDivision())
-      this.MostrarMensaje("Error", "No se han ingresado todos los datos.");
-    else if (!this.ValidarDivision())
-      this.MostrarMensaje("Error", "La division se esta repitiendo.");
+      this.MostrarMensaje("Error", "Datos invalidos, verifique...");
     else
     {
       //Agregar division en la base de datos.
-      this.MostrarMensaje("Exito", this.tipo + " registrado con exito.");
-      this.Volver();
-    }
-  }
+      let alumnos = new Array<any>();
 
-  ValidarDivision()
-  {
-    //Validar con base de datos que no se repitan divisiones.
-    return true;
+      this.alumnosActuales.forEach((alumno) => {
+        alumnos.push({idAlumno : alumno.alumno.idUsuario, faltas : alumno.faltas, estado : "Cursando"});
+      })
+      this.alumnosNoEmpezadas.forEach((alumno) => {
+        alumnos.push({idAlumno : alumno.alumno.idUsuario, faltas : alumno.faltas, estado : "No empezada"});
+      })
+      this.alumnosTerminadas.forEach((alumno) => {
+        alumnos.push({idAlumno : alumno.alumno.idUsuario, faltas : alumno.faltas, estado : "Terminada"});
+      })
+      this.alumnosAbandonadas.forEach((alumno) => {
+        alumnos.push({idAlumno : alumno.alumno.idUsuario, faltas : alumno.faltas, estado : "Abandonada"});
+      })
+      this.alumnosLibre.forEach((alumno) => {
+        alumnos.push({idAlumno : alumno.alumno.idUsuario, faltas : alumno.faltas, estado : "Libre"});
+      })
+
+      var divisionAgregar = {idAula : this.division.aula.idAula,
+                             idMateria : this.division.materia.idMateria,
+                             idCiclo : this.division.ciclo.idCiclo,
+                             idProfesor : this.division.profesor.idUsuario,
+                             nombre : this.division.nombre,
+                             turno : this.division.turno,
+                             fechaInicio : this.fechas.fechaInicio,
+                             fechaFin : this.fechas.fechaFin,
+                             hora : this.division.hora,
+                             dia1 : this.division.dias,
+                             dia2 : null,
+                             dia3 : null,
+                             estado : this.division.estado,
+                             cupoMaximo : this.division.cupoMaximo,
+                             cupoActual : this.division.cupoActual,
+                             cantClases : this.division.cantClases,
+                             claseActual : this.division.claseActual,
+                             fechaProxClase : this.fechas.fechaProxClase,
+                             alumnos : alumnos
+                            }
+                            
+      this.MostrarLoading("subida de la division");
+
+      this.ws.AgregarDivision(divisionAgregar).then((data) => {
+
+        this.cargando.dismiss();
+
+        console.log(data);
+
+        if (data.exito)
+        {
+          this.MostrarMensaje("Exito", this.tipo + " registrado con exito.");
+          this.Volver();
+        }
+        else
+        {
+          this.MostrarMensaje("Error", data.mensaje);
+        }
+      })
+      .catch((error) => { this.cargando.dismiss(); this.MostrarMensaje("Error en el servidor", "Vuelva a intentar mas tarde..."); console.log(error); })
+    }
   }
 
   AgregarMateria()
   {
     if (!this.ValidarDatosMateria())
-      this.MostrarMensaje("Error", "No se han ingresado todos los datos.");
-    else if (!this.ValidarMateria())
-      this.MostrarMensaje("Error", "El nombre ya se ha ingresado.");
+      this.MostrarMensaje("Error", "El nombre no se ha ingresado");
     else
     {
       //Agregar materia en la base de datos.
-      this.MostrarMensaje("Exito", this.tipo + " registrado con exito.");
-      this.Volver();
+      this.MostrarLoading("subida de la materia");
+
+      this.ws.AgregarMateria({nombre : this.materia.nombre, img : "default.png"}).then((data) => {
+
+        this.cargando.dismiss();
+
+        if (data.exito)
+        {
+          this.MostrarMensaje("Exito", this.tipo + " registrado con exito.");
+          this.Volver();
+        }
+        else
+        {
+          this.MostrarMensaje("Error", data.mensaje);
+        }
+      })
+      .catch((error) => { this.cargando.dismiss(); this.MostrarMensaje("Error en el servidor", "Vuelva a intentar mas tarde..."); console.log(error); })
     }
   }
 
   ValidarDatosMateria()
   {
-    if (this.materia.nombre == "")
-      return false
-    return true;
-  }
+    var valido = true;
 
-  ValidarMateria()
-  {
-    //Validar con base de datos que no se repitan las materias.
-    return true;
+    this.vacioNombreMateria = null;
+
+    if (this.materia.nombre == "")
+    {
+      this.vacioNombreMateria = true;
+      valido = false;
+    }
+
+    return valido;
   }
 
   AgregarAula()
   {
     if (!this.ValidarDatosAula())
-      this.MostrarMensaje("Error", "No se han ingresado todos los datos.");
-    else if (!this.ValidarAula())
-      this.MostrarMensaje("Error", "El nombre ya se ha ingresado.");
+      this.MostrarMensaje("Error", "El nombre no se ha ingresado");
     else
     {
-      //Agregar aula en la base de datos.
-      this.MostrarMensaje("Exito", this.tipo + " registrado con exito.");
-      this.Volver();
+      //Agregar ciclo en la base de datos.
+
+      if (this.piso == "Planta baja")
+        this.aula.piso = 0;
+      else if (this.piso == "Primer piso")
+        this.aula.piso = 1;
+      else if (this.piso == "Segundo piso")
+        this.aula.piso = 2;
+      else
+        this.aula.piso = 3;
+
+      this.MostrarLoading("subida del aula");
+
+      this.ws.AgregarAula({nombre : this.aula.nombre, piso : this.aula.piso}).then((data) => {
+
+        this.cargando.dismiss();
+
+        if (data.exito)
+        {
+          this.MostrarMensaje("Exito", this.tipo + " registrado con exito.");
+          this.Volver();
+        }
+        else
+        {
+          this.MostrarMensaje("Error", data.mensaje);
+        }
+      })
+      .catch((error) => { this.cargando.dismiss(); this.MostrarMensaje("Error en el servidor", "Vuelva a intentar mas tarde..."); console.log(error); })
     }
   }
 
   ValidarDatosAula()
   {
-    if (this.aula.nombre == "")
-      return false
-    return true;
-  }
+    var valido = true;
 
-  ValidarAula()
-  {
-    //Validar con base de datos que no se repita el aula.
-    return true;
+    this.vacioNombreAula = null;
+
+    if (this.aula.nombre == "")
+    {
+      this.vacioNombreAula = true;
+      valido = false;
+    }
+
+    return valido;
   }
 
   AgregarCiclo()
   {
     if (!this.ValidarDatosCiclo())
-      this.MostrarMensaje("Error", "No se han ingresado todos los datos.");
-    else if (!this.ValidarCiclo())
-      this.MostrarMensaje("Error", "El año y cuatrimestre ya se ha ingresado.");
+      this.MostrarMensaje("Error", "El año ingresado no es valido.");
     else
     {
       //Agregar ciclo en la base de datos.
-      this.MostrarMensaje("Exito", this.tipo + " registrado con exito.");
-      this.Volver();
+
+      this.MostrarLoading("subida del ciclo");
+
+      this.ws.AgregarCiclo({anio : this.year, cuatrimestre: (this.cuatrimestre == 'Primer cuatrimestre'? 1 : 2)}).then((data) => {
+
+        this.cargando.dismiss();
+
+        if (data.exito)
+        {
+          this.MostrarMensaje("Exito", this.tipo + " registrado con exito.");
+          this.Volver();
+        }
+        else
+        {
+          this.MostrarMensaje("Error", data.mensaje);
+        }
+      })
+      .catch((error) => { this.cargando.dismiss(); this.MostrarMensaje("Error en el servidor", "Vuelva a intentar mas tarde..."); console.log(error); })
     }
   }
 
   ValidarDatosCiclo()
   {
-    if (this.year == 0)
-      return false
-    return true;
-  }
+    var valido = true;
 
-  ValidarCiclo()
-  {
-    //Validar con base de datos que no se repita el ciclo.
-    return true;
+    this.vacioYear = null;
+
+    if (this.year < 2000)
+    {
+      this.vacioYear = true;
+      valido = false;
+    }
+
+    return valido;
   }
 
   MostrarMensaje(titulo : string, mensaje : string)
