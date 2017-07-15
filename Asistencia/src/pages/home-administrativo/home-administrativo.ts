@@ -4,10 +4,12 @@ import { NavController, NavParams, LoadingController, ActionSheetController, Pla
 import { ListadoAdministrativoPage } from '../listado-administrativo/listado-administrativo';
 import { DatosAdministrativoPage } from '../datos-administrativo/datos-administrativo';
 import { LoginPage } from '../login/login';
+import { LocalNotifications } from '@ionic-native/local-notifications';
 
 @Component({
   selector: 'page-home-administrativo',
-  templateUrl: 'home-administrativo.html'
+  templateUrl: 'home-administrativo.html',
+  providers:[LocalNotifications]
 })
 export class HomeAdministrativoPage {
 
@@ -17,10 +19,11 @@ export class HomeAdministrativoPage {
   loading : any;
   iconos : string = "Grandes";
 
-  constructor(public navCtrl: NavController, public navParams: NavParams,
+  constructor(public navCtrl: NavController, public navParams: NavParams,private localNotifications: LocalNotifications,
               public loadingController : LoadingController, public actionSheetController : ActionSheetController, private platform: Platform,
               public alertCtrl: AlertController) 
   {
+    this.Noti("Bienvenido Secretario!");
   }
 
   ionViewDidLoad() {
@@ -46,7 +49,15 @@ export class HomeAdministrativoPage {
       this.seleccionAnimar = 0;
     }
   }
-
+  Noti(mensaje)
+  {
+  this.localNotifications.schedule({
+   text: mensaje,
+   at: new Date(new Date().getTime() + 1000),
+   led: 'FF0000',
+   sound: null
+});
+  }
   NoImplementado()
   {
     let confirm = this.alertCtrl.create({

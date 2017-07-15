@@ -14,11 +14,12 @@ import { AngularFireDatabase, FirebaseListObservable } from 'angularfire2/databa
 
 import { Vibration } from '@ionic-native/vibration';
 import { NativeAudio } from '@ionic-native/native-audio';
+import { LocalNotifications } from '@ionic-native/local-notifications';
 
 @Component({
   selector: 'page-asistencia-administrativo',
   templateUrl: 'asistencia-administrativo.html',
-  providers: [Ws,NativeAudio,Vibration]
+  providers: [Ws,NativeAudio,Vibration,LocalNotifications]
 })
 export class AsistenciaAdministrativoPage {
 
@@ -30,7 +31,7 @@ export class AsistenciaAdministrativoPage {
   //miLista:any;
   listado : FirebaseListObservable<any[]>;//FIREBASE!
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public ws : Ws, 
+  constructor(public navCtrl: NavController, public navParams: NavParams, public ws : Ws, private localNotifications: LocalNotifications,
               public loadingController : LoadingController, public alertCtrl: AlertController,private firebase: AngularFireDatabase, 
               public toast : ToastController, public nativeAudio: NativeAudio, public vibration:Vibration)
   {
@@ -60,7 +61,15 @@ export class AsistenciaAdministrativoPage {
   {
     this.navCtrl.pop();
   }
-
+Noti(mensaje)
+  {
+  this.localNotifications.schedule({
+   text: mensaje,
+   at: new Date(new Date().getTime() + 1000),
+   led: 'FF0000',
+   sound: null
+});
+  }
   Vibrar()
   {
     console.log("Vibrar");
@@ -262,6 +271,7 @@ export class AsistenciaAdministrativoPage {
 
       this.cargando.dismiss();
       this.Sonar();
+      this.Noti("Se todo lista correctamen!");
       this.MostrarToast("Lista tomada exitosamente!!!");
       this.navCtrl.setRoot(HomeAdministrativoPage);
 
@@ -269,6 +279,7 @@ export class AsistenciaAdministrativoPage {
     .catch((error) => { this.cargando.dismiss(); this.MostrarToast("La lista de asistencias no se guardo."); this.navCtrl.setRoot(HomeAdministrativoPage); console.log("Error"); });// CON ESA FUNCION SUBO EL JSON A FIREBASE
 
     this.listado.push(subir);// CON ESA FUNCION SUBO EL JSON A FIREBASE
+    
     //ACA SE SUBE EN FIREBASE EL OBJETO SUBIR...AL TERMINAR EL PROCESO IR AL MENU PRINCIPAL -> HOME CON SET ROOT, MOSTRAR UN MENSAJE SI SE GUARDO.
   }
   GenerateArray(obj)//PARA FIREBASE!

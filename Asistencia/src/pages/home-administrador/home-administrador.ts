@@ -3,10 +3,12 @@ import { NavController, NavParams, LoadingController, ActionSheetController, Pla
 import { ListadoAdministradorPage } from '../listado-administrador/listado-administrador';
 import { AgregarAdministradorPage } from '../agregar-administrador/agregar-administrador';
 import { LoginPage } from '../login/login';
+import { LocalNotifications } from '@ionic-native/local-notifications';
 
 @Component({
   selector: 'page-home-administrador',
-  templateUrl: 'home-administrador.html'
+  templateUrl: 'home-administrador.html',
+  providers:[LocalNotifications]
 })
 export class HomeAdministradorPage {
 
@@ -16,10 +18,11 @@ export class HomeAdministradorPage {
   loading : any;
   iconos : string = "Grandes";
 
-  constructor(public navCtrl: NavController, public navParams: NavParams,
+  constructor(public navCtrl: NavController, public navParams: NavParams,private localNotifications: LocalNotifications,
               public loadingController : LoadingController, public actionSheetController : ActionSheetController, private platform: Platform,
               public alertCtrl: AlertController) 
   {
+    this.Noti("Bienvenido Administrador!");
   }
 
   ionViewDidLoad() {
@@ -44,6 +47,15 @@ export class HomeAdministradorPage {
       this.animacionSeleccion[opcion] = "";
       this.seleccionAnimar = 0;
     }
+  }
+  Noti(mensaje)
+  {
+  this.localNotifications.schedule({
+   text: mensaje,
+   at: new Date(new Date().getTime() + 1000),
+   led: 'FF0000',
+   sound: null
+});
   }
 
   /**
