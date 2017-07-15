@@ -12,6 +12,7 @@ import { AngularFireDatabase, FirebaseListObservable } from 'angularfire2/databa
 import { NativeAudio } from '@ionic-native/native-audio';
 import { Vibration } from '@ionic-native/vibration';
 import { Device } from '@ionic-native/device';
+import { Ayuda } from '../ayuda/ayuda';
 
 
 @Component({
@@ -59,7 +60,8 @@ export class LoginPage {
   }
   Ayuda()
   {
-    this.MensajeToast("pronto!");
+    localStorage.setItem('ayuda','0');
+    this.navCtrl.push(Ayuda);
   }
   
   MensajeToast(mensaje)
@@ -197,6 +199,7 @@ export class LoginPage {
 
     this.loading.present();
   }
+
   AlertCorrecto(nombre)
   {
     let alert = this.alert.create({

@@ -6,7 +6,18 @@ import { NavController, NavParams } from 'ionic-angular';
 })
 export class Ayuda {
 
-
+  logins = [
+    {
+      image: "assets/ayuda/login/l1.png",
+      title: "Pantalla de Login",
+       description: "Muestreo de los botones de testing en el login, Con el boton de ayuda y ver informacion del dispositivo."
+    },
+    {
+      image: "assets/ayuda/login/l2.png",
+      title: "Pantalla de Login",
+      description: "Campo de E-mail y Password a la hora de querer entrar a nuestro sistema."
+    }
+  ];
    alumnos = [
     {
       image: "assets/ayuda/alumno/a1.png",
@@ -78,21 +89,21 @@ export class Ayuda {
   ];
      secretarios = [
     {
-      image: "assets/ayuda/alumno/a5.png",
+      image: "assets/ayuda/login/l1.png",
       title: "Welcome to the Docs!"
     },
     {
-      image: "assets/ayuda/alumno/a2.png",
+      image: "assets/ayuda/login/l1.png",
       title: "Welcome to the Docs!"
     }
   ];
      administradores = [
     {
-      image: "assets/ayuda/alumno/a6.png",
+      image: "assets/ayuda/login/l1.png",
       title: "Welcome to the Docs!"
     },
     {
-      image: "assets/ayuda/alumno/a2.png",
+      image: "assets/ayuda/login/l1.png",
       title: "Welcome to the Docs!"
     }
   ];
