@@ -58,54 +58,113 @@ export class Ayuda {
     },
     {
       image: "assets/ayuda/profesor/p2.png",
-      description: "Muestra todas las funcionabilidades esenciales que puede realizar el profesor. Puede apretar en la imagen o en el nombre de la imagen. Todas las pantallas contaran con la posibilidad de volver a este menu de una manera facil.",
+      description: "Este contara con una variedad de operaciones que podra realizar el profesor. Realizar una encuesta , Ver el establecimiento en un mapa!",
       title: "Menu del Perfil Profesor"
     },
         {
       image: "assets/ayuda/profesor/p3.png",
-      description: "Muestra todas las funcionabilidades esenciales que puede realizar el profesor. Puede apretar en la imagen o en el nombre de la imagen. Todas las pantallas contaran con la posibilidad de volver a este menu de una manera facil.",
+      description: "Se podra aceder a la informacion del profesor logeado en nuestro sistema. Esta nostrara su foto con algunos datos relevantes.",
       title: "Datos del Profesor"
     },
         {
       image: "assets/ayuda/profesor/p4.png",
-      description: "Muestra todas las funcionabilidades esenciales que puede realizar el profesor. Puede apretar en la imagen o en el nombre de la imagen. Todas las pantallas contaran con la posibilidad de volver a este menu de una manera facil.",
-      title: "Pantalla del Perfil Profesor"
+      description: "Estan son todas las materias que el profesor tiene asignado.",
+      title: "Materias del profesor"
     },
         {
       image: "assets/ayuda/profesor/p5.png",
-      description: "Muestra todas las funcionabilidades esenciales que puede realizar el profesor. Puede apretar en la imagen o en el nombre de la imagen. Todas las pantallas contaran con la posibilidad de volver a este menu de una manera facil.",
-      title: "Pantalla del Perfil Profesor"
+      description: "Se muestras todas las clases del dia de hoy con la posibilidad de pedir falta.",
+      title: "Listado de Clases del dia de hoy y de la semana."
     },
         {
       image: "assets/ayuda/profesor/p7.png",
-      description: "Muestra todas las funcionabilidades esenciales que puede realizar el profesor. Puede apretar en la imagen o en el nombre de la imagen. Todas las pantallas contaran con la posibilidad de volver a este menu de una manera facil.",
-      title: "Pantalla del Perfil Profesor"
+      description: "Todas las divisiones en la que se encuentra dicho profesor.",
+      title: "Lista de divisiones"
     },
         {
       image: "assets/ayuda/profesor/p6.png",
-      description: "Muestra todas las funcionabilidades esenciales que puede realizar el profesor. Puede apretar en la imagen o en el nombre de la imagen. Todas las pantallas contaran con la posibilidad de volver a este menu de una manera facil.",
-      title: "Pantalla del Perfil Profesor"
+      description: "Todas las notificaciones recibidas por parte del profesor.",
+      title: "Lista de notificaciones."
     },
   ];
      secretarios = [
     {
-      image: "assets/ayuda/login/l1.png",
-      title: "Welcome to the Docs!"
+      image: "assets/ayuda/secretario/s4.png",
+      title: "Menu del perfil Administrarivo",
+      description: "Todas las acciones posibles que puede tomar el perfil administrativo."
     },
     {
-      image: "assets/ayuda/login/l1.png",
-      title: "Welcome to the Docs!"
+      image: "assets/ayuda/secretario/s1.png",
+      title: "Tomar Asistencia Paso 1",
+      description: "Funcionabilidades esenciales del administrativo en este se encuentra el de tomar lista el mas importante."
+    },
+    {
+      image: "assets/ayuda/secretario/s2.png",
+      title: "Tomar Asistencia Paso 2",
+      description: "Todas las divisiones disponibles para que el secretario elija cual de ellar desea tomar lista."
+    },
+    {
+      image: "assets/ayuda/secretario/s3.png",
+      title: "Tomar Asistencia Paso 3",
+      description: "Tendremos que marcar que alumno asistio en el dia."
     }
   ];
      administradores = [
     {
-      image: "assets/ayuda/login/l1.png",
-      title: "Welcome to the Docs!"
+      image: "assets/ayuda/administrador/w1.png",
+      title: "Pantalla principal del Administrador",
+      description: "Todas las funciones esenciales del perfil administrador."
     },
     {
-      image: "assets/ayuda/login/l1.png",
-      title: "Welcome to the Docs!"
-    }
+      image: "assets/ayuda/administrador/w2.png",
+      title: "Pantalla principal del administrador",
+      description: "Todas las funciones esenciales del perfil administrador."
+    },
+        {
+      image: "assets/ayuda/administrador/w3.png",
+      title: "Menu del perfil Administrardor",
+      description: "Todas las acciones posibles que puede tomar el perfil administrativo."
+    },
+        {
+      image: "assets/ayuda/administrador/w4.png",
+      title: "Agregar Usuario Paso 1",
+      description: "Tendremos que llenar los campos necesarios para agregar un usuario al sistema"
+    },
+        {
+      image: "assets/ayuda/administrador/w5.png",
+      title: "Agregar Usuario Paso 2",
+      description: "Tendremos que asignar en cada campono que lo necesite una division dependiendo el tipo"
+    },
+        {
+      image: "assets/ayuda/administrador/w6.png",
+      title: "Agregar Usuario paso 3",
+      description: "Al finalizar tendremos que utilizar los botones de aceptar o cancelar."
+    },
+        {
+      image: "assets/ayuda/administrador/w7.png",
+      title: "Agregar Division Paso 1",
+      description: "Formulario necesario para agregar una division al sistema"
+    },
+        {
+      image: "assets/ayuda/administrador/w8.png",
+      title: "Agregar Division Paso 2",
+      description: "Al finalizar tendremos que utilizar los botones de aceptar o cancelar."
+    },
+        {
+      image: "assets/ayuda/administrador/w9.png",
+      title: "Agregar Materia",
+      description: "Formulario para agregar una materia al sistema."
+    },
+        {
+      image: "assets/ayuda/administrador/w10.png",
+      title: "Agregar Aula",
+      description: "Formulario para agregar un aula"
+    },
+        {
+      image: "assets/ayuda/administrador/w11.png",
+      title: "Agregar Ciclo",
+      description: "Formulario para el agregado de un ciclo."
+    },
   ];
   constructor(public navCtrl: NavController, public navParams: NavParams) 
   {
