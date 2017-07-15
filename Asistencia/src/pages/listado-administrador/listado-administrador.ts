@@ -182,7 +182,7 @@ export class ListadoAdministradorPage {
         {
           text: 'Aceptar',
           handler: () => {
-            this.CargarDivisiones();
+            this.CargarUsuarios();
           }
         }
       ]

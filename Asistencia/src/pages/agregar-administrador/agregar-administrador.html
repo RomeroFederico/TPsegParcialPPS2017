@@ -29,12 +29,14 @@
       </ion-list-header>
       <ion-item>
         <ion-label [color] = "DevolverColor()" floating>Apellido</ion-label>
-        <ion-input type="text" [(ngModel)]="usuario.apellido" ></ion-input>
+        <ion-input type="text" [value] ="usuario.apellido" (input)="ValidarSoloLetras($event, 'Apellido')" maxlength = "20" ></ion-input>
       </ion-item>
+      <ion-label *ngIf = "vacioApellido != null" style = "color: red; font-size: smaller; margin-left: 20px">No se ha ingresado nada</ion-label>
       <ion-item>
         <ion-label [color] = "DevolverColor()" floating>Nombre</ion-label>
-        <ion-input type="text" [(ngModel)]="usuario.nombre" ></ion-input>
+        <ion-input type="text" [value] ="usuario.nombre" (input)="ValidarSoloLetras($event, 'Nombre')" maxlength = "20"></ion-input>
       </ion-item>
+      <ion-label *ngIf = "vacioNombre!= null" style = "color: red; font-size: smaller; margin-left: 20px">No se ha ingresado nada</ion-label>
       <ion-item style = "margin-top : 24px;">
         <ion-label [color] = "DevolverColor()">Sexo</ion-label>
         <ion-select [(ngModel)] = "usuario.sexo">
@@ -44,20 +46,25 @@
       </ion-item>
       <ion-item>
         <ion-label [color] = "DevolverColor()" floating>Edad</ion-label>
-        <ion-input type="number" [(ngModel)] = "usuario.edad"></ion-input>
+        <ion-input type="text" [value]="usuario.edad" (input)="ValidarSoloNumeros($event, 'Edad')" maxlength = "2"></ion-input>
       </ion-item>
+      <ion-label *ngIf = "vacioEdad != null" style = "color: red; font-size: smaller; margin-left: 20px">Edad invalida, debe ser mayor o igual a 18</ion-label>
       <ion-item>
         <ion-label [color] = "DevolverColor()" floating>Legajo</ion-label>
-        <ion-input type="number" [(ngModel)] = "usuario.legajo"></ion-input>
+        <ion-input type="text" [value]="usuario.legajo" (input)="ValidarSoloNumeros($event, 'Legajo')" maxlength = "15"></ion-input>
       </ion-item>
+      <ion-label *ngIf = "vacioLegajo != null" style = "color: red; font-size: smaller; margin-left: 20px">No se ha ingresado nada</ion-label>
       <ion-item>
         <ion-label [color] = "DevolverColor()" floating>DNI</ion-label>
-        <ion-input type="number" [(ngModel)] = "usuario.dni"></ion-input>
+        <ion-input type="text" [value]="usuario.dni" (input)="ValidarSoloNumeros($event, 'Dni')" maxlength = "8"></ion-input>
       </ion-item>
+      <ion-label *ngIf = "vacioDni!= null" style = "color: red; font-size: smaller; margin-left: 20px">No se ha ingresado nada</ion-label>
       <ion-item>
         <ion-label [color] = "DevolverColor()" floating>Email</ion-label>
-        <ion-input type="text" [(ngModel)] = "usuario.email"></ion-input>
+        <ion-input type="email" [(ngModel)]="usuario.email" maxlength = "30"></ion-input>
       </ion-item>
+      <ion-label *ngIf = "vacioEmail != null" style = "color: red; font-size: smaller; margin-left: 20px">No se ha ingresado nada</ion-label>
+      <ion-label *ngIf = "errorEmail != null" style = "color: red; font-size: smaller; margin-left: 20px">El email ingresado no es valido</ion-label>
       <ion-list-header [color] = "DevolverColor()" style = "margin-top: 10px; margin-bottom: 0px !important;" text-left>
         Imagen
       </ion-list-header>
@@ -69,11 +76,11 @@
         <button ion-button clear item-right [color] = "DevolverColor()">Elegir</button>
       </ion-item>
       <div *ngIf = "tipo != 'Administrativo'">
-      <ion-list-header [color] = "DevolverColor()" style = "margin-top: 10px; margin-bottom: 0px !important;" text-left *ngIf = "tipo != 'Administrativo'">
+      <ion-list-header [color] = "DevolverColor()" style = "margin-top: 10px; margin-bottom: 0px !important;" text-left *ngIf = "tipo == 'Alumno'">
         Divisiones Actuales:
         <button ion-button clear item-right color = "light" (click) = "AddAlListadoDivisiones('Actuales')">Añadir</button>
       </ion-list-header>
-      <ion-item *ngIf = "divisionesActuales.length == 0">
+      <ion-item *ngIf = "tipo == 'Alumno' && divisionesActuales.length == 0">
         No hay divisiones asignadas.
       </ion-item>
       <div *ngIf = "divisionesActuales.length > 0">
@@ -87,11 +94,11 @@
           <button ion-button clear item-right [color] = "DevolverColor()" (click) = "QuitarDelListadoDivisiones('Actuales', d.division.idDivision)">Quitar</button>
         </ion-item>
       </div>
-      <ion-list-header [color] = "DevolverColor()" style = "margin-top: 10px; margin-bottom: 0px !important;" text-left *ngIf = "tipo != 'Administrativo'">
+      <ion-list-header [color] = "DevolverColor()" style = "margin-top: 10px; margin-bottom: 0px !important;" text-left *ngIf = "tipo == 'Alumno'">
         Divisiones no Empezadas:
         <button ion-button clear item-right color = "light" (click) = "AddAlListadoDivisiones('No Empezadas')">Añadir</button>
       </ion-list-header>
-      <ion-item *ngIf = "divisionesNoEmpezadas.length == 0">
+      <ion-item *ngIf = "tipo == 'Alumno' && divisionesNoEmpezadas.length == 0">
         No hay divisiones asignadas.
       </ion-item>
       <div *ngIf = "divisionesNoEmpezadas.length > 0">
@@ -104,11 +111,11 @@
           <button ion-button clear item-right [color] = "DevolverColor()" (click) = "QuitarDelListadoDivisiones('No Empezadas', d.division.idDivision)">Quitar</button>
         </ion-item>
       </div>
-      <ion-list-header [color] = "DevolverColor()" style = "margin-top: 10px; margin-bottom: 0px !important;" text-left *ngIf = "tipo != 'Administrativo'">
+      <ion-list-header [color] = "DevolverColor()" style = "margin-top: 10px; margin-bottom: 0px !important;" text-left *ngIf = "tipo == 'Alumno'">
         Divisiones Terminadas:
         <button ion-button clear item-right color = "light" (click) = "AddAlListadoDivisiones('Terminadas')">Añadir</button>
       </ion-list-header>
-      <ion-item *ngIf = "divisionesTerminadas.length == 0">
+      <ion-item *ngIf = "tipo == 'Alumno' && divisionesTerminadas.length == 0">
         No hay divisiones asignadas.
       </ion-item>
       <div *ngIf = "divisionesTerminadas.length > 0">
@@ -123,11 +130,11 @@
         </ion-item>
       </div>
       <div *ngIf = "tipo == 'Alumno'">
-      <ion-list-header [color] = "DevolverColor()" style = "margin-top: 10px; margin-bottom: 0px !important;" text-left *ngIf = "tipo != 'Administrativo'">
+      <ion-list-header [color] = "DevolverColor()" style = "margin-top: 10px; margin-bottom: 0px !important;" text-left *ngIf = "tipo == 'Alumno'">
         Divisiones Abandonadas:
         <button ion-button clear item-right color = "light" (click) = "AddAlListadoDivisiones('Abandonadas')">Añadir</button>
       </ion-list-header>
-      <ion-item *ngIf = "divisionesAbandonadas.length == 0">
+      <ion-item *ngIf = "tipo == 'Alumno' && divisionesAbandonadas.length == 0">
         No hay divisiones asignadas.
       </ion-item>
       <div *ngIf = "divisionesAbandonadas.length > 0">
@@ -141,11 +148,11 @@
           <button ion-button clear item-right [color] = "DevolverColor()" (click) = "QuitarDelListadoDivisiones('Abandonadas', d.division.idDivision)">Quitar</button>
         </ion-item>
       </div>
-      <ion-list-header [color] = "DevolverColor()" style = "margin-top: 10px; margin-bottom: 0px !important;" text-left *ngIf = "tipo != 'Administrativo'">
+      <ion-list-header [color] = "DevolverColor()" style = "margin-top: 10px; margin-bottom: 0px !important;" text-left *ngIf = "tipo == 'Alumno'">
         Divisiones en las que quedo Libre:
         <button ion-button clear item-right color = "light" (click) = "AddAlListadoDivisiones('Libre')">Añadir</button>
       </ion-list-header>
-      <ion-item *ngIf = "divisionesLibre.length == 0">
+      <ion-item *ngIf = "tipo == 'Alumno' && divisionesLibre.length == 0">
         No hay divisiones asignadas.
       </ion-item>
       <div *ngIf = "divisionesLibre.length > 0">
@@ -171,8 +178,9 @@
     <ion-list>
       <ion-item>
         <ion-label color = "dark" floating>Nombre</ion-label>
-        <ion-input type="text" [(ngModel)]="division.nombre" ></ion-input>
+        <ion-input type="text" [value] ="division.nombre" (input)="ValidarSoloLetrasYNumeros($event, 'Division')" maxlength = "20" ></ion-input>
       </ion-item>
+      <ion-label *ngIf = "vacioNombreDivision != null" style = "color: red; font-size: smaller; margin-left: 20px">No se ha ingresado nada</ion-label>
       <ion-item style = "margin-top : 24px;">
         <ion-label color = "dark">Turno</ion-label>
         <ion-select [(ngModel)] = "division.turno">
@@ -186,6 +194,7 @@
           <ion-option *ngFor = "let ciclo of ciclos" [value] = "ciclo">{{ciclo.CicloEnCadena}}</ion-option>
         </ion-select> 
       </ion-item>
+      <ion-label *ngIf = "vacioCiclo != null" style = "color: red; font-size: smaller; margin-left: 20px">No se ha ingresado nada</ion-label>
       <ion-list-header color = "dark" style = "margin-top: 10px; margin-bottom: 0px !important;" text-left *ngIf = "tipo != 'Administrativo'">
         Materia :
         <button ion-button clear item-right color = "light" (click) = "AsignarMateria()">ASIGNAR</button>
@@ -193,6 +202,7 @@
       <ion-item *ngIf = "division.materia.idMateria == 0">
         No se asigno una materia.
       </ion-item>
+      <ion-label *ngIf = "vacioMateria != null" style = "color: red; font-size: smaller; margin-left: 20px">No se ha ingresado nada</ion-label>
       <div *ngIf ="division.materia.idMateria != 0">
         <ion-item text-wrap>
           <ion-thumbnail item-left>
@@ -208,6 +218,7 @@
       <ion-item *ngIf = "division.aula.idAula == 0">
         No se asigno un aula.
       </ion-item>
+      <ion-label *ngIf = "vacioAula != null" style = "color: red; font-size: smaller; margin-left: 20px">No se ha ingresado nada</ion-label>
       <div *ngIf ="division.aula.idAula != 0">
         <ion-item text-wrap>
           <ion-thumbnail item-left>
@@ -224,6 +235,7 @@
       <ion-item *ngIf = "division.profesor.idUsuario == 0">
         No se asigno un profesor.
       </ion-item>
+      <ion-label *ngIf = "vacioProfesor != null" style = "color: red; font-size: smaller; margin-left: 20px">No se ha ingresado nada</ion-label>
       <div *ngIf ="division.profesor.idUsuario != 0">
         <ion-item text-wrap>
           <ion-thumbnail item-left>
@@ -236,12 +248,13 @@
       </div>
       <ion-item style = "margin-top : 24px;">
         <ion-label color = "dark">Estado</ion-label>
-        <ion-select [(ngModel)] = "division.estado">
+        <ion-select [(ngModel)] = "division.estado" (ionChange)="onChangeEstado()">
           <ion-option value="Terminada">Terminada</ion-option>
           <ion-option value="Cursando">Cursando</ion-option>
           <ion-option value="No empezada">No empezada</ion-option>
         </ion-select> 
       </ion-item>
+      <ion-label *ngIf = "vacioEstado != null" style = "color: red; font-size: smaller; margin-left: 20px">No se ha ingresado nada</ion-label>
       <ion-item>
         <ion-label color = "dark">Hora</ion-label>
         <ion-datetime displayFormat="HH:mm" [(ngModel)]="division.hora" item-right>
@@ -249,7 +262,7 @@
       </ion-item>
       <ion-item>
         <ion-label color = "dark">Dias</ion-label>
-        <ion-select [(ngModel)]="division.dias" multiple="true">
+        <ion-select [(ngModel)]="division.dias" multiple="false">
           <ion-option>Lunes</ion-option>
           <ion-option>Martes</ion-option>
           <ion-option>Miercoles</ion-option>
@@ -258,42 +271,45 @@
           <ion-option>Sabado</ion-option>
         </ion-select>
       </ion-item>
-      <ion-item>
-        <ion-label color = "dark">Hora</ion-label>
-        <ion-datetime displayFormat="HH:mm" [(ngModel)]="division.hora" item-right>
-        </ion-datetime>
-      </ion-item>
+      <ion-label *ngIf = "vacioDias != null" style = "color: red; font-size: smaller; margin-left: 20px">No se ha ingresado nada</ion-label>
       <ion-item>
         <ion-label color = "dark">Fecha inicio</ion-label>
         <ion-datetime displayFormat="DD/MM/YYYY" [(ngModel)]="fechas.fechaInicio" item-right>
         </ion-datetime>
       </ion-item>
+      <ion-label *ngIf = "errorFechaInicio != null" style = "color: red; font-size: smaller; margin-left: 20px">La fecha inicio es mayor a la final</ion-label>
       <ion-item>
         <ion-label color = "dark">Fecha fin</ion-label>
         <ion-datetime displayFormat="DD/MM/YYYY" [(ngModel)]="fechas.fechaFin" item-right>
         </ion-datetime>
       </ion-item>
+      <ion-label *ngIf = "errorFechaFin != null" style = "color: red; font-size: smaller; margin-left: 20px">La fecha fin es menor a la inicial</ion-label>
       <ion-item>
         <ion-label color = "dark">Prox. Clase</ion-label>
         <ion-datetime displayFormat="DD/MM/YYYY" [(ngModel)]="fechas.fechaProxClase" item-right>
         </ion-datetime>
       </ion-item>
+      <ion-label *ngIf = "errorFechaProx != null" style = "color: red; font-size: smaller; margin-left: 20px">La fecha proxima no esta en el rango entre inicial y final</ion-label>
       <ion-item>
         <ion-label color = "dark" floating>Cupo Maximo</ion-label>
-        <ion-input type="number" [(ngModel)]="division.cupoMaximo" ></ion-input>
+        <ion-input type="text" [value]="division.cupoMaximo" (input)="ValidarSoloNumeros($event, 'CupoMaximo')" maxlength = "2"></ion-input>
       </ion-item>
+      <ion-label *ngIf = "vacioCupoMaximo != null" style = "color: red; font-size: smaller; margin-left: 20px">No se ha ingresado nada</ion-label>
       <ion-item>
         <ion-label color = "dark" floating>Cupo Actual</ion-label>
-        <ion-input type="number" [(ngModel)]="division.cupoActual" ></ion-input>
+        <ion-input type="text" [value]="division.cupoActual" (input)="ValidarSoloNumeros($event, 'CupoActual')" maxlength = "2"></ion-input>
       </ion-item>
+      <ion-label *ngIf = "errorCupoActual != null" style = "color: red; font-size: smaller; margin-left: 20px">El cupo actual supera al maximo</ion-label>
       <ion-item>
         <ion-label color = "dark" floating>Cantidad de clases</ion-label>
-        <ion-input type="number" [(ngModel)]="division.cantClases" ></ion-input>
+        <ion-input type="text" [value]="division.cantClases" (input)="ValidarSoloNumeros($event, 'CantidadClases')" maxlength = "2"></ion-input>
       </ion-item>
+      <ion-label *ngIf = "vacioCantClases != null" style = "color: red; font-size: smaller; margin-left: 20px">No se ha ingresado nada</ion-label>
       <ion-item>
         <ion-label color = "dark" floating>Clase actual</ion-label>
-        <ion-input type="number" [(ngModel)]="division.claseActual" ></ion-input>
+        <ion-input type="text" [value]="division.claseActual" (input)="ValidarSoloNumeros($event, 'ClaseActual')" maxlength = "2"></ion-input>
       </ion-item>
+      <ion-label *ngIf = "errorClaseActual != null" style = "color: red; font-size: smaller; margin-left: 20px">La clase actual es mayor a la maxima</ion-label>
       <!-- Listado de alumnos cursando de la division -->
       <div *ngIf = "division.estado == 'Cursando'">
         <ion-list-header color = "dark" style = "margin-top: 10px; margin-bottom: 0px !important;">
@@ -408,8 +424,9 @@
     <ion-list>
       <ion-item>
         <ion-label color = "dark" floating>Nombre</ion-label>
-        <ion-input type="text" [(ngModel)]="materia.nombre" ></ion-input>
+        <ion-input type="text" [value] ="materia.nombre" (input)="ValidarSoloLetrasYNumeros($event, 'Materia')" maxlength = "20"></ion-input>
       </ion-item>
+      <ion-label *ngIf = "vacioNombreMateria != null" style = "color: red; font-size: smaller; margin-left: 20px">No se ha ingresado nada</ion-label>
       <ion-list-header color = "dark" style = "margin-top: 10px; margin-bottom: 0px !important;" text-right>
         Imagen
       </ion-list-header>
@@ -430,8 +447,9 @@
     <ion-list>
       <ion-item>
         <ion-label color = "dark" floating>Nombre</ion-label>
-        <ion-input type="text" [(ngModel)]="aula.nombre" ></ion-input>
+        <ion-input type="text" [value] ="aula.nombre" (input)="ValidarSoloLetrasYNumeros($event, 'Aula')" maxlength = "20"></ion-input>
       </ion-item>
+      <ion-label *ngIf = "vacioNombreAula != null" style = "color: red; font-size: smaller; margin-left: 20px">No se ha ingresado nada</ion-label>
       <ion-item>
         <ion-label color = "dark">Piso</ion-label>
         <ion-select [(ngModel)]="piso" multiple="false">
@@ -451,8 +469,9 @@
     <ion-list>
       <ion-item>
         <ion-label color = "dark" floating>Año</ion-label>
-        <ion-input type="number" [(ngModel)]="year" ></ion-input>
+        <ion-input type="text" [value]="year" (input)="ValidarSoloNumeros($event, 'Year')" maxlength = "4"></ion-input>
       </ion-item>
+      <ion-label *ngIf = "vacioYear != null" style = "color: red; font-size: smaller; margin-left: 20px">Debe ser superior o igual a 2000</ion-label>
       <ion-item>
         <ion-label color = "dark">Cuatrimestre</ion-label>
         <ion-select [(ngModel)]="cuatrimestre" multiple="false">
