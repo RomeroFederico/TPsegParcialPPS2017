@@ -1,0 +1,159 @@
+<ion-header>
+  <ion-navbar>
+    <!--<ion-title>Prueba de temas</ion-title>-->
+
+    <ion-buttons end>
+      <button ion-button icon-only (click)="presentPopover($event)">
+        <ion-icon name="more"></ion-icon>
+      </button>
+    </ion-buttons>
+
+    <ion-label class = "titulo">Cambio de estilos</ion-label>
+
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+
+  <div class = "bug" *ngIf = "bug != null" style = "height: 50px"></div>
+
+  <div class = "animated slideInUp">
+
+  <ion-grid no-padding class = "miHeader">
+
+      <ion-row>
+
+        <ion-col width-33 style = "padding: 10px 10px 0px 10px">
+
+            <img class = 'imagenPerfil' src = "assets/images/default.png">
+
+        </ion-col>
+
+        <ion-col class = 'columnaCentrada'>
+
+          <div>
+          <h3 class = "tituloUsuario">Usuario De Prueba</h3>
+          
+          <p class = "subtituloUsuario">probando...</p>
+          </div>
+
+        </ion-col>
+
+      </ion-row>
+
+      <p class = "tipoUsuario">Alumno</p>
+
+    </ion-grid>
+
+    <!-- DATOS -->
+    <ion-item style = "padding: 0px 0px 0px 0px">
+      <ion-grid no-padding>
+            <ion-row>
+              <ion-col width-33>
+                <p class = "atributo">
+                Apellido :
+                </p>
+              </ion-col>
+              <ion-col><p class = "mostrarAtributo">Mi Apellido<p></ion-col>
+            </ion-row>
+            <ion-row>
+              <ion-col width-33>
+                <p class = "atributo">
+                Nombre :
+                </p>
+              </ion-col>
+              <ion-col><p class = "mostrarAtributo">Mi Nombre<p></ion-col>
+            </ion-row>
+            <ion-row>
+              <ion-col width-33>
+                <p class = "atributo">
+                Edad :
+                </p>
+              </ion-col>
+              <ion-col><p class = "mostrarAtributo">22<p></ion-col>
+            </ion-row>
+            <ion-row>
+              <ion-col width-33>
+                <p class = "atributo">
+                Email :
+                </p>
+              </ion-col>
+              <ion-col><p class = "mostrarAtributo">email@prueba.com<p></ion-col>
+            </ion-row>
+      </ion-grid>
+    </ion-item>
+
+    
+
+    <ion-grid style = "margin-top: 35px;">
+
+    <div class = "miHeader" style = "padding: 20px; border-style : double; border-color: white; border-radius : 10px;">
+      <h1>Bienvenido</h1>
+
+      <label>Seleccione un tema en el menu o cree uno</label>
+
+      <ion-grid style = "margin-top: 20px;">
+
+        <ion-row>
+
+        <ion-col col-4>
+
+          <button ion-button block large text-wrap class = "botonInfo" (click)="presentPopover($event)" style = "height: 80px;">
+            <ion-grid>
+              <ion-row>
+                <ion-col col-6 offset-2 style = "font-size: x-large">
+                  <ion-icon name="menu"></ion-icon>
+                </ion-col>
+              </ion-row>
+              <ion-row>
+                Menu
+              </ion-row>
+            </ion-grid>
+          </button>
+
+        </ion-col>
+
+        <ion-col col-4>
+
+          <button ion-button block large text-wrap class = "botonAceptar" (click)="CrearTema()" style = "height: 80px;">
+            <ion-grid>
+              <ion-row>
+                <ion-col col-6 offset-2 style = "font-size: x-large">
+                  <ion-icon name="color-palette"></ion-icon>
+                </ion-col>
+              </ion-row>
+              <ion-row>
+                Crear
+              </ion-row>
+            </ion-grid>
+          </button>
+
+        </ion-col>
+
+        <ion-col col-4>
+
+          <button ion-button block large text-wrap class = "botonCancelar" (click)="Salir()" style = "height: 80px;">
+            <ion-grid>
+              <ion-row>
+                <ion-col col-6 offset-2 style = "font-size: x-large">
+                  <ion-icon name="exit"></ion-icon>
+                </ion-col>
+              </ion-row>
+              <ion-row>
+                Salir
+              </ion-row>
+            </ion-grid>
+          </button>
+
+        </ion-col>
+
+        </ion-row>
+
+      </ion-grid>
+    </div>
+
+  </ion-grid>
+
+  </div>
+
+</ion-content>

@@ -1,0 +1,95 @@
+<ion-header>
+  <ion-toolbar>
+    <!--<ion-buttons left>
+      <button ion-button (click)="Volver()">
+        <ion-icon class="customIcon" name="arrow-back"></ion-icon>
+      </button>
+    </ion-buttons>-->
+    <ion-title>Tema personalizado</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content padding>
+
+  <div>
+    <ion-list class = "alta">
+      <ion-list-header text-left>
+        <ion-icon name="brush"></ion-icon> - Configuracion de Colores
+      </ion-list-header>
+      <ion-item style = "margin-top : 24px;" (click) = "mostrarModal($event, 1)">
+        <ion-label>Color Principal</ion-label>
+        <ion-select [(ngModel)] = "tema.colorPrincipal" disabled = "true">
+          <ion-option value="#222">Negro</ion-option>
+          <ion-option value="#327eff">Azul</ion-option>
+          <ion-option value="#32db64">Verde</ion-option>
+          <ion-option value="#f53d3d">Rojo</ion-option>
+          <ion-option value="#E36E1B">Naranja</ion-option>
+          <ion-option value="#9E40A4">Violeta</ion-option>
+        </ion-select> 
+      </ion-item>
+      <ion-item style = "margin-top : 24px;" (click) = "mostrarModal($event, 2)">
+        <ion-label>Color Secundario</ion-label>
+        <ion-select [(ngModel)] = "tema.colorSecundario" disabled = "true">
+          <ion-option value="#616161">Gris</ion-option>
+          <ion-option value="#5694FF">Celeste</ion-option>
+          <ion-option value="#52DF7C'">Verde Claro</ion-option>
+          <ion-option value="#F25555">Rojo Claro</ion-option>
+          <ion-option value="#E98C4A">Naranja Claro</ion-option>
+          <ion-option value="#B662BC">Violeta Claro</ion-option>
+        </ion-select> 
+      </ion-item>
+      <ion-item style = "margin-top : 24px;" (click) = "mostrarModal($event, 3)">
+        <ion-label>Color de Fondo</ion-label>
+        <ion-select [(ngModel)] = "tema.colorFondo" disabled = "true">
+          <ion-option value="lightgray">Gris Claro</ion-option>
+          <ion-option value="lightblue">Celeste Claro</ion-option>
+          <ion-option value="#BCFFBC">Verde Oliva</ion-option>
+          <ion-option value="lightcoral">Rosa</ion-option>
+          <ion-option value="#F6D875">Amarillo</ion-option>
+          <ion-option value="#AD8DB0">Lila</ion-option>
+        </ion-select> 
+      </ion-item>
+      <br>
+      <ion-list-header text-left>
+        <ion-icon name="logo-tumblr"></ion-icon> - Configuracion de la Fuente
+      </ion-list-header>
+      <ion-item style = "margin-top : 24px;" (click) = "mostrarModal($event, 4)">
+        <ion-label>Fuente</ion-label>
+        <ion-select [(ngModel)] = "tema.fuente" disabled = "true">
+          <ion-option value="Gill Sans, Trebuchet MS, sans-serif">Gill Sans</ion-option>
+          <ion-option value="Arial, Trebuchet MS, sans-serif">Arial</ion-option>
+          <ion-option value="Calibri, Trebuchet MS, sans-serif">Calibri</ion-option>
+          <ion-option value="Times New Roman, Trebuchet MS, sans-serif">Times New Roman</ion-option>
+          <ion-option value="Franklin Gothic Medium, Trebuchet MS, sans-serif">Franklin Gothic Medium</ion-option>
+          <ion-option value="Trebuchet MS, sans-serif">Trebuchet MS</ion-option>
+        </ion-select> 
+      </ion-item>
+      <ion-item style = "margin-top : 24px;" (click) = "mostrarModal($event, 5)">
+        <ion-label>Tamaño de la fuente</ion-label>
+        <ion-select [(ngModel)] = "tema.fuenteSize" disabled = "true">
+          <ion-option value="large">Grande</ion-option>
+          <ion-option value="medium">Mediana</ion-option>
+          <ion-option value="small">Pequeña</ion-option>
+        </ion-select> 
+      </ion-item>
+      <ion-item style = "margin-top : 24px;" (click) = "mostrarModal($event, 6)">
+        <ion-label>Color de fuente</ion-label>
+        <ion-select [(ngModel)] = "tema.fuenteColor" disabled = "true">
+          <ion-option value="black">Negro</ion-option>
+          <ion-option value="white">Blanco</ion-option>
+        </ion-select> 
+      </ion-item>
+      <ion-item style = "margin-top : 24px;" (click) = "mostrarModal($event, 7)">
+        <ion-label>Cursiva</ion-label>
+        <ion-select [(ngModel)] = "tema.fuenteCursiva" disabled = "true">
+          <ion-option value="true">Si</ion-option>
+          <ion-option value="false">No</ion-option>
+        </ion-select> 
+      </ion-item>
+    </ion-list>
+
+    <button ion-button block class = "botonAceptar" (click) = "Aceptar()">Aceptar</button>
+    <button ion-button block class = "botonCancelar"(click) = "Cancelar()">Cancelar</button>
+  </div>
+
+</ion-content>

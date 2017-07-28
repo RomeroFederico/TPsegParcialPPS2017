@@ -1,0 +1,157 @@
+<div *ngIf = "opcion == 1">
+  <ion-list class="popover-page">
+        <ion-item class="text-calibri">
+          <ion-label>Color Principal:</ion-label>
+        </ion-item>
+        <ion-row class="row-dots">
+          <ion-col col-4 *ngFor = "let color of coloresPrincipales" (click)="ElegirColor(color)">
+            <ion-row>
+            <button ion-button="dot" [ngStyle] = "{'background-color' : color.codigo,'height': '30px', 'width': '30px', 'border-radius': '50%', 'margin': '10px auto', 'position': 'relative'}"></button>
+            </ion-row>
+            <ion-row>
+            <ion-col class = "columnaCentrada">
+                <ion-col>
+                  <label>{{color.nombre}}</label>
+                </ion-col>
+              </ion-col>
+            </ion-row>
+          </ion-col>
+          
+        </ion-row>
+      </ion-list>
+</div>
+
+<div *ngIf = "opcion == 2">
+  <ion-list class="popover-page">
+        <ion-item class="text-calibri">
+          <ion-label>Color Secundario:</ion-label>
+        </ion-item>
+        <ion-row class="row-dots">
+          <ion-col col-4 *ngFor = "let color of coloresSecundarios" (click)="ElegirColor(color)">
+            <ion-row>
+            <button ion-button="dot" [ngStyle] = "{'background-color' : color.codigo,'height': '30px', 'width': '30px', 'border-radius': '50%', 'margin': '10px auto', 'position': 'relative'}"></button>
+            </ion-row>
+            <ion-row>
+            <ion-col class = "columnaCentrada">
+                <ion-col>
+                  <label>{{color.nombre}}</label>
+                </ion-col>
+              </ion-col>
+            </ion-row>
+          </ion-col>
+          
+        </ion-row>
+      </ion-list>
+</div>
+
+<div *ngIf = "opcion == 3">
+  <ion-list class="popover-page">
+        <ion-item class="text-calibri">
+          <ion-label>Color de Fondo:</ion-label>
+        </ion-item>
+        <ion-row class="row-dots">
+          <ion-col col-4 *ngFor = "let color of coloresFondo" (click)="ElegirColor(color)">
+            <ion-row>
+            <button ion-button="dot" [ngStyle] = "{'background-color' : color.codigo,'height': '30px', 'width': '30px', 'border-radius': '50%', 'margin': '10px auto', 'position': 'relative'}"></button>
+            </ion-row>
+            <ion-row>
+            <ion-col class = "columnaCentrada">
+                <ion-col>
+                  <label>{{color.nombre}}</label>
+                </ion-col>
+              </ion-col>
+            </ion-row>
+          </ion-col>
+          
+        </ion-row>
+      </ion-list>
+</div>
+
+<div *ngIf = "opcion == 4">
+  <ion-list class="popover-page">
+        <ion-item class="text-calibri">
+          <ion-label>Fuente:</ion-label>
+        </ion-item>
+        <ion-row class="row-dots">
+          <ion-col col-4 *ngFor = "let fuente of fuentes" (click)="ElegirFuente(fuente)">
+            <ion-row>
+            <ion-col class = "columnaCentrada">
+                <ion-col>
+                  <label [ngStyle] = "{'font-family': fuente.todo}">{{fuente.nombre}}</label>
+                </ion-col>
+              </ion-col>
+            </ion-row>
+          </ion-col>
+          
+        </ion-row>
+      </ion-list>
+</div>
+
+<div *ngIf = "opcion == 5">
+  <ion-list class="popover-page">
+        <ion-item class="text-calibri">
+          <ion-label>Tamaño de la Fuente:</ion-label>
+        </ion-item>
+        <ion-row class="row-dots">
+          <ion-col col-12 *ngFor = "let size of sizes" (click)="ElegirSize(size)">
+            <ion-row>
+            <ion-col class = "columnaCentrada">
+                <ion-col>
+                  <label [ngStyle] = "{'font-size': size.todo}">{{size.nombre}}</label>
+                </ion-col>
+              </ion-col>
+            </ion-row>
+          </ion-col>
+          
+        </ion-row>
+      </ion-list>
+</div>
+
+<div *ngIf = "opcion == 6" style = "background-color: darkgrey">
+  <ion-list class="popover-page">
+        <ion-item class="text-calibri">
+          <ion-label>Color de la Fuente:</ion-label>
+        </ion-item>
+        <ion-row class="row-dots">
+          <ion-col col-12 *ngFor = "let color of coloresFuente" (click)="ElegirColorFuente(color)">
+            <ion-row>
+            <ion-col class = "columnaCentrada">
+                <ion-col>
+                  <label [ngStyle] = "{'color': color.todo}">{{color.nombre}}</label>
+                </ion-col>
+              </ion-col>
+            </ion-row>
+          </ion-col>
+          
+        </ion-row>
+      </ion-list>
+</div>
+
+<div *ngIf = "opcion == 7">
+  <ion-list class="popover-page">
+        <ion-item class="text-calibri">
+          <ion-label>Tamaño de la Fuente:</ion-label>
+        </ion-item>
+        <ion-row class="row-dots">
+          <ion-col col-12 (click)="ElegirCursiva(true)">
+            <ion-row>
+            <ion-col class = "columnaCentrada">
+                <ion-col>
+                  <label style = "font-style: italic">Con Cursiva</label>
+                </ion-col>
+              </ion-col>
+            </ion-row>
+          </ion-col>
+          <ion-col col-12 (click)="ElegirCursiva(false)">
+            <ion-row>
+            <ion-col class = "columnaCentrada">
+                <ion-col>
+                  <label>Sin Cursiva</label>
+                </ion-col>
+              </ion-col>
+            </ion-row>
+          </ion-col>
+          
+        </ion-row>
+      </ion-list>
+</div>
