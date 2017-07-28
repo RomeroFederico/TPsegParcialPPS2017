@@ -46,7 +46,7 @@
             <ion-grid no-padding>
             <ion-row class = "filaMostrar">
               <ion-col width-33>
-                <p [ngClass] = "DevolverTipo(usuario) == 'Alumno' ? 'atributoAlumno' : (DevolverTipo(usuario) == 'Profesor' ? 'atributoProfesor' : 'atributoAdministrativo')">
+                <p class = "atributo">
                 Legajo :
                 </p>
               </ion-col>
@@ -54,14 +54,14 @@
             </ion-row>
             <ion-row class = "filaMostrar">
               <ion-col width-33>
-                <p [ngClass] = "DevolverTipo(usuario) == 'Alumno' ? 'atributoAlumno' : (DevolverTipo(usuario) == 'Profesor' ? 'atributoProfesor' : 'atributoAdministrativo')">
+                <p class = "atributo">
                 Email :
                 </p>
               </ion-col>
               <ion-col><p class = "mostrarAtributo">{{usuario.email}}<p></ion-col>
             </ion-row>
             </ion-grid>
-            <p [ngClass] = "DevolverTipo(usuario) == 'Alumno' ? 'tipoUsuarioAlumno' : (DevolverTipo(usuario) == 'Profesor' ? 'tipoUsuarioProfesor' : 'tipoUsuarioAdministrativo')">{{DevolverTipo(usuario)}}</p>
+            <p class = "tipoUsuario">{{DevolverTipo(usuario)}}</p>
       </ion-item>
     </ion-list>
 

@@ -1,5 +1,5 @@
 <ion-header>
-  <ion-toolbar [color] = "DevolverColor()">
+  <ion-toolbar  >
     <button ion-button menuToggle>
       <ion-icon name="menu"></ion-icon>
     </button>
@@ -24,48 +24,48 @@
 
   <div *ngIf = "opciones.tipo == 'Usuario'">
     <ion-list>
-      <ion-list-header [color] = "DevolverColor()" style = "margin-bottom: 0px !important;" text-left>
+      <ion-list-header style = "margin-bottom: 0px !important;" text-left>
         Datos Personales
       </ion-list-header>
       <ion-item>
-        <ion-label [color] = "DevolverColor()" floating>Apellido</ion-label>
+        <ion-label   floating>Apellido</ion-label>
         <ion-input type="text" [value] ="usuario.apellido" (input)="ValidarSoloLetras($event, 'Apellido')" maxlength = "20" ></ion-input>
       </ion-item>
       <ion-label *ngIf = "vacioApellido != null" style = "color: red; font-size: smaller; margin-left: 20px">No se ha ingresado nada</ion-label>
       <ion-item>
-        <ion-label [color] = "DevolverColor()" floating>Nombre</ion-label>
+        <ion-label   floating>Nombre</ion-label>
         <ion-input type="text" [value] ="usuario.nombre" (input)="ValidarSoloLetras($event, 'Nombre')" maxlength = "20"></ion-input>
       </ion-item>
       <ion-label *ngIf = "vacioNombre!= null" style = "color: red; font-size: smaller; margin-left: 20px">No se ha ingresado nada</ion-label>
       <ion-item style = "margin-top : 24px;">
-        <ion-label [color] = "DevolverColor()">Sexo</ion-label>
+        <ion-label  >Sexo</ion-label>
         <ion-select [(ngModel)] = "usuario.sexo">
           <ion-option value="Masculino">Masculino</ion-option>
           <ion-option value="Femenino">Femenino</ion-option>
         </ion-select> 
       </ion-item>
       <ion-item>
-        <ion-label [color] = "DevolverColor()" floating>Edad</ion-label>
+        <ion-label   floating>Edad</ion-label>
         <ion-input type="text" [value]="usuario.edad" (input)="ValidarSoloNumeros($event, 'Edad')" maxlength = "2"></ion-input>
       </ion-item>
       <ion-label *ngIf = "vacioEdad != null" style = "color: red; font-size: smaller; margin-left: 20px">Edad invalida, debe ser mayor o igual a 18</ion-label>
       <ion-item>
-        <ion-label [color] = "DevolverColor()" floating>Legajo</ion-label>
+        <ion-label   floating>Legajo</ion-label>
         <ion-input type="text" [value]="usuario.legajo" (input)="ValidarSoloNumeros($event, 'Legajo')" maxlength = "15"></ion-input>
       </ion-item>
       <ion-label *ngIf = "vacioLegajo != null" style = "color: red; font-size: smaller; margin-left: 20px">No se ha ingresado nada</ion-label>
       <ion-item>
-        <ion-label [color] = "DevolverColor()" floating>DNI</ion-label>
+        <ion-label   floating>DNI</ion-label>
         <ion-input type="text" [value]="usuario.dni" (input)="ValidarSoloNumeros($event, 'Dni')" maxlength = "8"></ion-input>
       </ion-item>
       <ion-label *ngIf = "vacioDni!= null" style = "color: red; font-size: smaller; margin-left: 20px">No se ha ingresado nada</ion-label>
       <ion-item>
-        <ion-label [color] = "DevolverColor()" floating>Email</ion-label>
+        <ion-label   floating>Email</ion-label>
         <ion-input type="email" [(ngModel)]="usuario.email" maxlength = "30"></ion-input>
       </ion-item>
       <ion-label *ngIf = "vacioEmail != null" style = "color: red; font-size: smaller; margin-left: 20px">No se ha ingresado nada</ion-label>
       <ion-label *ngIf = "errorEmail != null" style = "color: red; font-size: smaller; margin-left: 20px">El email ingresado no es valido</ion-label>
-      <ion-list-header [color] = "DevolverColor()" style = "margin-top: 10px; margin-bottom: 0px !important;" text-left>
+      <ion-list-header   style = "margin-top: 10px; margin-bottom: 0px !important;" text-left>
         Imagen
       </ion-list-header>
       <ion-item text-wrap>
@@ -73,10 +73,10 @@
           <img src = "assets/images/administrador/usuario-agregar.png">
         </ion-thumbnail>
           {{rutaImagen}}
-        <button ion-button clear item-right [color] = "DevolverColor()">Elegir</button>
+        <button ion-button clear item-right  >Elegir</button>
       </ion-item>
       <div *ngIf = "tipo != 'Administrativo'">
-      <ion-list-header [color] = "DevolverColor()" style = "margin-top: 10px; margin-bottom: 0px !important;" text-left *ngIf = "tipo == 'Alumno'">
+      <ion-list-header   style = "margin-top: 10px; margin-bottom: 0px !important;" text-left *ngIf = "tipo == 'Alumno'">
         Divisiones Actuales:
         <button ion-button clear item-right color = "light" (click) = "AddAlListadoDivisiones('Actuales')">Añadir</button>
       </ion-list-header>
@@ -90,11 +90,11 @@
             </ion-thumbnail>
           <h3>{{d.division.nombre}} {{d.division.ciclo.CicloEnCadena}}</h3>
           <p>Materia: {{d.division.materia.nombre}}</p>
-          <p *ngIf = "tipo == 'Alumno'">Faltas : {{d.faltas}} <small ion-text [color] = "DevolverColor()" (click) = "EstablecerFaltas(d)">ASIGNAR</small></p>
-          <button ion-button clear item-right [color] = "DevolverColor()" (click) = "QuitarDelListadoDivisiones('Actuales', d.division.idDivision)">Quitar</button>
+          <p *ngIf = "tipo == 'Alumno'">Faltas : {{d.faltas}} <small ion-text   (click) = "EstablecerFaltas(d)">ASIGNAR</small></p>
+          <button ion-button clear item-right   (click) = "QuitarDelListadoDivisiones('Actuales', d.division.idDivision)">Quitar</button>
         </ion-item>
       </div>
-      <ion-list-header [color] = "DevolverColor()" style = "margin-top: 10px; margin-bottom: 0px !important;" text-left *ngIf = "tipo == 'Alumno'">
+      <ion-list-header   style = "margin-top: 10px; margin-bottom: 0px !important;" text-left *ngIf = "tipo == 'Alumno'">
         Divisiones no Empezadas:
         <button ion-button clear item-right color = "light" (click) = "AddAlListadoDivisiones('No Empezadas')">Añadir</button>
       </ion-list-header>
@@ -108,10 +108,10 @@
             </ion-thumbnail>
           <h3>{{d.division.nombre}} {{d.division.ciclo.CicloEnCadena}}</h3>
           <p>Materia: {{d.division.materia.nombre}}</p>
-          <button ion-button clear item-right [color] = "DevolverColor()" (click) = "QuitarDelListadoDivisiones('No Empezadas', d.division.idDivision)">Quitar</button>
+          <button ion-button clear item-right   (click) = "QuitarDelListadoDivisiones('No Empezadas', d.division.idDivision)">Quitar</button>
         </ion-item>
       </div>
-      <ion-list-header [color] = "DevolverColor()" style = "margin-top: 10px; margin-bottom: 0px !important;" text-left *ngIf = "tipo == 'Alumno'">
+      <ion-list-header   style = "margin-top: 10px; margin-bottom: 0px !important;" text-left *ngIf = "tipo == 'Alumno'">
         Divisiones Terminadas:
         <button ion-button clear item-right color = "light" (click) = "AddAlListadoDivisiones('Terminadas')">Añadir</button>
       </ion-list-header>
@@ -125,12 +125,12 @@
             </ion-thumbnail>
           <h3>{{d.division.nombre}} {{d.division.ciclo.CicloEnCadena}}</h3>
           <p>Materia: {{d.division.materia.nombre}}</p>
-          <p *ngIf = "tipo == 'Alumno'">Faltas : {{d.faltas}} <small ion-text [color] = "DevolverColor()" (click) = "EstablecerFaltas(d)">ASIGNAR</small></p>
-          <button ion-button clear item-right [color] = "DevolverColor()" (click) = "QuitarDelListadoDivisiones('Terminadas', d.division.idDivision)">Quitar</button>
+          <p *ngIf = "tipo == 'Alumno'">Faltas : {{d.faltas}} <small ion-text   (click) = "EstablecerFaltas(d)">ASIGNAR</small></p>
+          <button ion-button clear item-right   (click) = "QuitarDelListadoDivisiones('Terminadas', d.division.idDivision)">Quitar</button>
         </ion-item>
       </div>
       <div *ngIf = "tipo == 'Alumno'">
-      <ion-list-header [color] = "DevolverColor()" style = "margin-top: 10px; margin-bottom: 0px !important;" text-left *ngIf = "tipo == 'Alumno'">
+      <ion-list-header   style = "margin-top: 10px; margin-bottom: 0px !important;" text-left *ngIf = "tipo == 'Alumno'">
         Divisiones Abandonadas:
         <button ion-button clear item-right color = "light" (click) = "AddAlListadoDivisiones('Abandonadas')">Añadir</button>
       </ion-list-header>
@@ -144,11 +144,11 @@
             </ion-thumbnail>
           <h3>{{d.division.nombre}} {{d.division.ciclo.CicloEnCadena}}</h3>
           <p>Materia: {{d.division.materia.nombre}}</p>
-          <p>Faltas : {{d.faltas}} <small ion-text [color] = "DevolverColor()" (click) = "EstablecerFaltas(d)">ASIGNAR</small></p>
-          <button ion-button clear item-right [color] = "DevolverColor()" (click) = "QuitarDelListadoDivisiones('Abandonadas', d.division.idDivision)">Quitar</button>
+          <p>Faltas : {{d.faltas}} <small ion-text   (click) = "EstablecerFaltas(d)">ASIGNAR</small></p>
+          <button ion-button clear item-right   (click) = "QuitarDelListadoDivisiones('Abandonadas', d.division.idDivision)">Quitar</button>
         </ion-item>
       </div>
-      <ion-list-header [color] = "DevolverColor()" style = "margin-top: 10px; margin-bottom: 0px !important;" text-left *ngIf = "tipo == 'Alumno'">
+      <ion-list-header   style = "margin-top: 10px; margin-bottom: 0px !important;" text-left *ngIf = "tipo == 'Alumno'">
         Divisiones en las que quedo Libre:
         <button ion-button clear item-right color = "light" (click) = "AddAlListadoDivisiones('Libre')">Añadir</button>
       </ion-list-header>
@@ -162,16 +162,16 @@
             </ion-thumbnail>
           <h3>{{d.division.nombre}} {{d.division.ciclo.CicloEnCadena}}</h3>
           <p>Materia: {{d.division.materia.nombre}}</p>
-          <p>Faltas : {{d.faltas}} <small ion-text [color] = "DevolverColor()" (click) = "EstablecerFaltas(d)">ASIGNAR</small></p>
-          <button ion-button clear item-right [color] = "DevolverColor()" (click) = "QuitarDelListadoDivisiones('Libre', d.division.idDivision)">Quitar</button>
+          <p>Faltas : {{d.faltas}} <small ion-text   (click) = "EstablecerFaltas(d)">ASIGNAR</small></p>
+          <button ion-button clear item-right   (click) = "QuitarDelListadoDivisiones('Libre', d.division.idDivision)">Quitar</button>
         </ion-item>
       </div>
       </div>
       </div>
     </ion-list>
 
-    <button ion-button block (click) = 'AgregarUsuario()' color = "secondary">Agregar</button>
-    <button ion-button block (click) = 'Cancelar()' color = "danger">Cancelar</button>
+    <button ion-button block (click) = 'AgregarUsuario()' class = "botonAceptar">Agregar</button>
+    <button ion-button block (click) = 'Cancelar()'class = "botonCancelar">Cancelar</button>
   </div>
 
   <div *ngIf = "opciones.tipo == 'Division'">
@@ -416,8 +416,8 @@
       </div>
     </ion-list>
 
-    <button ion-button block (click) = 'AgregarDivision()' color = "secondary">Agregar</button>
-    <button ion-button block (click) = 'Cancelar()' color = "danger">Cancelar</button>
+    <button ion-button block (click) = 'AgregarDivision()' class = "botonAceptar">Agregar</button>
+    <button ion-button block (click) = 'Cancelar()' class = "botonCancelar">Cancelar</button>
   </div>
 
   <div *ngIf = "opciones.tipo == 'Materia'">
@@ -439,8 +439,8 @@
       </ion-item>
     </ion-list>
 
-    <button ion-button block (click) = 'AgregarMateria()' color = "secondary">Agregar</button>
-    <button ion-button block (click) = 'Cancelar()' color = "danger">Cancelar</button>
+    <button ion-button block (click) = 'AgregarMateria()' class = "botonAceptar">Agregar</button>
+    <button ion-button block (click) = 'Cancelar()' class = "botonCancelar">Cancelar</button>
   </div>
 
   <div *ngIf = "opciones.tipo == 'Aula'">
@@ -461,8 +461,8 @@
       </ion-item>
     </ion-list>
 
-    <button ion-button block (click) = 'AgregarAula()' color = "secondary">Agregar</button>
-    <button ion-button block (click) = 'Cancelar()' color = "danger">Cancelar</button>
+    <button ion-button block (click) = 'AgregarAula()' class = "botonAceptar">Agregar</button>
+    <button ion-button block (click) = 'Cancelar()' class = "botonCancelar">Cancelar</button>
   </div>
 
   <div *ngIf = "opciones.tipo == 'Ciclo'">
@@ -481,8 +481,8 @@
       </ion-item>
     </ion-list>
 
-    <button ion-button block (click) = 'AgregarCiclo()' color = "secondary">Agregar</button>
-    <button ion-button block (click) = 'Cancelar()' color = "danger">Cancelar</button>
+    <button ion-button block (click) = 'AgregarCiclo()' class = "botonAceptar">Agregar</button>
+    <button ion-button block (click) = 'Cancelar()' class = "botonCancelar">Cancelar</button>
   </div>
 
 </ion-content>

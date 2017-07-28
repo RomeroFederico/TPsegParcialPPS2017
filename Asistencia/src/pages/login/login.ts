@@ -14,6 +14,7 @@ import { Vibration } from '@ionic-native/vibration';
 import { Device } from '@ionic-native/device';
 import { Ayuda } from '../ayuda/ayuda';
 
+import { AppState } from '../../app/app.global';
 
 @Component({
   providers:[Ws,Auth,NativeAudio,Vibration,Device],
@@ -38,7 +39,8 @@ export class LoginPage {
               public ws:Ws,private auth :Auth, 
               public alert: AlertController,private device: Device,
               public loading2:LoadingController,private nativeAudio: NativeAudio,private vibration:Vibration,private toast : ToastController,
-              private firebase: AngularFireDatabase ) 
+              private firebase: AngularFireDatabase,
+              public global: AppState) 
   {
     this.nativeAudio.preloadSimple("p1","assets/sonidos/sonido1.mp3");
     this.nativeAudio.preloadSimple("p2","assets/sonidos/sonido2.mp3");
@@ -163,6 +165,10 @@ export class LoginPage {
               this.AlertCorrecto(data.rta.usuario.nombre);
               this.Vibrar();
               this.nativeAudio.play("p1");
+
+              //TEMAS
+              this.SeleccionarTema(data.rta.usuario);
+
               this.navCtrl.setRoot(MenuPage);
             })
             .catch(error => 
@@ -225,6 +231,34 @@ export class LoginPage {
       buttons: ['OK']
     });
     alert.present();
+  }
+
+  // TEMA
+  SeleccionarTema(usuario)
+  {
+    console.log("Ajusto tema...");
+    if (usuario.tipo == "Alumno")
+    {
+      console.log("Alumno")
+      this.global.set('theme', "theme-alumno");
+    }
+    else if (usuario.tipo == "Profesor")
+    {
+      console.log("Profesor")
+      this.global.set('theme', "theme-profesor");
+    }
+    else if (usuario.tipo == "Administrativo")
+    {
+      console.log("Administrativo")
+      this.global.set('theme', "theme-administrativo");
+      console.log(this.global.get("theme"));
+    }
+    else if (usuario.tipo == "Administrador")
+    {
+      console.log("Administrador")
+      this.global.set('theme', "administrador-theme");
+      //console.log(this.global.get("theme"));
+    }
   }
 
 }

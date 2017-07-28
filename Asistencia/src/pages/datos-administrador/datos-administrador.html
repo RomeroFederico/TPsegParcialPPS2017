@@ -19,7 +19,7 @@
   <div *ngIf = "tipo == 'Usuario'">
 
     <!-- PORTADA -->
-    <ion-grid no-padding [ngClass] = "DevolverTipo(usuario) == 'Alumno' ? 'miHeader alumno' : (DevolverTipo(usuario) == 'Profesor' ? 'miHeader profesor' : 'miHeader administrativo')">
+    <ion-grid no-padding class = "miHeader">
 
       <ion-row>
 
@@ -56,7 +56,7 @@
       <ion-grid no-padding>
             <ion-row>
               <ion-col width-33>
-                <p [ngClass] = "DevolverTipo(usuario) == 'Alumno' ? 'atributoAlumno' : (DevolverTipo(usuario) == 'Profesor' ? 'atributoProfesor' : 'atributoAdministrativo')">
+                <p class = "atributo">
                 Id :
                 </p>
               </ion-col>
@@ -64,7 +64,7 @@
             </ion-row>
             <ion-row>
               <ion-col width-33>
-                <p [ngClass] = "DevolverTipo(usuario) == 'Alumno' ? 'atributoAlumno' : (DevolverTipo(usuario) == 'Profesor' ? 'atributoProfesor' : 'atributoAdministrativo')">
+                <p class = "atributo">
                 Apellido :
                 </p>
               </ion-col>
@@ -72,7 +72,7 @@
             </ion-row>
             <ion-row>
               <ion-col width-33>
-                <p [ngClass] = "DevolverTipo(usuario) == 'Alumno' ? 'atributoAlumno' : (DevolverTipo(usuario) == 'Profesor' ? 'atributoProfesor' : 'atributoAdministrativo')">
+                <p class = "atributo">
                 Nombre :
                 </p>
               </ion-col>
@@ -80,7 +80,7 @@
             </ion-row>
             <ion-row>
               <ion-col width-33>
-                <p [ngClass] = "DevolverTipo(usuario) == 'Alumno' ? 'atributoAlumno' : (DevolverTipo(usuario) == 'Profesor' ? 'atributoProfesor' : 'atributoAdministrativo')">
+                <p class = "atributo">
                 Edad :
                 </p>
               </ion-col>
@@ -88,7 +88,7 @@
             </ion-row>
             <ion-row>
               <ion-col width-33>
-                <p [ngClass] = "DevolverTipo(usuario) == 'Alumno' ? 'atributoAlumno' : (DevolverTipo(usuario) == 'Profesor' ? 'atributoProfesor' : 'atributoAdministrativo')">
+                <p class = "atributo">
                 Legajo :
                 </p>
               </ion-col>
@@ -96,7 +96,7 @@
             </ion-row>
             <ion-row>
               <ion-col width-33>
-                <p [ngClass] = "DevolverTipo(usuario) == 'Alumno' ? 'atributoAlumno' : (DevolverTipo(usuario) == 'Profesor' ? 'atributoProfesor' : 'atributoAdministrativo')">
+                <p class = "atributo">
                 DNI :
                 </p>
               </ion-col>
@@ -104,7 +104,7 @@
             </ion-row>
             <ion-row>
               <ion-col width-33>
-                <p [ngClass] = "DevolverTipo(usuario) == 'Alumno' ? 'atributoAlumno' : (DevolverTipo(usuario) == 'Profesor' ? 'atributoProfesor' : 'atributoAdministrativo')">
+                <p class = "atributo">
                 Email :
                 </p>
               </ion-col>
@@ -116,10 +116,10 @@
     <!-- LISTA DESPLEGABLE DE DIVISIONES EN CURSO -->
     <ion-item text-wrap (click)="toggleGroup(0)" no-padding *ngIf = " DevolverTipo(usuario) != 'Administrativo' ">
 
-      <p [ngClass] = "DevolverTipo(usuario) == 'Alumno' ? 'atributoAlumno' :'atributoProfesor'">
+      <p class = "atributo">
         Divisiones actuales
       </p>
-      <ion-icon item-right [name]="isGroupShown(0) ? 'arrow-dropdown' : 'arrow-dropright'" [ngClass] = "DevolverTipo(usuario) == 'Alumno' ? 'iconoAlumno' :'iconoProfesor'"></ion-icon>
+      <ion-icon item-right [name]="isGroupShown(0) ? 'arrow-dropdown' : 'arrow-dropright'" class = "icono"></ion-icon>
 
       <div *ngIf="isGroupShown(0) && DevolverTipo(usuario) == 'Alumno'">
         
@@ -135,7 +135,7 @@
           </ion-item>
 
           <ion-item *ngIf = "filtrarDivisionesAlumno('Cursando').length == 0" text-wrap no-padding>
-            <ion-icon item-left large name = "warning" class = "iconoAlumno"></ion-icon>
+            <ion-icon item-left large name = "warning" class = "icono"></ion-icon>
             <h3>No hay divisiones para mostrar</h3>
           </ion-item>
         </ion-list>
@@ -156,7 +156,7 @@
           </ion-item>
 
           <ion-item *ngIf = "filtrarDivisionesProfesor('Cursando').length == 0" text-wrap no-padding>
-            <ion-icon item-left large name = "warning" class = "iconoProfesor"></ion-icon>
+            <ion-icon item-left large name = "warning" class = "icono"></ion-icon>
             <h3>No hay divisiones para mostrar</h3>
           </ion-item>
         </ion-list>
@@ -168,10 +168,10 @@
     <!-- LISTA DESPLEGABLE DE DIVISIONES YA TERMINADAS -->
     <ion-item text-wrap (click)="toggleGroup(1)" no-padding *ngIf = " DevolverTipo(usuario) != 'Administrativo' ">
 
-      <p [ngClass] = "DevolverTipo(usuario) == 'Alumno' ? 'atributoAlumno' :'atributoProfesor'">
+      <p class = "atributo">
         Divisiones terminadas
       </p>
-      <ion-icon item-right [name]="isGroupShown(1) ? 'arrow-dropdown' : 'arrow-dropright'" [ngClass] = "DevolverTipo(usuario) == 'Alumno' ? 'iconoAlumno' :'iconoProfesor'"></ion-icon>
+      <ion-icon item-right [name]="isGroupShown(1) ? 'arrow-dropdown' : 'arrow-dropright'" class = "icono"></ion-icon>
 
       <div *ngIf="isGroupShown(1) && DevolverTipo(usuario) == 'Alumno'">
         
@@ -185,7 +185,7 @@
           </ion-item>
 
           <ion-item *ngIf = "filtrarDivisionesAlumno('Terminada').length == 0" text-wrap no-padding>
-            <ion-icon item-left large name = "warning" class = "iconoAlumno"></ion-icon>
+            <ion-icon item-left large name = "warning" class = "icono"></ion-icon>
             <h3>No hay divisiones para mostrar</h3>
           </ion-item>
         </ion-list>
@@ -204,7 +204,7 @@
           </ion-item>
 
           <ion-item *ngIf = "filtrarDivisionesProfesor('Terminada').length == 0" text-wrap no-padding>
-            <ion-icon item-left large name = "warning" class = "iconoProfesor"></ion-icon>
+            <ion-icon item-left large name = "warning" class = "icono"></ion-icon>
             <h3>No hay divisiones para mostrar</h3>
           </ion-item>
         </ion-list>
@@ -216,10 +216,10 @@
     <!-- LISTA DESPLEGABLE DE DIVISIONES NO EMPEZADAS -->
     <ion-item text-wrap (click)="toggleGroup(2)" no-padding *ngIf = " DevolverTipo(usuario) != 'Administrativo' ">
       
-      <p [ngClass] = "DevolverTipo(usuario) == 'Alumno' ? 'atributoAlumno' :'atributoProfesor'">
+      <p class = "atributo">
         Divisiones no empezadas
       </p>
-      <ion-icon item-right [name]="isGroupShown(2) ? 'arrow-dropdown' : 'arrow-dropright'" [ngClass] = "DevolverTipo(usuario) == 'Alumno' ? 'iconoAlumno' :'iconoProfesor'"></ion-icon>
+      <ion-icon item-right [name]="isGroupShown(2) ? 'arrow-dropdown' : 'arrow-dropright'" class = "icono"></ion-icon>
 
       <div *ngIf="isGroupShown(2) && DevolverTipo(usuario) == 'Alumno'">
         
@@ -234,7 +234,7 @@
           </ion-item>
 
           <ion-item *ngIf = "filtrarDivisionesAlumno('No empezada').length == 0" text-wrap no-padding>
-            <ion-icon item-left large name = "warning" class = "iconoAlumno"></ion-icon>
+            <ion-icon item-left large name = "warning" class = "icono"></ion-icon>
             <h3>No hay divisiones para mostrar</h3>
           </ion-item>
         </ion-list>
@@ -254,7 +254,7 @@
           </ion-item>
 
           <ion-item *ngIf = "filtrarDivisionesProfesor('No empezada').length == 0" text-wrap no-padding>
-            <ion-icon item-left large name = "warning" class = "iconoProfesor"></ion-icon>
+            <ion-icon item-left large name = "warning" class = "icono"></ion-icon>
             <h3>No hay divisiones para mostrar</h3>
           </ion-item>
         </ion-list>
@@ -266,10 +266,10 @@
     <!-- LISTA DESPLEGABLE DE DIVISIONES ABANDONADAS -->
     <ion-item text-wrap (click)="toggleGroup(3)" no-padding *ngIf = " DevolverTipo(usuario) == 'Alumno' ">
       
-      <p class = "atributoAlumno">
+      <p class = "atributo">
         Divisiones abandonadas
       </p>
-      <ion-icon item-right [name]="isGroupShown(3) ? 'arrow-dropdown' : 'arrow-dropright'" class = "iconoAlumno"></ion-icon>
+      <ion-icon item-right [name]="isGroupShown(3) ? 'arrow-dropdown' : 'arrow-dropright'" class = "icono"></ion-icon>
 
       <div *ngIf="isGroupShown(3)">
         
@@ -283,7 +283,7 @@
           </ion-item>
 
           <ion-item *ngIf = "filtrarDivisionesAlumno('Abandonada').length == 0" text-wrap no-padding>
-            <ion-icon item-left large name = "warning" class = "iconoAlumno"></ion-icon>
+            <ion-icon item-left large name = "warning" class = "icono"></ion-icon>
             <h3>No hay divisiones para mostrar</h3>
           </ion-item>
         </ion-list>
@@ -295,10 +295,10 @@
     <!-- LISTA DESPLEGABLE DE DIVISIONES EN LAS QUE QUEDO LIBRE -->
     <ion-item text-wrap (click)="toggleGroup(4)" no-padding *ngIf = " DevolverTipo(usuario) == 'Alumno' ">
 
-      <p class = "atributoAlumno">
+      <p class = "atributo">
         Divisiones que quedo libre
       </p>
-      <ion-icon item-right [name]="isGroupShown(4) ? 'arrow-dropdown' : 'arrow-dropright'" class = "iconoAlumno"></ion-icon>
+      <ion-icon item-right [name]="isGroupShown(4) ? 'arrow-dropdown' : 'arrow-dropright'" class = "icono"></ion-icon>
 
       <div *ngIf="isGroupShown(4)">
         
@@ -312,7 +312,7 @@
           </ion-item>
 
           <ion-item *ngIf = "filtrarDivisionesAlumno('Libre').length == 0" text-wrap no-padding>
-            <ion-icon item-left large name = "warning" class = "iconoAlumno"></ion-icon>
+            <ion-icon item-left large name = "warning" class = "icono"></ion-icon>
             <h3>No hay divisiones para mostrar</h3>
           </ion-item>
         </ion-list>
@@ -326,7 +326,7 @@
   <div *ngIf = "tipo == 'Division'">
 
      <!-- PORTADA -->
-    <ion-grid no-padding class = "miHeader administrador">
+    <ion-grid no-padding class = "miHeader">
 
       <ion-row>
 
@@ -358,7 +358,7 @@
       <ion-grid no-padding text-wrap>
             <ion-row>
               <ion-col width-33>
-                <p class = "atributoAdministrador">
+                <p class = "atributo">
                 Id :
                 </p>
               </ion-col>
@@ -366,7 +366,7 @@
             </ion-row>
             <ion-row>
               <ion-col width-33>
-                <p class = "atributoAdministrador">
+                <p class = "atributo">
                 Materia :
                 </p>
               </ion-col>
@@ -374,7 +374,7 @@
             </ion-row>
             <ion-row>
               <ion-col width-33>
-                <p class = "atributoAdministrador">
+                <p class = "atributo">
                 Turno :
                 </p>
               </ion-col>
@@ -382,7 +382,7 @@
             </ion-row>
             <ion-row>
               <ion-col width-33>
-                <p class = "atributoAdministrador">
+                <p class = "atributo">
                 Ciclo :
                 </p>
               </ion-col>
@@ -390,7 +390,7 @@
             </ion-row>
             <ion-row>
               <ion-col width-33>
-                <p class = "atributoAdministrador">
+                <p class = "atributo">
                 Aula :
                 </p>
               </ion-col>
@@ -398,7 +398,7 @@
             </ion-row>
             <ion-row>
               <ion-col width-33>
-                <p class = "atributoAdministrador">
+                <p class = "atributo">
                 Piso :
                 </p>
               </ion-col>
@@ -406,7 +406,7 @@
             </ion-row>
             <ion-row>
               <ion-col width-33>
-                <p class = "atributoAdministrador">
+                <p class = "atributo">
                 Horario :
                 </p>
               </ion-col>
@@ -414,7 +414,7 @@
             </ion-row>
             <ion-row>
               <ion-col width-33>
-                <p class = "atributoAdministrador">
+                <p class = "atributo">
                 Dias :
                 </p>
               </ion-col>
@@ -422,7 +422,7 @@
             </ion-row>
             <ion-row>
               <ion-col width-33>
-                <p class = "atributoAdministrador">
+                <p class = "atributo">
                 Estado :
                 </p>
               </ion-col>
@@ -430,7 +430,7 @@
             </ion-row>
             <ion-row>
               <ion-col width-33>
-                <p class = "atributoAdministrador">
+                <p class = "atributo">
                 Fecha Inicio :
                 </p>
               </ion-col>
@@ -438,7 +438,7 @@
             </ion-row>
             <ion-row>
               <ion-col width-33>
-                <p class = "atributoAdministrador">
+                <p class = "atributo">
                 Fecha Fin :
                 </p>
               </ion-col>
@@ -446,7 +446,7 @@
             </ion-row>
             <ion-row>
               <ion-col width-33>
-                <p class = "atributoAdministrador">
+                <p class = "atributo">
                 Cupo :
                 </p>
               </ion-col>
@@ -454,7 +454,7 @@
             </ion-row>
             <ion-row>
               <ion-col width-33>
-                <p class = "atributoAdministrador">
+                <p class = "atributo">
                 Nro Clases :
                 </p>
               </ion-col>
@@ -462,7 +462,7 @@
             </ion-row>
             <ion-row *ngIf = "division.fechaProxClase != null">
               <ion-col width-33>
-                <p class = "atributoAdministrador">
+                <p class = "atributo">
                 Prox. Clase :
                 </p>
               </ion-col>
@@ -473,7 +473,7 @@
 
     <!-- DATOS DEL PROFESOR -->
     <div *ngIf = "division.profesor != null">
-      <p class = "atributoAdministrador">
+      <p class = "atributo">
         Datos del Profesor
       </p>
       <ion-item text-wrap no-padding>
@@ -484,7 +484,7 @@
               <ion-grid no-padding>
               <ion-row>
                 <ion-col width-33>
-                  <p class = "atributoAdministradorSmall">
+                  <p class = "atributo">
                   Legajo :
                   </p>
                 </ion-col>
@@ -492,7 +492,7 @@
               </ion-row>
               <ion-row>
                 <ion-col width-33>
-                  <p class = "atributoAdministradorSmall">
+                  <p class = "atributo">
                   Email :
                   </p>
                 </ion-col>
@@ -502,7 +502,7 @@
         </ion-item>
     </div>
     <div *ngIf = "division.profesor == null">
-      <p class = "atributoAdministrador">
+      <p class = "atributo">
         No hay profesor asignado.
       </p>
     </div>
@@ -510,10 +510,10 @@
     <!-- DATOS DE LOS ALUMNOS -->
     <ion-item text-wrap (click)="toggleGroup(0)" no-padding *ngIf = "alumnosDivision != null && alumnosDivision.length > 0">
 
-      <p class = "atributoAdministrador">
+      <p class = "atributo">
         Alumnos
       </p>
-      <ion-icon item-right [name]="isGroupShown(0) ? 'arrow-dropdown' : 'arrow-dropright'" class = "iconoAdministrador"></ion-icon>
+      <ion-icon item-right [name]="isGroupShown(0) ? 'arrow-dropdown' : 'arrow-dropright'" class = "icono"></ion-icon>
 
       <div *ngIf="isGroupShown(0)">
         
@@ -526,7 +526,7 @@
               <ion-grid no-padding>
               <ion-row>
                 <ion-col width-33>
-                  <p class = "atributoAdministradorSmall">
+                  <p class = "atributo">
                   Legajo :
                   </p>
                 </ion-col>
@@ -534,7 +534,7 @@
               </ion-row>
               <ion-row>
                 <ion-col width-33>
-                  <p class = "atributoAdministradorSmall">
+                  <p class = "atributo">
                   Email :
                   </p>
                 </ion-col>
@@ -542,14 +542,14 @@
               </ion-row>
               <ion-row>
                 <ion-col width-33>
-                  <p class = "atributoAdministradorSmall">
+                  <p class = "atributo">
                   Faltas :
                   </p>
                 </ion-col>
                 <ion-col><p class = "mostrarAtributoSmall">{{alumno.faltas}}<p></ion-col>
               </ion-row>
               </ion-grid>
-              <p class = "tipoUsuarioAdministrador">{{alumno.estado}}</p>
+              <p class = "tipoUsuario">{{alumno.estado}}</p>
           </ion-item>
         </ion-list>
 
@@ -557,7 +557,7 @@
 
     </ion-item>
     <div *ngIf = "alumnosDivision == null || alumnosDivision.length == 0">
-      <p class = "atributoAdministrador">
+      <p class = "atributo">
         No hay alumnos asignados.
       </p>
     </div>
@@ -567,7 +567,7 @@
   <div *ngIf = "tipo == 'Materia'">
 
      <!-- PORTADA -->
-    <ion-grid no-padding class = "miHeader administrador">
+    <ion-grid no-padding class = "miHeader">
 
       <ion-row>
 
@@ -594,10 +594,10 @@
     <!-- DATOS DE LAS DIVISIONES -->
     <ion-item text-wrap (click)="toggleGroup(0)" no-padding *ngIf = "divisionesMateria.length > 0">
 
-      <p class = "atributoAdministrador">
+      <p class = "atributo">
         Divisiones
       </p>
-      <ion-icon item-right [name]="isGroupShown(0) ? 'arrow-dropdown' : 'arrow-dropright'" class = "iconoAdministrador"></ion-icon>
+      <ion-icon item-right [name]="isGroupShown(0) ? 'arrow-dropdown' : 'arrow-dropright'" class = "icono"></ion-icon>
 
       <div *ngIf="isGroupShown(0)">
         
@@ -607,7 +607,7 @@
               <ion-grid no-padding>
               <ion-row>
                 <ion-col width-33>
-                  <p class = "atributoAdministradorSmall">
+                  <p class = "atributo">
                   Dias :
                   </p>
                 </ion-col>
@@ -615,7 +615,7 @@
               </ion-row>
               <ion-row>
                 <ion-col width-33>
-                  <p class = "atributoAdministradorSmall">
+                  <p class = "atributo">
                   Turno :
                   </p>
                 </ion-col>
@@ -623,7 +623,7 @@
               </ion-row>
               <ion-row>
                 <ion-col width-33>
-                  <p class = "atributoAdministradorSmall">
+                  <p class = "atributo">
                   Aula :
                   </p>
                 </ion-col>
@@ -631,14 +631,14 @@
               </ion-row>
               <ion-row>
                 <ion-col width-33>
-                  <p class = "atributoAdministradorSmall">
+                  <p class = "atributo">
                   Piso :
                   </p>
                 </ion-col>
                 <ion-col><p class = "mostrarAtributoSmall">{{division.aula.piso}}<p></ion-col>
               </ion-row>
               </ion-grid>
-              <p class = "tipoUsuarioAdministrador">{{division.estado}}</p>
+              <p class = "tipoUsuario">{{division.estado}}</p>
           </ion-item>
         </ion-list>
 
@@ -646,7 +646,7 @@
 
     </ion-item>
     <div *ngIf = "divisionesMateria.length == 0">
-      <p class = "atributoAdministrador">
+      <p class = "atributo">
         No hay divisiones con la materia.
       </p>
     </div>
@@ -656,7 +656,7 @@
   <div *ngIf = "tipo == 'Aula'">
 
      <!-- PORTADA -->
-    <ion-grid no-padding class = "miHeader administrador">
+    <ion-grid no-padding class = "miHeader">
 
       <ion-row>
 
@@ -685,10 +685,10 @@
     <!-- DATOS DE LAS DIVISIONES -->
     <ion-item text-wrap (click)="toggleGroup(0)" no-padding *ngIf = "divisionesAula.length > 0">
 
-      <p class = "atributoAdministrador">
+      <p class = "atributo">
         Divisiones
       </p>
-      <ion-icon item-right [name]="isGroupShown(0) ? 'arrow-dropdown' : 'arrow-dropright'" class = "iconoAdministrador"></ion-icon>
+      <ion-icon item-right [name]="isGroupShown(0) ? 'arrow-dropdown' : 'arrow-dropright'" class = "icono"></ion-icon>
 
       <div *ngIf="isGroupShown(0)">
         
@@ -701,7 +701,7 @@
               <ion-grid no-padding>
               <ion-row>
                 <ion-col width-33>
-                  <p class = "atributoAdministradorSmall">
+                  <p class = "atributo">
                   Dias :
                   </p>
                 </ion-col>
@@ -709,14 +709,14 @@
               </ion-row>
               <ion-row>
                 <ion-col width-33>
-                  <p class = "atributoAdministradorSmall">
+                  <p class = "atributo">
                   Turno :
                   </p>
                 </ion-col>
                 <ion-col><p class = "mostrarAtributoSmall">{{division.turno}}<p></ion-col>
               </ion-row>
               </ion-grid>
-              <p class = "tipoUsuarioAdministrador">{{division.estado}}</p>
+              <p class = "tipoUsuario">{{division.estado}}</p>
           </ion-item>
         </ion-list>
 
@@ -724,7 +724,7 @@
 
     </ion-item>
     <div *ngIf = "divisionesAula.length == 0">
-      <p class = "atributoAdministrador">
+      <p class = "atributo">
         No hay divisiones en el aula.
       </p>
     </div>

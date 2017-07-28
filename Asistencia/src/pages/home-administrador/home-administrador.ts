@@ -5,6 +5,8 @@ import { AgregarAdministradorPage } from '../agregar-administrador/agregar-admin
 import { LoginPage } from '../login/login';
 import { LocalNotifications } from '@ionic-native/local-notifications';
 
+import { AppState } from '../../app/app.global';
+
 @Component({
   selector: 'page-home-administrador',
   templateUrl: 'home-administrador.html',
@@ -20,7 +22,7 @@ export class HomeAdministradorPage {
 
   constructor(public navCtrl: NavController, public navParams: NavParams,private localNotifications: LocalNotifications,
               public loadingController : LoadingController, public actionSheetController : ActionSheetController, private platform: Platform,
-              public alertCtrl: AlertController) 
+              public alertCtrl: AlertController, public global: AppState) 
   {
     this.Noti("Bienvenido Administrador!");
   }

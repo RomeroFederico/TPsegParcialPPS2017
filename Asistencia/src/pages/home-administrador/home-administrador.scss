@@ -1,21 +1,21 @@
 page-home-administrador {
     
-    .home {
+    // .home {
 
-        background-color : white;
-        font-family: 'Calibri';
+    //     // background-color : white;
+    //     font-family: 'Calibri';
 
-        scroll-content {
-            display: flex;
-            flex-direction: column;
-        }
-        ion-grid {
-            padding: 0;
-        }
-        ion-row {
-            flex: 1;
-        } 
-    }
+    //     scroll-content {
+    //         display: flex;
+    //         flex-direction: column;
+    //     }
+    //     ion-grid {
+    //         padding: 0;
+    //     }
+    //     ion-row {
+    //         flex: 1;
+    //     } 
+    // }
 
     .columnaCentrada{
         display: flex;
@@ -29,34 +29,34 @@ page-home-administrador {
         height: 100%; 
     }
 
-    .opcion {
-        height: 10%;
-        color: white;
-        font-size : small;
-        font-weight: bold;
+    // .opcion {
+    //     height: 10%;
+    //     color: white;
+    //     font-size : small;
+    //     font-weight: bold;
 
-        border-radius: 50px;
-        margin-bottom: 10px;
-        background-color: #488aff;
-        opacity: 0.7;
-    }
+    //     border-radius: 50px;
+    //     margin-bottom: 10px;
+    //     background-color: #488aff;
+    //     opacity: 0.7;
+    // }
 
     .imgOpcion{
         text-align: center;
         height: 90%
     }
 
-    h2 {
-        height: 10%;
-        color: white;
-        font-size : small;
-        font-weight: bold;
+    // h2 {
+    //     height: 10%;
+    //     color: white;
+    //     font-size : small;
+    //     font-weight: bold;
 
-        border-radius: 50px;
-        margin-bottom: 10px;
-        padding-left: 10px;
-        background-color: #488aff;
-        opacity: 0.7;
-    }
+    //     border-radius: 50px;
+    //     margin-bottom: 10px;
+    //     padding-left: 10px;
+    //     background-color: #488aff;
+    //     opacity: 0.7;
+    // }
 
 }

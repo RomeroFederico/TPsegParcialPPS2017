@@ -57,6 +57,9 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { IonicStorageModule } from '@ionic/storage';
 
+//TEMAS
+import { AppState } from './app.global';
+
 var configFirebase  = {
   production: false,
   firebase: {
@@ -146,6 +149,7 @@ var configFirebase  = {
     AsistenciaAlumnoPage
   ],
   providers: [
+    AppState,
     Auth,VerificarJwt,AuthHttp,AuthHttp,
         provideAuth({
             headerName: 'Authorization',
