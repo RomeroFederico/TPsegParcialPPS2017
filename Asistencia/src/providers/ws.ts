@@ -203,6 +203,24 @@ export class Ws
     .then(this.extractData)
     .catch(this.handleError);
   }
+  //MANEJO DE TEMAS
+  TraerTema(idUsuario)
+  {
+    return this.http.get('http://asistencianull.hol.es/index.php/tema/' + idUsuario)
+    .toPromise()
+    .then(this.extractData)
+    .catch(this.handleError);
+  }
+  GuardarTema(obj)
+  {
+    var body = obj;
+
+    return this.http.post('http://asistencianull.hol.es/index.php/tema/agregar', body)
+    .toPromise()
+    .then(this.extractData)
+    .catch(this.handleError);
+  }
+
   private extractData(res: Response) 
   {
     let body = res.json();    

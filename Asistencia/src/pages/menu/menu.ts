@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController,NavParams,AlertController } from 'ionic-angular';
+import { NavController,NavParams,AlertController, PopoverController } from 'ionic-angular';
 import { Auth } from '../../providers/auth';
 
 import { LoginPage } from '../login/login';
@@ -29,6 +29,9 @@ import { DatosAdministrativoPage } from '../datos-administrativo/datos-administr
 
 import { ListadoAdministradorPage } from '../listado-administrador/listado-administrador';
 
+//Tema
+import { MenuTemaPage } from '../menu-tema/menu-tema';
+
 @Component({
   providers:[Auth],
   selector: 'page-menu',
@@ -40,7 +43,7 @@ export class MenuPage {
   rootPage: any; //Pagina Principal
   tipo:string = "";
 
-  constructor(public navCtrl: NavController,public alertCtrl: AlertController, public navParams: NavParams,private auth : Auth) 
+  constructor(public navCtrl: NavController,public alertCtrl: AlertController, public navParams: NavParams,private auth : Auth, public popoverCtrl: PopoverController) 
   {
     this.tipo = this.ObtenerTipo();
 
@@ -214,6 +217,16 @@ export class MenuPage {
       ]
     });
     confirm.present();
+  }
+
+  //Tema
+
+  ElegirTema(myEvent)
+  {
+    let popover = this.popoverCtrl.create(MenuTemaPage);
+    popover.present({
+      ev: myEvent
+    });
   }
   
 

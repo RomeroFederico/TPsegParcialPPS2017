@@ -59,6 +59,7 @@ import { IonicStorageModule } from '@ionic/storage';
 
 //TEMAS
 import { AppState } from './app.global';
+import { MenuTemaPage } from "../pages/menu-tema/menu-tema";
 
 var configFirebase  = {
   production: false,
@@ -104,8 +105,8 @@ var configFirebase  = {
     NotificacionesAlumnoPage,
     ListadoDivisionesAlumnoPage,
     DatosDivisionAlumnoPage,
-    AsistenciaAlumnoPage
-
+    AsistenciaAlumnoPage,
+    MenuTemaPage
   ],
   imports: [
     BrowserModule,
@@ -146,7 +147,8 @@ var configFirebase  = {
     NotificacionesAlumnoPage,
     ListadoDivisionesAlumnoPage,
     DatosDivisionAlumnoPage,
-    AsistenciaAlumnoPage
+    AsistenciaAlumnoPage,
+    MenuTemaPage
   ],
   providers: [
     AppState,

@@ -1,0 +1,67 @@
+<ion-list class="popover-page">
+      <ion-item class="text-calibri">
+        <ion-label>Seleccione un tema:</ion-label>
+      </ion-item>
+      <ion-row class="row-dots">
+        <ion-col col-6 (click)="CambiarTema('administrador-theme')">
+          <ion-row>
+          <button ion-button="dot" class="dot-administrador"></button>
+          </ion-row>
+          <ion-row>
+          <ion-col class = "columnaCentrada">
+              <ion-col>
+                <label>Administrador</label>
+              </ion-col>
+            </ion-col>
+          </ion-row>
+        </ion-col>
+        <ion-col col-6 (click)="CambiarTema('theme-alumno')">
+          <ion-row>
+          <button ion-button="dot" class="dot-alumno"></button>
+          </ion-row>
+          <ion-row>
+            <ion-col class = "columnaCentrada">
+              <ion-col>
+                <label>Alumno</label>
+              </ion-col>
+            </ion-col>
+          </ion-row>
+        </ion-col>
+        <ion-col col-6 (click)="CambiarTema('theme-profesor')">
+          <ion-row>
+          <button ion-button = "dot" class="dot-profesor"></button>
+          </ion-row>
+          <ion-row>
+          <ion-col class = "columnaCentrada">
+              <ion-col>
+                <label>Profesor</label>
+              </ion-col>
+            </ion-col>
+          </ion-row>
+        </ion-col>
+        <ion-col col-6 (click)="CambiarTema('theme-administrativo')">
+          <ion-row>
+          <button ion-button="dot" class="dot-administrativo"></button>
+          </ion-row>
+          <ion-row>
+            <ion-col class = "columnaCentrada">
+              <ion-col>
+                <label>Administrativo</label>
+              </ion-col>
+            </ion-col>
+          </ion-row>
+        </ion-col>
+        <ion-col col-6 offset-3 *ngIf = "mostrarTemaPersonalizado != null" (click) = "CambiarTemaPersonalizado()">
+          <ion-row>
+          <button ion-button class="dot-personalizado"></button>
+          </ion-row>
+          <ion-row>
+          <ion-col class = "columnaCentrada">
+              <ion-col>
+                <label>Mi Tema</label>
+              </ion-col>
+            </ion-col>
+          </ion-row>
+        </ion-col>
+      </ion-row>
+    </ion-list>

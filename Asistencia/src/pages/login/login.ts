@@ -162,14 +162,14 @@ export class LoginPage {
               console.log(data.rta.usuario);
               localStorage.setItem("usuario",JSON.stringify(data.rta.usuario));
               localStorage.setItem("tipo",this.tipo);
-              this.AlertCorrecto(data.rta.usuario.nombre);
+              //this.AlertCorrecto(data.rta.usuario.nombre);
               this.Vibrar();
               this.nativeAudio.play("p1");
 
               //TEMAS
               this.SeleccionarTema(data.rta.usuario);
 
-              this.navCtrl.setRoot(MenuPage);
+              //this.navCtrl.setRoot(MenuPage);
             })
             .catch(error => 
             {
@@ -237,28 +237,50 @@ export class LoginPage {
   SeleccionarTema(usuario)
   {
     console.log("Ajusto tema...");
-    if (usuario.tipo == "Alumno")
-    {
-      console.log("Alumno")
-      this.global.set('theme', "theme-alumno");
-    }
-    else if (usuario.tipo == "Profesor")
-    {
-      console.log("Profesor")
-      this.global.set('theme', "theme-profesor");
-    }
-    else if (usuario.tipo == "Administrativo")
-    {
-      console.log("Administrativo")
-      this.global.set('theme', "theme-administrativo");
-      console.log(this.global.get("theme"));
-    }
-    else if (usuario.tipo == "Administrador")
-    {
-      console.log("Administrador")
-      this.global.set('theme', "administrador-theme");
-      //console.log(this.global.get("theme"));
-    }
+    this.MostrarLoading();
+    this.ws.TraerTema(usuario.idUsuario).then((data) => {
+
+      this.loading.dismiss();
+
+      if (data.Exito)
+      {
+        console.log("Asignando tema de la base de datos...");
+        this.global.set('theme', data.Tema.tema);
+      }
+      else
+      {
+        console.log("Asigno tema por default...");
+        if (usuario.tipo == "Alumno")
+        {
+          console.log("Alumno")
+          this.global.set('theme', "theme-alumno");
+        }
+        else if (usuario.tipo == "Profesor")
+        {
+          console.log("Profesor")
+          this.global.set('theme', "theme-profesor");
+        }
+        else if (usuario.tipo == "Administrativo")
+        {
+          console.log("Administrativo")
+          this.global.set('theme', "theme-administrativo");
+        }
+        else if (usuario.tipo == "Administrador")
+        {
+          console.log("Administrador")
+          this.global.set('theme', "administrador-theme");
+        }
+      }
+
+      this.AlertCorrecto(usuario.nombre);
+
+      this.navCtrl.setRoot(MenuPage);
+    })
+    .catch((error) => {
+      this.loading.dismiss();
+      this.AlertErrorBaseDatos();
+      console.log(error);
+    });
   }
 
 }
