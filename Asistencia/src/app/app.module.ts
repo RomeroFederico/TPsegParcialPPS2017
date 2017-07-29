@@ -60,6 +60,8 @@ import { IonicStorageModule } from '@ionic/storage';
 //TEMAS
 import { AppState } from './app.global';
 import { MenuTemaPage } from "../pages/menu-tema/menu-tema";
+import { ModalTemaPage } from "../pages/modal-tema/modal-tema";
+import { PersonalizarPage } from "../pages/personalizar/personalizar";
 
 var configFirebase  = {
   production: false,
@@ -106,7 +108,9 @@ var configFirebase  = {
     ListadoDivisionesAlumnoPage,
     DatosDivisionAlumnoPage,
     AsistenciaAlumnoPage,
-    MenuTemaPage
+    MenuTemaPage,
+    ModalTemaPage,
+    PersonalizarPage
   ],
   imports: [
     BrowserModule,
@@ -148,7 +152,9 @@ var configFirebase  = {
     ListadoDivisionesAlumnoPage,
     DatosDivisionAlumnoPage,
     AsistenciaAlumnoPage,
-    MenuTemaPage
+    MenuTemaPage,
+    ModalTemaPage,
+    PersonalizarPage
   ],
   providers: [
     AppState,

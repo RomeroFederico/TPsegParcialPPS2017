@@ -24,7 +24,7 @@ export class MenuTemaPage {
               public ws : Ws) 
   {
     this.storage.get("Tema").then(datos => {
-      if (datos.temaPersonalizado != undefined)
+      if (datos != undefined)
         this.mostrarTemaPersonalizado = true;
     })  
     .catch(err=>
@@ -51,7 +51,10 @@ export class MenuTemaPage {
     .catch((error) => { console.log("Error"); });
 
     this.global.set('theme', tema);
-    this.close();
+    this.storage.set("TemaPersonalizado", false).then((data)=> {
+      this.events.publish('QuitarTemaPersonalizado');
+      this.close();
+    });
   }
 
   close() {
@@ -62,6 +65,8 @@ export class MenuTemaPage {
   {
     //this.global.set('theme', "");
     //this.events.publish('TemaSeteado');
+    this.storage.set("TemaPersonalizado", true);
+    this.events.publish('TemaSeteado');
     this.close();
   }
 

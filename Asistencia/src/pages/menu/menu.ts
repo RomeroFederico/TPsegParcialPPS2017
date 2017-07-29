@@ -31,6 +31,7 @@ import { ListadoAdministradorPage } from '../listado-administrador/listado-admin
 
 //Tema
 import { MenuTemaPage } from '../menu-tema/menu-tema';
+import { PersonalizarPage } from '../personalizar/personalizar';
 
 @Component({
   providers:[Auth],
@@ -228,6 +229,10 @@ export class MenuPage {
       ev: myEvent
     });
   }
-  
+
+  CrearTema()
+  {
+    this.navCtrl.push(PersonalizarPage);
+  }
 
 }
